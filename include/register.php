@@ -208,13 +208,18 @@ $(document).ready(function(){
 		var username = $("#loguser").val();
 		var pass = $("#logpassword").val();
 		var login = "login";
+		if(username == "" || pass == "")
+		{
+			alert("Tài khoản hoặc mật khẩu không được trống");
+		}
+		else{
 		$.ajax({
 			url:"solvelogin.php",
 			method:"POST",
 			data:{login:login,username:username,pass:pass},
 			success:function(data)
 			{
-				if(data == "no") 
+				if($.trim(data)=="no") 
 				{
 					alert("Tài khoản hoặc mật khẩu không chính xác");	
 				}
@@ -225,8 +230,10 @@ $(document).ready(function(){
 					location.reload();
 				
 				}
-			}
+			},
+			error:function(){alert("Lỗi không thể đăng nhập!");}
 		});
+		}
 	});
 	$("#logout").click(function(){
 	 var action = "logout";
@@ -239,6 +246,74 @@ $(document).ready(function(){
 			location.reload();
 		}
 		});
+	});
+	$(document).on('click', '#txsubmit', function(){
+		var lastnamere = $("#txlname").val();
+		var firstnamere = $("#txfiname").val();
+		var emailre = $("#txemail").val();
+		var userre = $("#txuser").val();
+		var passre = $("#txpass").val();
+		var pass2re = $("#txpass2").val();
+		var addressre = $("#txaddress").val();
+		var phonere = $("#txphone").val();
+		var signup = "signup";
+		var kt=1;
+
+		var em=lastnamere;var pattern= /^([A-Z][a-z]*\s*)+$/;var out=pattern.test(em);
+		if(out==true){ $(".z-txlname").text("" ); $("#txlname").css("border","2px solid green");}
+		else {$(".z-txlname").text($("#txlname").attr("title")); $("#txlname").css("border","2px solid red");kt=0;}
+
+		var em=firstnamere;var pattern= /^([A-Z][a-z]*\s*)+$/;var out=pattern.test(em);
+		if(out==true){ $(".z-txfiname").text("" ); $("#txfiname").css("border","2px solid green");}
+		else {$(".z-txfiname").text($("#txfiname").attr("title")); $("#txfiname").css("border","2px solid red");kt=0;}
+
+		var em=emailre;var pattern= /^[a-zA-Z0-9\.\-\_](\w+(\.|\-|\_)?){2,}@\w{3,}(.\w{2,3})+$/;var out=pattern.test(em);
+		if(out==true){ $(".z-txemail").text(""); $("#txemail").css("border","2px solid green");}
+		else {$(".z-txemail").text($("#txemail").attr("title")); $("#txemail").css("border","2px solid red");kt=0;}
+
+		var em=userre;var pattern= /^[a-zA-Z0-9]{5,}$/;var out=pattern.test(em);
+		if(out==true){ $(".z-txuser").text(""); $("#txuser").css("border","2px solid green");}
+		else {$(".z-txuser").text($("#txuser").attr("title")); $("#txuser").css("border","2px solid red");kt=0;}
+
+		var em=passre;var pattern= /^[a-zA-Z0-9]{5,}$/;var out=pattern.test(em);
+		if(out==true){ $(".z-txpass").text( ""); $("#txpass").css("border","2px solid green");}
+		else {$(".z-txpass").text($("#txpass").attr("title")); $("#txpass").css("border","2px solid red");kt=0;}
+
+		if ($("#txpass2").is(":invalid")) {$("#txpass2").css("border","2px solid red");kt=0;}	
+		else{
+			if(passre==pass2re){$("#txpass2").css("border","2px solid green");$(".z-txpass2").text("");}
+			else{$("#txpass2").css("border","2px solid red");	$(".z-txpass2").text("Mật khẩu nhập lại bị sai!");kt=0;}
+		}
+
+		var em=phonere;
+		if(em=="")  $(this).css("border","2px solid green");
+		else{
+			var pattern=/^0\d{9,10}$/;var out=pattern.test(em);
+			if(out==true){ $(".z-txlname").text("" ); $(this).css("border","2px solid green");}
+			else {$(".z-txlname").text($(this).attr("title")); $(this).css("border","2px solid red");kt=0;}
+		}	
+		if(kt==1){
+		$.ajax({
+			url:"solvelogin.php",
+			method:"POST",
+			data:{signin:signin,username:userre,pass:passre,lastname:lastnamere,firstname:firstnamere,
+			email:emailre,address:addressre,phone:phonere},
+			success:function(data)
+			{
+				if(data == "no") 
+				{
+					alert("Tài khoản đã tồn tại");
+					$("#myForm").show();	
+				}
+				else 
+				{
+					alert("Đăng ký thành công");
+					$("#myForm").hide();
+					location.reload();
+				}
+			}
+		});
+		}
 	});
 });
 </script>
