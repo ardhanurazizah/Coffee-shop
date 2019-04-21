@@ -1,3 +1,6 @@
+<?php 
+session_start();
+?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -91,51 +94,8 @@ require("include/pagination.php");
 
 if($txpricemin==0) $txpricemin="";
 if($txpricemax==1000000) $txpricemax="";
+include "include/header.php";
 ?>
-
-
-
-			  <div id="header" id="home">			  	
-			    <div class="container">
-			    	<div class="row align-items-center justify-content-between d-flex">
-				      <div id="logo">
-				        <a href="index.html"><img src="img/logo.png" alt="" title="" /></a>
-				      </div>
-				      <nav id="nav-menu-container">
-				        <ul class="nav-menu">
-				          <li class="menu-active"><a href="<?php echo "./index.php";?>">Trang chủ</a></li>
-				          <li><a href="<?php echo "./index.php";?>">Chuyện cà phê</a></li>
-				          <li><a href="#coffee">Coffee</a></li>
-				          <li><a href="<?php echo "./index.php";?>">Đánh giá</a></li>
-						  <li><a href="#">Đăng nhập</a></li>
-				        </ul>
-				      </nav><!-- #nav-menu-container -->	
-					  <div>
-						<a href="#cart_popup" data-toggle="modal">
-							<img src="img/cart.png" style="width:40%;" />
-						</a>
-				 
-					  </div>  	    		
-			    	</div>
-			    </div>
-			  </div><!-- #header -->
-
-
-			<!-- start banner Area -->
-			<section class="banner-area" id="home">	
-				<div class="container">
-					<div class="row fullscreen d-flex align-items-center justify-content-start">
-						<div class="banner-content col-lg-7">
-							<h1>
-								Bắt đầu ngày mới <br>
-								với 1 ly cà phê				
-							</h1>
-						</div>											
-					</div>
-				</div>
-			</section>
-			<!-- End banner Area -->	
-
 			
 <!-- Start menu Area -->
 <section class="menu_home" id="coffee">
@@ -314,75 +274,7 @@ function showDetails(a)
 		a.style.display = 'none';
 	}
 </script>
-<script>
-$(document).ready(function(){
-load_cart_data()
-function load_cart_data()
-{
-	$.ajax({
-		url:"fetch_cart.php",
-		method:"POST",
-		dataType:"json",
-		success:function(data)
-		{
-		$("#cartDetails").html(data.cart_detail);
-		},
-		error:function()
-			{alert("Tạo giỏ hàng không thành công");}
-		});
-}
-$(document).on('click','.them',function(){
-		var product_id = $(this).attr("id");
-		var product_name =$("#name"+product_id+"").val();
-		var product_price =$("#price"+product_id+"").val();
-		var action ="add";
-		$.ajax({
-			url:"xuly.php",
-			method:"POST",
-			data:{product_id:product_id,product_name:product_name,product_price:product_price,action:action},
-			success:function(data)
-			{
-				load_cart_data();
-				alert("Đã thêm sản phẩm!");
-			},
-			error:function(){alert("Thêm không thành công");}
-		});
-	});
-$(document).on('click', '.delete', function(){
-		var product_id = $(this).attr("id");
-		var action = 'remove';
-		if(confirm("Bạn có chắc muốn xóa sản phẩm?"))
-		{
-			$.ajax({
-				url:"xuly.php",
-				method:"POST",
-				data:{product_id:product_id, action:action},
-				success:function()
-				{
-					load_cart_data();
-					
-				}
-			});
-		}
-		else
-		{
-			return false;
-		}
-	});
-$(document).on('click', '#clear_cart', function(){
-		var action = 'empty';
-		$.ajax({
-			url:"xuly.php",
-			method:"POST",
-			data:{action:action},
-			success:function()
-			{
-				load_cart_data();
-			}
-		});
-	});
-});
-</script>
+
 
 </body>
 </html>

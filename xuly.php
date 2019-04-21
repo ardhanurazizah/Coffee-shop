@@ -16,7 +16,7 @@ if(isset($_POST["action"]))
 				if($_SESSION["gio_hang"][$keys]['product_id'] == $_POST["product_id"])
 				{
 					$is_available++;
-					
+					$_SESSION["gio_hang"][$keys]["so_luong"]++;
 				}
 			}
 			if($is_available == 0)
@@ -74,6 +74,17 @@ if(isset($_POST["action"]))
 				{
 					$_SESSION["gio_hang"][$keys]["so_luong"]--;
 				}
+		}
+	}
+	if($_POST["action"] == 'checkout')
+	{
+		if(isset($_SESSION['myname']))
+		{
+			echo 'yes';
+		}
+		else
+		{
+			echo 'no';
 		}
 	}
 }

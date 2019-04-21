@@ -17,12 +17,17 @@ if(isset($_POST['login']))
 	if(mysqli_num_rows($result)>0)
 	{
 		$_SESSION["myname"] = $user;
+		$_SESSION['role']='customer';
 		echo "yes";
 	}
 	else{
 		if(mysqli_num_rows($result2)>0)
 		{
 			$_SESSION["myname"] = $user;
+			while($row = mysqli_fetch_assoc($result2)){
+				if($row['id_role'] == 1) $_SESSION['role']='admin';
+				else $_SESSION['role']='manager';
+			}
 			echo "yes";
 		}
 		else
@@ -31,9 +36,32 @@ if(isset($_POST['login']))
 		}
 	}
 }
-if(isset($_POST['action']))
+if(isset($_POST['action']) == 'logout')
 {
 	unset($_SESSION["myname"]);
+	unset($_SESSION['role']);
 }
-
+if(isset($_POST['signup']))
+{
+	$user = $_POST['username'];
+	$pass = $_POST['pass'];
+	$lname = $_POST['lastname'];
+	$fname = $_POST['firstname'];
+	$email = $_POST['email'];
+	$phone = $_POST['phone'];
+	$address = $_POST['address'];
+	$sql = "SELECT * FROM customer WHERE username='$user' ";
+	$result = mysqli_query($con,$sql);
+	if(mysqli_num_rows($result)>0){
+		echo 'no';
+	}
+	else {
+		$sql="INSERT INTO customer(lastname,firstname,username,password,email,phone,address)
+		VALUES('$lname','$fname','$user','$pass','$email','$phone','$address');";
+		mysqli_query($con, $sql);
+		$_SESSION["myname"] = $user;
+		$_SESSION['role']='customer';
+		echo "yes";
+	}
+}
 ?>
