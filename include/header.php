@@ -90,13 +90,13 @@
 			</div>  
 			<?php } ?>	
 			<?php 
-				if(isset($_SESSION['myname']))
+				if(isset($_SESSION['username']))
 				{
 			?>
 					<div class="dropdown">
 						<a href="#" id="dropdown"><img src="img/profile.png" width="30px" height="30px"/><?php echo $_SESSION['myname'] ?></a>
 							<ul class="dropdown-menu" id="dropdown-menu">
-								<li><button id="profile">Thông tin cá nhân</button></li>
+								<li><a href="account.php" id="account" style="color:black">Thông tin cá nhân</a></li>
 								
 						<!-- trang admin hoac manager -->
 						<?php 
@@ -116,7 +116,7 @@
 						}
 						?>
 						<!-- het trang admin manager -->
-							<li><button id="logout" style="color:">Thoát</button></li>
+							<li><button id="logout">Thoát</button></li>
 						</ul>
 					</div>
 					<script>
