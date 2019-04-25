@@ -61,6 +61,8 @@
 					<?php
 						$url=$_SERVER['PHP_SELF'];
 						$index=strpos($url,"index.php");
+						$payment=strpos($url,"payment.php");
+						$menu=strpos($url,"menu.php");
 				    if($index>0){
 				    	// neu la trang index
 				    ?>
@@ -73,19 +75,20 @@
 				    ?>
 				    <li class="menu-active"><a href="<?php echo "./index.php";?>">Trang chủ</a></li>
 				    <li><a href="<?php echo "./index.php";?>">Chuyện cà phê</a></li>
-				    <li><a href="#coffee">Coffee</a></li>	
+				    <li><a href="<?php echo "./menu.php";?>">Coffee</a></li>	
 				    <li><a href="<?php echo "./index.php";?>">Đánh giá</a></li>
 				    <?php
 						}
 				    ?>
 				</ul>
 			</nav><!-- #nav-menu-container -->
+			<?php if($index>0 || $menu>0){?>
 			<div>
 				<a href="#cart_popup" data-toggle="modal">
 					<img src="img/cart.png" style="width:40%;" />
 				</a>
-				 
-			</div>  	
+			</div>  
+			<?php } ?>	
 			<?php 
 				if(isset($_SESSION['myname']))
 				{
@@ -170,7 +173,7 @@
 					<button type="button" class="close" data-dismiss="modal" style="width:40px; height:40px;">&times;</button>
 				</div>
                 <div class="modal-header">
-                    <h4 class="modal-title" style=" font-weight:bold">Đặt hàng</h4>
+                    <h4 class="modal-title" style=" font-weight:bold">Giỏ hàng</h4>
                 </div>
                 <div class="modal-body">
 					<span id="cartDetails"></span>
@@ -285,13 +288,13 @@ $(document).on('click','#check_out_cart', function(){
 		data:{action:action},
 		success:function(data)
 		{
-			if(data == "no")
+			if($.trim(data) == "no")
 			{
 				alert("Bạn chưa đăng nhập!");
 			}
 			else
 			{
-				window.location.href = 'checkout.php';
+				window.location.href = "./payment.php";
 			}
 		}
 	});

@@ -300,7 +300,7 @@ $(document).ready(function(){
 			email:emailre,address:addressre,phone:phonere},
 			success:function(data)
 			{
-				if(data == "no") 
+				if($.trim(data) == "no") 
 				{
 					alert("Tài khoản đã tồn tại");
 					$("#myForm").show();	
