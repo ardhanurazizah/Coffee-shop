@@ -50,7 +50,7 @@ if(isset($_POST["action"]))
 			'check_address'	=> $check_address,
 			'check_phone'	=> $check_phone
 		);
-		if($check_cart == "true" && $check_name = "true" && $check_address = "true" && $check_phone = "true")
+		if($check_cart == "true" && $check_name == "true" && $check_address == "true" && $check_phone == "true")
 		{
 			$total_price = $_POST['total_price'];
 			$method = $_POST['method'];
