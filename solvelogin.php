@@ -58,7 +58,8 @@ if(isset($_POST['signup'])){
 		$sql="INSERT INTO customer(lastname,firstname,username,password,email,phone,address)
 		VALUES('$lname','$fname','$user','$pass','$email','$phone','$address');";
 		mysqli_query($con, $sql);
-		$_SESSION["myname"] = $user;
+		$_SESSION["username"] = $user;
+		$_SESSION["myname"] = $fname;
 		$_SESSION['role']='customer';
 		echo "yes";
 	}
@@ -81,7 +82,8 @@ if(isset($_POST['update'])){
 	$sql = "UPDATE employee SET lastname='$lname', firstname='$fname',
 	email='$email', phone='$phone', address='$address', password='$pass' WHERE id_em=$id; ";
 	echo "yes";
-	mysqli_query($con,$sql);	
+	mysqli_query($con,$sql);
+
 }
 mysqli_close($con);
 ?>

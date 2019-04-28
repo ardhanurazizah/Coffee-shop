@@ -4,7 +4,7 @@ session_start()
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<!-- Mobile Specific Meta -->
+		<!-- Mobile Specific Meta -->
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 		<!-- Favicon-->
 		<link rel="shortcut icon" href="img/fav.png">
@@ -14,7 +14,9 @@ session_start()
 		<meta name="description" content="">
 		
 		<!-- Meta Keyword -->
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<!--lavarel -->
+		<meta name="csrf-token" content="{{ csrf_token() }}">
 <title>Coffee Shop</title>
 <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet"> 
 			<!--
@@ -41,7 +43,6 @@ session_start()
 <?php include("include/footer.php"); ?>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-
 			<script src="js/vendor/bootstrap.min.js"></script>			
   			<script src="js/easing.min.js"></script>			
 			<script src="js/hoverIntent.js"></script>
@@ -54,6 +55,7 @@ session_start()
 			<script src="js/waypoints.min.js"></script>
 			<script src="js/jquery.counterup.min.js"></script>					
 			<script src="js/main.js"></script>	
+			
 
 </body>
 </html>
