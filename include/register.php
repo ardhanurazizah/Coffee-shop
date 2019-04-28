@@ -31,12 +31,12 @@ $(document).ready(function(){
 		else {$(".z-txpass").text($(this).attr("title")); $(this).css("border","2px solid red");}
 	});	
 	$("#txfiname").blur(function(){
-		var em=$(this).val();var pattern= /^([A-Z][a-z]*\s*)+$/;var out=pattern.test(em);
+		var em=removeTone($(this).val());var pattern= /^([A-Z][a-z]*\s*)+$/;var out=pattern.test(em);
 		if(out==true){ $(".z-txfiname").text("" ); $(this).css("border","2px solid green");}
 		else {$(".z-txfiname").text($(this).attr("title")); $(this).css("border","2px solid red");}
 	});
 	$("#txlname").blur(function(){
-		var em=$(this).val();var pattern= /^([A-Z][a-z]*\s*)+$/;var out=pattern.test(em);
+		var em=removeTone($(this).val());var pattern= /^([A-Z][a-z]*\s*)+$/;var out=pattern.test(em);
 		if(out==true){ $(".z-txlname").text("" ); $(this).css("border","2px solid green");}
 		else {$(".z-txlname").text($(this).attr("title")); $(this).css("border","2px solid red");}
 	});	
@@ -61,51 +61,6 @@ $(document).ready(function(){
 		else $("#logpassword").prop("type", "password");
 	});
 });
-function registerCheck(){
-	var kt=1;
-	var a1=document.register.txlname;
-	var a2=document.getElementById("txfiname");
-	var a3=document.getElementById("txemail");
-	var a4=document.getElementById("txuser");
-	var a5=document.getElementById("txpass");
-	var a6=document.getElementById("txpass2");
-	var a7=document.getElementById("txphone");
-
-	var pattern= /^([A-Z][a-z]*\s*)+$/;
-	if(a1.value==""){alert("Chưa nhập họ và tên lót");a1.focus();return false;}
-	if(pattern.test(a1.value)==false){
-		alert(a1.title);a1.focus();return false;
-	}
-	if(a2.value==""){alert("Chưa nhập tên");a2.focus();return false;}
-	if(pattern.test(a2.value)==false){
-		alert(a2.title);a2.focus();	return false;
-	}
-	pattern= /^[a-zA-Z0-9\.\-\_](\w+(\.|\-|\_)?){2,}@\w{3,}(.\w{2,3})+$/;
-	if(a3.value==""){alert("Chưa nhập email");a3.focus();return false;}
-	if(pattern.test(a3.value)==false){
-		alert(a3.title);a3.focus();return false;
-	}
-	pattern= /^[a-zA-Z0-9]{5,}$/;
-	if(a4.value==""){alert("Bạn chưa nhập tài khoản");a4.focus();return false;}
-	if(pattern.test(a4.value)==false){
-		alert(a4.title);a4.focus();return false;
-	}
-	if(a5.value==""){alert("Chưa nhập mật khẩu");a5.focus();return false;}
-	if(pattern.test(a5.value)==false){
-		alert(a5.title);a5.focus();return false;
-	}
-	if(a6.value==""){alert("Chưa nhập lại mật khẩu");a6.focus();return false;}
-	if(a6.value!= a5.value){
-		alert("Mật khẩu nhập lại không khớp!");a6.focus();return false;
-	}
-	if(a7.value!=""){
-		pattern=/^0\d{9,10}$/;
-		if(pattern.test(a7.value)==false){
-			alert("Nhập số điện thoại không hợp lệ");a7.focus();return false;
-		}
-	}
-	return true;
-}
 </script>
 <!--register form-->
 <?php
@@ -124,46 +79,45 @@ function registerCheck(){
         </div>
         <div class="modal-body">
 		<!--     form    it needs to change action later -->
-			<form action="registers.php" name="register" method="post" onsubmit="return registerCheck()">
-				<div style="padding: 5px">					
+			<form>
+				<div style="padding-bottom: 5px">					
 					<input type="text" placeholder="Họ và tên lót*" class="form-control" id="txlname" name="txlname" tabindex="1" required  title="Sai định dạng tên!" value="<?php echo $lastnamere;?>">
 					<span class="z-txlname" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>
 				</div>
-				<div style="padding: 5px">
+				<div style="padding-bottom: 5px">
 					<input type="text" placeholder="Tên của bạn*" class="form-control" id="txfiname" name="txfiname" tabindex="2"   title="Sai định dạng tên!" required value="<?php echo $finamere;?>">
 					<span class="z-txfiname" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>
 				</div>
-				<div style="padding: 5px">
+				<div style="padding-bottom: 5px">
 					<input type="text" class="form-control" placeholder="Email của bạn*" id="txemail" name="txemail" tabindex="3"  title="Email phải có dấu '@'và dấu '.'" required value="<?php echo 
 					$emailre;?>">
 					<span class="z-txemail" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>
 				</div>
-				<div style="padding: 5px">
+				<div style="padding-bottom: 5px">
 					<input type="text" placeholder="Tài khoản*" class="form-control" name="txuser" id="txuser" tabindex="4"  required title="Có ít nhất 5 ký tự và không có ký tự đặc biệt" value="<?php echo $userre;?>">
 					<span class="z-txuser" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>
 				</div>
-				<div style="padding: 5px">
+				<div style="padding-bottom: 5px">
 					<input type="password" placeholder="Mật khẩu*" class="form-control" name="txpass" id="txpass" tabindex="5"  title="Ít nhất 5 ký tự và không có ký tự đặc biệt!" required value="<?php echo $passre;?>" >
 					<span class="z-txpass" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>
 				</div>
-				<div style="padding: 5px">
+				<div style="padding-bottom: 5px">
 					<input type="password" placeholder="Nhập lại mật khẩu*" class="form-control" name="txpass2" id="txpass2" tabindex="6"  title="Phải giống mật khẩu!" required value="<?php echo $pass2re;?>">
 					<span class="z-txpass2" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>
 				</div>
-				<div style="padding: 5px">
+				<div style="padding-bottom: 5px">
 					<input type="text" class="form-control" placeholder="Địa chỉ" name="txaddress" id="txaddress" tabindex="7" value="<?php echo $addressre;?>" >
 				</div>
-				<div style="padding: 5px" >
+				<div style="padding-bottom: 5px" >
 					<input type="text" class="form-control" placeholder="Số điện thoại" name="txphone" id="txphone" tabindex="8" pattern="^0\d{9,10}$" title="10 hoặc 11 chữ số!" value="<?php echo $phonere;?>">
 				</div>
 				<div class="form-group">
-					<button type="submit" id="submit" class="btn btn-primary btn-block" tabindex="9" 
-					 onclick="return registerCheck()">Đăng ký</button>
+					<button type="button" id="btsubmit" class="btn btn-primary btn-block" tabindex="9">Đăng ký</button>
 				</div>
 				<div class="form-group">
 					<button type="reset" id="btreset" class="btn btn-primary btn-block" tabindex="10">Xóa</button>
-				</div>  
-			</form>
+				</div> 
+			</form> 
         </div>
       </div>    
     </div>
@@ -176,6 +130,7 @@ function registerCheck(){
           <h4 class="modal-title" style=" align-content: center; color:lightgray; font-weight: bold">Người dùng đăng nhập</h4>
         </div>
 		<div class="model-body" style="margin: 15px">
+			<form>
 				<div class="input-group" >
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					<input type="text" class="form-control" id="loguser" name="loguser" tabindex="1" placeholder="Tên tài khoản" required>
@@ -194,6 +149,7 @@ function registerCheck(){
 				<div class="form-group">
 					<button type="submit" id="loginuser" class="btn  btn-block" style="background-color: orange; " tabindex="3">Đăng nhập</button>
 				</div>
+			</form>
 		</div>
 		<div class="modal-footer">
 			<a data-toggle="modal" href="#myForm" id="clearcolor"data-dismiss="modal" style="">Đăng ký thành viên</a>
@@ -203,6 +159,23 @@ function registerCheck(){
     </div>
   </div>
 <script>
+function removeTone(str) {
+    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+    str = str.replace(/đ/g, "d");
+    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
+    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
+    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
+    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
+    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
+    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
+    str = str.replace(/Đ/g, "D");
+    return str;
+}
 $(document).ready(function(){
 	$(document).on('click', '#loginuser', function(){
 		var username = $("#loguser").val();
@@ -243,11 +216,11 @@ $(document).ready(function(){
 		data:{action:action},
 		success:function(data)
 		{
-			location.reload();
+			location.href="index.php";
 		}
 		});
 	});
-	$(document).on('click', '#txsubmit', function(){
+	$(document).on('click', '#btsubmit', function(){
 		var lastnamere = $("#txlname").val();
 		var firstnamere = $("#txfiname").val();
 		var emailre = $("#txemail").val();
@@ -259,11 +232,11 @@ $(document).ready(function(){
 		var signup = "signup";
 		var kt=1;
 
-		var em=lastnamere;var pattern= /^([A-Z][a-z]*\s*)+$/;var out=pattern.test(em);
+		var em=removeTone(lastnamere);var pattern= /^([A-Z][a-z]*\s*)+$/;var out=pattern.test(em);
 		if(out==true){ $(".z-txlname").text("" ); $("#txlname").css("border","2px solid green");}
 		else {$(".z-txlname").text($("#txlname").attr("title")); $("#txlname").css("border","2px solid red");kt=0;}
 
-		var em=firstnamere;var pattern= /^([A-Z][a-z]*\s*)+$/;var out=pattern.test(em);
+		var em=removeTone(firstnamere);var pattern= /^([A-Z][a-z]*\s*)+$/;var out=pattern.test(em);
 		if(out==true){ $(".z-txfiname").text("" ); $("#txfiname").css("border","2px solid green");}
 		else {$(".z-txfiname").text($("#txfiname").attr("title")); $("#txfiname").css("border","2px solid red");kt=0;}
 
@@ -296,7 +269,7 @@ $(document).ready(function(){
 		$.ajax({
 			url:"solvelogin.php",
 			method:"POST",
-			data:{signin:signin,username:userre,pass:passre,lastname:lastnamere,firstname:firstnamere,
+			data:{signup:signup,username:userre,pass:passre,lastname:lastnamere,firstname:firstnamere,
 			email:emailre,address:addressre,phone:phonere},
 			success:function(data)
 			{

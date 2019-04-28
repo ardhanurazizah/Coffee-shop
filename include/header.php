@@ -190,6 +190,7 @@
 <script>
 $(document).ready(function(){
 load_cart_data()
+//Load giỏ hàng
 function load_cart_data()
 {
 	$.ajax({
@@ -204,6 +205,7 @@ function load_cart_data()
 			{alert("Tạo giỏ hàng không thành công");}
 		});
 }
+//thêm sản phẩm vào giỏ hàng
 $(document).on('click','.them',function(){
 		var product_id = $(this).attr("id");
 		var product_name =$("#name"+product_id+"").val();
@@ -221,6 +223,7 @@ $(document).on('click','.them',function(){
 			error:function(){alert("Thêm không thành công");}
 		});
 	});
+//Xóa sản phẩm riêng theo từng dòng
 $(document).on('click', '.delete', function(){
 		var product_id = $(this).attr("id");
 		var action = 'remove';
@@ -242,6 +245,7 @@ $(document).on('click', '.delete', function(){
 			return false;
 		}
 	});
+//Xóa hết sản phẩm trong giỏ hàng
 $(document).on('click', '#clear_cart', function(){
 		var action = 'empty';
 		$.ajax({
@@ -254,6 +258,7 @@ $(document).on('click', '#clear_cart', function(){
 			}
 		});
 	});
+//Cộng số lượng 
 $(document).on('click', '.plus', function(){
 	var action = 'plus';
 	var product_id = $(this).attr("id");
@@ -267,6 +272,7 @@ $(document).on('click', '.plus', function(){
 		}
 	});
 });
+//Trừ số lượng
 $(document).on('click', '.min', function(){
 	var action = 'min';
 	var product_id = $(this).attr("id");
@@ -280,6 +286,7 @@ $(document).on('click', '.min', function(){
 		}
 	});
 });
+//Chuyển sang trang thanh toán có kiểm tra đăng nhập
 $(document).on('click','#check_out_cart', function(){
 	var action = 'checkout';
 	$.ajax({

@@ -23,9 +23,9 @@
 		</div>
 		<div class="menu_item_info bg_white">
 			<h3><?php echo $row['name'];?></h3>
-			<div class="price_product_item"><?php echo $row['price'].' Đ'?></div>
+			<div class="price_product_item"><?php echo number_format($row['price'],0,".",",").' Đ'?></div>
 			<input type="hidden"  id="name<?php echo $row['id_pro']?>" value="<?php echo $row['name']?>"/>
-			<input type="hidden" id="price<?php echo $row['id_pro']?>" value="<?php echo $row['price']?>"/>
+			<input type="hidden" id="price<?php echo $row['id_pro']?>" value="<?php echo number_format($row['price'],0,".",",")?>"/>
 			<button class="menu_item_action animate_btn them" id="<?php echo $row['id_pro'] ?>">Mua ngay</button>
 			<!--<a class="menu_item_action_view" href="/products/tra-oolong-sen-an-nhien">Tìm hiểu thêm</a>-->
 		</div>				
@@ -87,6 +87,14 @@
         </div>
 </div>
 <script>
+function number_format( number, decimals, dec_point, thousands_sep ) {                         
+    var n = number, c = isNaN(decimals = Math.abs(decimals)) ? 2 : decimals;
+    var d = dec_point == undefined ? "," : dec_point;
+    var t = thousands_sep == undefined ? "." : thousands_sep, s = n < 0 ? "-" : "";
+    var i = parseInt(n = Math.abs(+n || 0).toFixed(c)) + "", j = (j = i.length) > 3 ? j % 3 : 0;
+                              
+    return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
+}
 function showDetails(a)
 {
 	var productID = a.id;
@@ -100,7 +108,7 @@ function showDetails(a)
 			$("#nameTitle").text(product.name);
 			$("#names").text(product.name);
 			$("#info").text(product.info);
-			$("#prices").text(product.price+" Đ");
+			$("#prices").text(number_format(product.price,0,".",",")+" Đ");
 			$("#images").html("<img src='img/product/"+product.image+"' witdh='50%' height='50%'/>");
 			$("#hide").html("<input type='hidden'  id='name"+product.id_pro+"' value='"+product.name+"'/><input type='hidden' id='price"+product.id_pro+"' value='"+product.price+"'/>");
 			$("#button").html("<button class='btn btn-warning them' id='"+product.id_pro+"'>Mua ngay</button>");
