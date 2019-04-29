@@ -19,17 +19,17 @@ if(!empty($_SESSION["gio_hang"]))
 			<div class="uk-description-list uk-width-expand">
 				<p class="tch-text-bold">'.$values["product_name"].'</p>
 			</div>
-			<div class="uk-width-auto">'.number_format($values["product_price"]*$values["so_luong"],0,".",",").' ';
+			<div class="uk-width-auto">'.number_format((float)$values["product_price"]*$values["so_luong"]*1000,0,".",",").' ';
 			$output.='</div>
 			</div>';
-	$total_price = $total_price + $values["product_price"]*$values["so_luong"];
+	(float)$total_price = (float)$total_price + (float)$values["product_price"]*$values["so_luong"];
 	$total_item++;
 	}
 }
 $data = array(
 	'payment_detail'  => $output,
-	'total_price' 	  => number_format($total_price,0,".",","),
-	'total_item' 	  => number_format($total_item,0,".",",")
+	'total_price' 	  => number_format($total_price*1000,0,".",","),
+	'total_item' 	  => $total_item,0,".",","
 );
 echo json_encode($data);
 ?>

@@ -25,18 +25,18 @@ if(!empty($_SESSION["gio_hang"]))
 		<tr>
 			<td align="center">'.$values["product_name"].'</td>
 			<td align="center"><button id="'.$values["product_id"].'" class="min" style="border:none;background:none;padding-right:20px">-</button><span id="quantity">'.$values["so_luong"].'</span><button id="'.$values["product_id"].'" class="plus" style="border:none;background:none;padding-left:20px">+</button></td>
-			<td align="right">'.number_format($values["product_price"],0,".",",").'</td>
-			<td align="right">'.number_format($values["product_price"]*$values["so_luong"],0,".",",").'</td>
+			<td align="right">'.$values["product_price"].'</td>
+			<td align="right">'.number_format((int)$values["product_price"]*$values["so_luong"]*1000,0,".",",").'</td>
 			<td align="center"><button name="delete" class="btn btn-danger btn-xs	delete" id="'.$values["product_id"].'">Xóa</button></td>
 		</tr>
 		';
-		$total_price = $total_price + $values["product_price"]*$values["so_luong"];
+		(int)$total_price = (int)$total_price + (int)$values["product_price"]*$values["so_luong"];
 		$total_item++;
 	}
 $output .='
 	<tr>
 			<td colspan="3" align="right">Tổng cộng</td>
-			<td align="right">'.number_format($total_price,0,".",",").'</td>
+			<td align="right">'.number_format((int)$total_price*1000,0,".",",").'</td>
 			<td></td>
 	</tr>
 ';
