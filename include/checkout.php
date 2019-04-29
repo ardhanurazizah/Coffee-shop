@@ -186,14 +186,14 @@ $(document).ready(function(){
 		$.ajax({
 		url:"fetch_payment.php",
 		method:"POST",
-		dataType:"json",
 		success:function(data)
 		{	
-		$("#paymentDetail").html(data.payment_detail);
-		$("#total_item").text(data.total_item);
-		$("#total_price").text(data.total_price+ " đ");
-		$("#total_price2").text(data.total_price+ " đ");
-		$("#tong_tien").val(data.total_price);
+		var cart = JSON.parse(data);
+		$("#paymentDetail").html(cart.payment_detail);
+		$("#total_item").text(cart.total_item);
+		$("#total_price").text(cart.total_price+ " đ");
+		$("#total_price2").text(cart.total_price+ " đ");
+		$("#tong_tien").val(cart.total_price);
 		},
 		error:function()
 			{alert("Tạo giỏ hàng không thành công");}

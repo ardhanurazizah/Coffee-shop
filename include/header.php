@@ -54,7 +54,7 @@
 	<div class="container">
 		<div class="row align-items-center justify-content-between d-flex">
 			<div id="logo">
-				<a href="index.html"><img src="img/logo.png" alt="" title="" /></a>
+				<a href="index.php"><img src="img/logo.png" alt="" title="" /></a>
 			</div>
 			<nav id="nav-menu-container">
 				<ul class="nav-menu">
@@ -196,10 +196,10 @@ function load_cart_data()
 	$.ajax({
 		url:"fetch_cart.php",
 		method:"POST",
-		dataType:"json",
 		success:function(data)
 		{
-		$("#cartDetails").html(data.cart_detail);
+		var cart = JSON.parse(data);
+		$("#cartDetails").html(cart.cart_detail);
 		},
 		error:function()
 			{alert("Tạo giỏ hàng không thành công");}
@@ -298,6 +298,7 @@ $(document).on('click','#check_out_cart', function(){
 			if($.trim(data) == "no")
 			{
 				alert("Bạn chưa đăng nhập!");
+				window.location.reload();
 			}
 			else
 			{

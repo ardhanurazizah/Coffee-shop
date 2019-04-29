@@ -45,9 +45,9 @@
 		</div>
 		<div class="menu_item_info bg_white">
 			<h3><?php echo $row['name'];?></h3>
-			<div class="price_product_item"><?php echo $row['price'].' Đ'?></div>
+			<div class="price_product_item"><?php echo number_format($row['price'],0,".",",").' Đ'?></div>
 			<input type="hidden"  id="name<?php echo $row['id_pro']?>" value="<?php echo $row['name']?>"/>
-			<input type="hidden" id="price<?php echo $row['id_pro']?>" value="<?php echo $row['price']?>"/>
+			<input type="hidden" id="price<?php echo $row['id_pro']?>" value="<?php echo number_format($row['price'],0,".",",")?>"/>
 			<button class="menu_item_action animate_btn them" id="<?php echo $row['id_pro'] ?>">Mua ngay</button>
 		</div>				
 	</div>	
