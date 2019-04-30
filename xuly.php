@@ -78,13 +78,18 @@ if(isset($_POST["action"]))
 	}
 	if($_POST["action"] == 'checkout')
 	{
-		if(isset($_SESSION['myname']))
+		if(isset($_SESSION['username']) && strcmp($_SESSION['role'],'customer')== 0)
 		{
 			echo 'yes';
 		}
 		else
 		{
-			echo 'no';
+			if(strcmp($_SESSION['role'],'admin')==0 || strcmp($_SESSION['role'],'manager')==0 ){
+				echo 'not';
+				unset($_SESSION['gio_hang']);
+			}
+			else{
+			echo 'no';}
 		}
 	}
 }

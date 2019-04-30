@@ -1,5 +1,7 @@
 <?php 
 session_start();
+
+if(isset($_SESSION["username"]) && strcmp($_SESSION['role'],'customer')==0 ){
 require("include/dbconnect.php");
 $myname=$_SESSION["username"];
 if($_SESSION['role']=='customer')	
@@ -19,7 +21,16 @@ while($row = mysqli_fetch_assoc($result)){
 	$phone=$row['phone'];
 	$address=$row['address'];
 }
-mysqli_close($con);
+$sql= "SELECT id_bill FROM order_bill where cus_id=$id ORDER BY  id_bill DESC";
+$result = mysqli_query($con,$sql);
+$i=0;
+while($row = mysqli_fetch_assoc($result)){
+	$bill[$i]=$row['id_bill'];
+	$i++;
+}
+$rowOrder=$i;
+
+// mysqli_close($con);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -85,13 +96,17 @@ function removeTone(str) {
     return str;
 }
 $(document).ready(function(){
-  $("#personal").click(function(){
-  	$("#cartinfo").removeClass("active");
+  $("#profile").click(function(){
+  	$("#order").removeClass("active");
   	$(this).addClass("active");
+  	$("#profile_form").css("display","block");
+  	$("#order_form").css("display","none");
   });
-  $("#cartinfo").click(function(){ 
-  	$("#personal").removeClass("active");
+  $("#order").click(function(){ 
+  	$("#profile").removeClass("active");
   	$(this).addClass("active");
+  	$("#profile_form").css("display","none");
+  	$("#order_form").css("display","block");
   });
   $("#change").change(function() {
     if($(this).is(':checked')) {
@@ -114,7 +129,7 @@ $(document).ready(function(){
 		var address = $("#acaddress").val();
 		var id=<?php echo $id; ?>;
 		var table="<?php echo $table; ?>";
-		var newpass=<?php echo $pass; ?>;
+		var newpass="<?php echo $pass; ?>";
 		var oldpass=newpass2="";
 		if($("#change").is(':checked')) {
 			oldpass=$("#acoldpass").val();
@@ -157,6 +172,7 @@ $(document).ready(function(){
 	});
 });
 </script>
+
 <body>
 <?php 
 include "include/header.php";
@@ -167,18 +183,18 @@ include "include/header.php";
 		<div class="col-sm-3">
 			 <div class="menu-left">
                 <div class="profiles">
-    				<p class="image"><img src="img/account.jpg" height="100" width="100" alt=""></p>
+    				<p class="image"><img src="img/account.jpg" height="150" width="150" alt=""></p>
     				<h3 class="name">Tài khoản của</h3>
    					<h4><?php echo $lname." ".$fname; ?></h4>
 				</div>
-				<ul class="list-group">
-					 <li><a href="account.php" id="personal" class="list-group-item list-group-item-action list-group-item-warning active">Thông tin tài khoản</a></li>
-           			 <li><a href="account.php" id="cartinfo" class="list-group-item list-group-item-action list-group-item-warning">Đơn hàng của bạn</a></li>
+				<ul class="list-group" style="cursor:pointer">
+					<li id="profile" class="list-group-item list-group-item-action list-group-item-warning"> Thông tin tài khoản </li>
+					 <li id="order"class="list-group-item list-group-item-action list-group-item-warning"> Đơn hàng của bạn</li>
 				</ul>
 			</div><br />
 		</div>
-		<div class="col-sm-5">
-			<form name="abcd">
+		<div class="col-sm-5" id="profile_form" style="display:block">
+			<form name="abcd" >
 				<div class="input-wrap">
 					<label class="control-label" for="full_name">Họ và tên lót: </label>
                     <input type="text" name="aclastname" class="form-control" id="aclastname" value="<?php echo $lname; ?>"placeholder="Họ và tên lót">
@@ -223,6 +239,72 @@ include "include/header.php";
  				</div>
 			</form>
 		</div>
+		<div id="order_form" style="display: none; " class="col-sm-9" >
+			<h3 style="display: flex; justify-content: center; border:solid 1px orange;border-radius: 5px;background-color:orange" >Danh sách đơn hàng của bạn</h3>
+			<div style="overflow-y: scroll; overflow-x:hidden; height: 600px;">
+			<?php 
+				for($i=0;$i<$rowOrder;$i++){
+					$sql="SELECT * FROM order_bill where id_bill= $bill[$i];";
+					$result = mysqli_query($con,$sql);
+					while( $row=mysqli_fetch_assoc($result) ){
+						$billphone=$row['user_phone'];
+						$billaddress=$row['user_address'];
+						$billname=$row['user_name'];
+						$billpayment=$row['payment'];
+						$billnote=$row['note'];
+						$billstatus=$row['status'];
+						$billtotal=$row['total_price'];
+						$billtime=$row['now'];
+					}
+					echo '<div style="border:lightgray dotted 0.5px;padding:5px;border-radius: 5px;">
+					<h4 style="display: flex"><strong>Mã đơn đặt hàng: </strong> '.$bill[$i].'</h4>';
+					if($billstatus==0)
+							echo '<div style=" float:right;font-size:18px;color:red"> Đang chờ xử lý </div>';
+						else 
+							echo '<div style="color:#8EFB31;float:right;font-size:18px"> Đã xử lý </div>';
+					echo '<div ><strong>Giờ đặt:</strong>'.$billtime.'</div><br />'; 
+					echo '<table class="table table-hover table-striped ">
+				    <thead class="thead-dark">
+				      <tr>
+				        <th width="30%" style=" text-align:center">Tên sản phẩm</th>
+				        <th width="20%" style=" text-align:center">Số lượng</th>
+				        <th width="15%" style=" text-align:center">Đơn giá</th>
+				        <th width="20%" style=" text-align:center">Thành tiền</th>
+				      </tr>
+				    </thead>
+				    <tbody>';
+					$sql="SELECT p.name as name,d.price as price, d.qty as amount  FROM detail_order as d join product as p on p.id_pro=d.pro_id where id_bill= $bill[$i];";
+					$result = mysqli_query($con,$sql);
+					while( $row=mysqli_fetch_assoc($result) ){
+			?>	
+				      <tr>
+				        <td align="center"><?php echo $row['name'] ?></td>
+				        <td align="center"><?php echo $row['amount'] ?></td>
+				        <td align="right"><?php echo number_format((int)$row['price'],0,".",","); ?> đ</td>
+				        <td align="right"><?php echo  number_format((int)$row['price']*$row['amount'],0,".",",");?> đ</td>
+				      </tr>
+			<?php 	
+					}
+			?>
+					<tr>
+						<td colspan="2" ></td>
+						<td style=" font-weight: bold" align="right">Tổng cộng</td>
+						<td align="right"><?php echo number_format((int)$billtotal,0,".",",") ?> đ</td>
+					</tr>
+					</tbody>
+					</table>
+					<div ><strong>Địa chỉ:</strong> <?php echo $billaddress ?> </div>
+					<div ><strong>Người nhận:</strong> <?php echo $billname ?> </div>
+					<div ><strong>Số điện thoại:</strong> <?php echo $billphone ?> </div>
+					<div ><strong>Phương thức thanh toán:</strong> <?php echo $billpayment ?> </div>
+					<div ><strong>Ghi chú:</strong> <?php echo $billnote ?> </div>
+					</div>
+					<br />
+			<?php	
+				}
+			?> 
+			</div>
+		</div>
 	</div>
 </div>
 
@@ -232,3 +314,68 @@ include "include/header.php";
 ?>
 </body>
 </html>
+<?php }
+	else
+	{?>
+	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+<!-- Mobile Specific Meta -->
+		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<!-- Favicon-->
+		<link rel="shortcut icon" href="img/fav.png">
+		<!-- Author Meta -->
+		<meta name="author" content="codepixer">
+		<!-- Meta Description -->
+		<meta name="description" content="">
+		
+		<!-- Meta Keyword -->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Coffee Shop</title>
+			<!--
+			CSS
+			============================================= -->
+			<link rel="stylesheet" href="css/linearicons.css">
+			<link rel="stylesheet" href="css/font-awesome.min.css">
+			<link rel="stylesheet" href="css/bootstrap.css">
+			<link rel="stylesheet" href="css/magnific-popup.css">
+			<link rel="stylesheet" href="css/nice-select.css">				
+			<link rel="stylesheet" href="css/animate.min.css">
+			<link rel="stylesheet" href="css/owl.carousel.css">
+			<link rel="stylesheet" href="css/main.css">
+			<link rel="stylesheet" href="css/tch.min.css" />
+			<link rel="stylesheet" href="css/styles_product.css" />
+			<script src="js/vendor/jquery-2.2.4.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+			<script src="js/vendor/bootstrap.min.js"></script>			
+  			<script src="js/easing.min.js"></script>			
+			<script src="js/hoverIntent.js"></script>
+			<script src="js/superfish.min.js"></script>	
+			<script src="js/jquery.ajaxchimp.min.js"></script>
+			<script src="js/jquery.magnific-popup.min.js"></script>	
+			<script src="js/owl.carousel.min.js"></script>			
+			<script src="js/jquery.nice-select.min.js"></script>			
+			<script src="js/parallax.min.js"></script>	
+			<script src="js/waypoints.min.js"></script>
+			<script src="js/jquery.counterup.min.js"></script>					
+			<script src="js/main.js"></script>	
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+
+<body>
+<?php include("include/header.php"); ?>
+<?php if(strcmp($_SESSION['role'],'admin')==0 || strcmp($_SESSION['role'],'manager')==0 )
+	{
+	?>
+		<div style="margin-left:450px; font-weight:bold"><h3>Bạn không có quyền xem trang này</h3></div>
+<?php }
+	else
+	{ ?>
+		<div style="margin-left:450px; font-weight:bold"><h3>Bạn cần phải đăng nhập để xem trang này</h3></div>
+<?php }?>
+<?php include("include/footer.php"); ?>
+</body>
+</html>
+<?php }
+?>

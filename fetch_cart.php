@@ -8,14 +8,14 @@ $so_luong = 1;
 //khai báo biến output biểu diễn html
 $output ='
 	<div class="table-reponsive" id="oder_table">
-		<table class="table table-bordered table-striped">
-			<tr>
-				<th width="30%" style=" text-align:center">Tên sản phẩm</th>
-				<th width="20%" style=" text-align:center">Số lượng</th>
-				<th width="15%" style=" text-align:center">Giá</th>
-				<th width="20%" style=" text-align:center">Tổng cộng</th>
-				<th witdh="5%" style=" text-align:center">Thao tác</th>
-			</tr>
+		<table class="table table-striped">
+				<tr>
+					<th width="30%" style=" text-align:center">Tên sản phẩm</th>
+					<th width="20%" style=" text-align:center">Số lượng</th>
+					<th width="15%" style=" text-align:center">Giá</th>
+					<th width="20%" style=" text-align:center">Tổng cộng</th>
+					<th witdh="5%" style=" text-align:center">Thao tác</th>
+				</tr>
 ';
 if(!empty($_SESSION["gio_hang"]))
 {
