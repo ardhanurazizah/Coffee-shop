@@ -1,5 +1,5 @@
 <?php 
-	if(isset($_SESSION["myname"])){
+	if(isset($_SESSION["myname"]) && strcmp($_SESSION['role'],'customer')==0 ){
 		$myname=$_SESSION["username"];
 		require("include/dbconnect.php");	
 		$result="";
@@ -295,6 +295,12 @@ $(document).ready(function(){
 </script>
 <?php }
 else
-{?>
-<div>Bạn cần phải đăng nhập để thực hiện thanh toán</div>
-<?php }?>
+{
+	if(strcmp($_SESSION['role'],'admin')==0 || strcmp($_SESSION['role'],'manager')==0 )
+	{ ?>
+		<div style="margin-left:450px; font-weight:bold"><h3>Bạn không có quyền xem trang này</h3></div>
+		<?php }
+	else {?>
+		<div style="margin-left:450px; font-weight:bold"><h3>Bạn cần phải đăng nhập để thực hiện thanh toán</h3></div>
+<?php }
+}?>

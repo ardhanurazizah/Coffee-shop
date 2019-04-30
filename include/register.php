@@ -220,6 +220,9 @@ $(document).ready(function(){
 		}
 		});
 	});
+	$("#account").click(function(){
+		window.location.href = "account.php";
+	});
 	$(document).on('click', '#btsubmit', function(){
 		var lastnamere = $("#txlname").val();
 		var firstnamere = $("#txfiname").val();

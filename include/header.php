@@ -9,12 +9,11 @@
 	}
 	.dropdown a{color:#FFFFFF}
 	.dropdown{position:relative;}
-	.dropdown ul .dropdown-menu
+	.dropdown .dropdown-menu
 	{
 		display:absolute;
-		min-width:160px;
+		min-width:150px;
 		display:none;
-		
 	}
 	.dropdown ul .dropdown-menu li{
 		display:block !important;
@@ -36,7 +35,7 @@
 	.dropdown .dropdown-menu li button{
 		position: relative;
 		height:35px;
-		width:140px;
+		width:100%;
 		color:black;
 		background-color:#FFFFFF;
 		border:none;
@@ -45,9 +44,17 @@
 	.dropdown .dropdown-menu li:hover{
 		background-color:#FF8C55;
 	}
+	.dropdown .dropdown-menu li {
+	text-align:center;
+	height:35px;
+	width:150px;
+	}
 	.dropdown .dropdown-menu li button:hover{
 	background-color:#FF8C55;
 	color:#FFFFFF;	
+	}
+	@media (max-width:768px){
+		.cart{margin-right:50px;}
 	}
 </style>
 <div id="header">			  	
@@ -63,6 +70,7 @@
 						$index=strpos($url,"index.php");
 						$payment=strpos($url,"payment.php");
 						$menu=strpos($url,"menu.php");
+						$account =strpos($url,"account.php");
 				    if($index>0){
 				    	// neu la trang index
 				    ?>
@@ -82,8 +90,8 @@
 				    ?>
 				</ul>
 			</nav><!-- #nav-menu-container -->
-			<?php if($index>0 || $menu>0){?>
-			<div>
+			<?php if($index>0 || $menu>0 || $account>0){?>
+			<div class="cart" style="position:relative;">
 				<a href="#cart_popup" data-toggle="modal">
 					<img src="img/cart.png" style="width:40%;" />
 				</a>
@@ -92,25 +100,32 @@
 			<?php 
 				if(isset($_SESSION['username']))
 				{
+					if(isset($_SESSION['role'])){
 			?>
-					<div class="dropdown">
-						<a href="#" id="dropdown"><img src="img/profile.png" width="30px" height="30px"/><?php echo $_SESSION['myname'] ?></a>
-							<ul class="dropdown-menu" id="dropdown-menu">
-								<li><a href="account.php" id="account" style="color:black">Thông tin cá nhân</a></li>
+			<div class="dropdown">
+				<a href="#" id="dropdown">
+					<img src="img/profile.png" width="9%" height="9%"/><span style="padding-left:5px;"><?php echo $_SESSION['myname'] ?></span></a>
+					<ul class="dropdown-menu" id="dropdown-menu">
+			<?php
+						if(strcmp($_SESSION['role'],"customer")==0)
+						{
+			?>
+					
+								<li><button id="account">Thông tin cá nhân</button></li>
 								
 						<!-- trang admin hoac manager -->
 						<?php 
-						if(isset($_SESSION['role'])){
+						  }
 							if(strcmp($_SESSION['role'],"admin") ==0)
 							{
 						?>
-								<li><a href="#" id="logout11">admin</a></li>
+								<li><button id="admin">Vào trang admin</button></li>
 						<?php
 							}
 							if(strcmp($_SESSION['role'],"manager") ==0)
 							{
 						?>
-								<li><a href="#" id="logout22">manager</a></li>
+								<li><button id="manager">Vào trang manager</button></li>
 						<?php
 							}
 						}
@@ -140,7 +155,7 @@
 				else
 				{
 			?>
-				<div class="dangnhap">
+				<div class="dangnhap" style="margin-right:20px">
 					<a href="#myloginForm" data-toggle="modal">Đăng nhập</a>
 				</div>
 				
@@ -298,6 +313,11 @@ $(document).on('click','#check_out_cart', function(){
 			if($.trim(data) == "no")
 			{
 				alert("Bạn chưa đăng nhập!");
+				window.location.reload();
+			}
+			if($.trim(data) == "not")
+			{
+				alert("Bạn không có quyền mua hàng!");
 				window.location.reload();
 			}
 			else
