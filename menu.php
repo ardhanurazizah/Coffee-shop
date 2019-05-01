@@ -21,7 +21,7 @@ session_start();
 			CSS
 			============================================= -->
 			<link rel="stylesheet" href="css/linearicons.css">
-			<link rel="stylesheet" href="css/font-awesome.min.css">
+			
 			<link rel="stylesheet" href="css/bootstrap.css">
 			<link rel="stylesheet" href="css/magnific-popup.css">
 			<link rel="stylesheet" href="css/nice-select.css">				
@@ -29,6 +29,7 @@ session_start();
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
 			<link rel="stylesheet" href="css/tch.min.css" />
+			<link rel="stylesheet" href="css/font-awesome.min.css">
 			<link rel="stylesheet" href="css/styles_product.css" />
 			<script src="js/vendor/jquery-2.2.4.min.js"></script>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">	
@@ -190,15 +191,13 @@ include "include/header.php";
                         <h3 id="names"></h3>
                         <p id="info"></p>
                         <p class="popup_price" id="prices"></i></p>                            
-                    <span id="hide"></span>                      
-                    </div>                  
+                    <span id="hide"></span>
+					<div class="col-md-12" style="text-align:center;padding-top:20px">   
+							<span id="button"></span>                  
+					</div>
+					</div>                  
                     <div class="clearfix"> </div>                   
                 </div>
-                <div class="modal-footer">
-					<div align="center" class="modal-footer-left">
-                    	<span id="button"></span>
-					</div>
-				</div>
             </div>
         </div>
 </div>
@@ -267,7 +266,7 @@ function showDetails(a)
 			$("#prices").text(number_format(product.price,0,".",",")+" Đ");
 			$("#images").html("<img src='img/product/"+product.image+"' witdh='50%' height='50%'/>");
 			$("#hide").html("<input type='hidden'  id='name"+product.id_pro+"' value='"+product.name+"'/><input type='hidden' id='price"+product.id_pro+"' value='"+product.price+"'/>");
-			$("#button").html("<button class='btn btn-warning them' id='"+product.id_pro+"'>Mua ngay</button>");
+			$("#button").html("<button class='btn btn-warning them' style='width:80%' id='"+product.id_pro+"'>Mua ngay</button>");
 		}
 	});
 }

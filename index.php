@@ -21,7 +21,7 @@ session_start();
 			CSS
 			============================================= -->
 			<link rel="stylesheet" href="css/linearicons.css">
-			<link rel="stylesheet" href="css/font-awesome.min.css">
+
 			<link rel="stylesheet" href="css/bootstrap.css">
 			<link rel="stylesheet" href="css/magnific-popup.css">
 			<link rel="stylesheet" href="css/nice-select.css">				
@@ -29,6 +29,7 @@ session_start();
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
 			<link rel="stylesheet" href="css/tch.min.css" />
+			<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
 			<link rel="stylesheet" href="css/styles_product.css" />
 			<script src="js/vendor/jquery-2.2.4.min.js"></script>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -47,8 +48,7 @@ include "include/review.php";
 <?php 
 	include "include/footer.php";
 ?>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 			<script src="js/vendor/bootstrap.min.js"></script>			
   			<script src="js/easing.min.js"></script>			
 			<script src="js/hoverIntent.js"></script>
@@ -59,7 +59,8 @@ include "include/review.php";
 			<script src="js/jquery.nice-select.min.js"></script>			
 			<script src="js/parallax.min.js"></script>	
 			<script src="js/waypoints.min.js"></script>
-			<script src="js/jquery.counterup.min.js"></script>					
+			<script src="js/jquery.counterup.min.js"></script>	
+			<script src="js/mail-script.js"></script>					
 			<script src="js/main.js"></script>	
 
 </body>
