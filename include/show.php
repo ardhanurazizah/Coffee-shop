@@ -74,15 +74,11 @@
                         <h3 id="names"></h3>
                         <p id="info"></p>
                         <p class="popup_price" id="prices"></i></p>                            
-                    <span id="hide"></span>                      
+                    <span id="hide"></span>
+						<span id="button"></span>                      
                     </div>                  
                     <div class="clearfix"> </div>                   
                 </div>
-                <div class="modal-footer">
-					<div align="center" class="modal-footer-left">
-                    	<span id="button"></span>
-					</div>
-				</div>
             </div>
         </div>
 </div>

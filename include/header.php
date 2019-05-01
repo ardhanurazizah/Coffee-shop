@@ -53,6 +53,9 @@
 	background-color:#FF8C55;
 	color:#FFFFFF;	
 	}
+	.dropdown .dropdown-menu li button:focus{
+	border:none;
+	}
 	@media (max-width:768px){
 		.cart{margin-right:50px;}
 	}

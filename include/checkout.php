@@ -296,10 +296,12 @@ $(document).ready(function(){
 <?php }
 else
 {
-	if(strcmp($_SESSION['role'],'admin')==0 || strcmp($_SESSION['role'],'manager')==0 )
-	{ ?>
-		<div style="margin-left:450px; font-weight:bold"><h3>Bạn không có quyền xem trang này</h3></div>
-		<?php }
+	if(isset($_SESSION['role'])){
+		if(strcmp($_SESSION['role'],'admin')==0 || strcmp($_SESSION['role'],'manager')==0 )
+		{ ?>
+			<div style="margin-left:450px; font-weight:bold"><h3>Bạn không có quyền xem trang này</h3></div>
+<?php   }
+	}
 	else {?>
 		<div style="margin-left:450px; font-weight:bold"><h3>Bạn cần phải đăng nhập để thực hiện thanh toán</h3></div>
 <?php }
