@@ -337,7 +337,7 @@ include "include/header.php";
 			CSS
 			============================================= -->
 			<link rel="stylesheet" href="css/linearicons.css">
-			<link rel="stylesheet" href="css/font-awesome.min.css">
+			
 			<link rel="stylesheet" href="css/bootstrap.css">
 			<link rel="stylesheet" href="css/magnific-popup.css">
 			<link rel="stylesheet" href="css/nice-select.css">				
@@ -345,6 +345,7 @@ include "include/header.php";
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
 			<link rel="stylesheet" href="css/tch.min.css" />
+			<link rel="stylesheet" href="css/font-awesome.min.css">	
 			<link rel="stylesheet" href="css/styles_product.css" />
 			<script src="js/vendor/jquery-2.2.4.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -365,11 +366,14 @@ include "include/header.php";
 
 <body>
 <?php include("include/header.php"); ?>
-<?php if(strcmp($_SESSION['role'],'admin')==0 || strcmp($_SESSION['role'],'manager')==0 )
+<?php
+ if(isset($_SESSION['role'])){	
+ 	if(strcmp($_SESSION['role'],'admin')==0 || strcmp($_SESSION['role'],'manager')==0 )
 	{
 	?>
 		<div style="margin-left:450px; font-weight:bold"><h3>Bạn không có quyền xem trang này</h3></div>
 <?php }
+	}
 	else
 	{ ?>
 		<div style="margin-left:450px; font-weight:bold"><h3>Bạn cần phải đăng nhập để xem trang này</h3></div>
