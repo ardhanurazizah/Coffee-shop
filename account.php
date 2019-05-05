@@ -1,18 +1,16 @@
 <?php 
 session_start();
-
-if(isset($_SESSION["username"]) && strcmp($_SESSION['role'],'customer')==0 ){
+if(isset($_SESSION["username"])){
 require("include/dbconnect.php");
 $myname=$_SESSION["username"];
 if($_SESSION['role']=='customer')	
 	$sql = "SELECT * FROM customer WHERE username='$myname' ";
-else 
-	$sql = "SELECT * FROM employee WHERE username='$myname' ";
+//else $sql = "SELECT * FROM employee WHERE username='$myname' ";
 $result = mysqli_query($con,$sql);
 while($row = mysqli_fetch_assoc($result)){
 	$id="";$table="";
 	if($_SESSION['role']=='customer'){ $id=$row['id_cus']; $table='customer';}
-	else{ $id=$row['id_em'];$table='employee';}
+	//else{ $id=$row['id_em'];$table='employee';}
 	$lname=$row['lastname'];
 	$fname=$row['firstname'];
 	$user=$row['username'];
@@ -29,7 +27,6 @@ while($row = mysqli_fetch_assoc($result)){
 	$i++;
 }
 $rowOrder=$i;
-
 // mysqli_close($con);
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -187,7 +184,7 @@ include "include/header.php";
     				<h3 class="name">Tài khoản của</h3>
    					<h4><?php echo $lname." ".$fname; ?></h4>
 				</div>
-				<ul class="list-group" style="cursor:pointer">
+				<ul class="list-group">
 					<li id="profile" class="list-group-item list-group-item-action list-group-item-warning"> Thông tin tài khoản </li>
 					 <li id="order"class="list-group-item list-group-item-action list-group-item-warning"> Đơn hàng của bạn</li>
 				</ul>
@@ -241,7 +238,7 @@ include "include/header.php";
 		</div>
 		<div id="order_form" style="display: none; " class="col-sm-9" >
 			<h3 style="display: flex; justify-content: center; border:solid 1px orange;border-radius: 5px;background-color:orange" >Danh sách đơn hàng của bạn</h3>
-			<div style="overflow-y: scroll; overflow-x:hidden; height: 600px;">
+			<div style="overflow: scroll; height: 600px;">
 			<?php 
 				for($i=0;$i<$rowOrder;$i++){
 					$sql="SELECT * FROM order_bill where id_bill= $bill[$i];";
@@ -268,8 +265,8 @@ include "include/header.php";
 				      <tr>
 				        <th width="30%" style=" text-align:center">Tên sản phẩm</th>
 				        <th width="20%" style=" text-align:center">Số lượng</th>
-				        <th width="15%" style=" text-align:center">Đơn giá</th>
-				        <th width="20%" style=" text-align:center">Thành tiền</th>
+				        <th width="15%" style=" text-align:right">Đơn giá</th>
+				        <th width="20%" style=" text-align:right">Thành tiền</th>
 				      </tr>
 				    </thead>
 				    <tbody>';
@@ -277,7 +274,7 @@ include "include/header.php";
 					$result = mysqli_query($con,$sql);
 					while( $row=mysqli_fetch_assoc($result) ){
 			?>	
-				      <tr>
+				       <tr>
 				        <td align="center"><?php echo $row['name'] ?></td>
 				        <td align="center"><?php echo $row['amount'] ?></td>
 				        <td align="right"><?php echo number_format((int)$row['price'],0,".",","); ?> đ</td>
@@ -310,13 +307,14 @@ include "include/header.php";
 
 <!-- end content -->
 <?php 
+	mysqli_close($con);
 	include "include/footer.php";
 ?>
 </body>
 </html>
-<?php }
-	else
-	{?>
+<?php 
+	}
+	else{?>
 	<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -337,7 +335,7 @@ include "include/header.php";
 			CSS
 			============================================= -->
 			<link rel="stylesheet" href="css/linearicons.css">
-			
+			<link rel="stylesheet" href="css/font-awesome.min.css">
 			<link rel="stylesheet" href="css/bootstrap.css">
 			<link rel="stylesheet" href="css/magnific-popup.css">
 			<link rel="stylesheet" href="css/nice-select.css">				
@@ -345,7 +343,6 @@ include "include/header.php";
 			<link rel="stylesheet" href="css/owl.carousel.css">
 			<link rel="stylesheet" href="css/main.css">
 			<link rel="stylesheet" href="css/tch.min.css" />
-			<link rel="stylesheet" href="css/font-awesome.min.css">	
 			<link rel="stylesheet" href="css/styles_product.css" />
 			<script src="js/vendor/jquery-2.2.4.min.js"></script>
 			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
@@ -363,23 +360,15 @@ include "include/header.php";
 			<script src="js/main.js"></script>	
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 </head>
-
 <body>
-<?php include("include/header.php"); ?>
-<?php
- if(isset($_SESSION['role'])){	
- 	if(strcmp($_SESSION['role'],'admin')==0 || strcmp($_SESSION['role'],'manager')==0 )
-	{
-	?>
-		<div style="margin-left:450px; font-weight:bold"><h3>Bạn không có quyền xem trang này</h3></div>
-<?php }
-	}
-	else
-	{ ?>
-		<div style="margin-left:450px; font-weight:bold"><h3>Bạn cần phải đăng nhập để xem trang này</h3></div>
-<?php }?>
-<?php include("include/footer.php"); ?>
+	<?php	include("include/header.php");
+?>
+	<div class="container">
+				<div class="row">
+					<div style="font-weight:bold"><h3>Bạn cần phải đăng nhập để xem thông tin này</h3></div>
+				</div>
+			</div>
+<?php include("include/footer.php");?>
 </body>
 </html>
-<?php }
-?>
+<?php } ?>

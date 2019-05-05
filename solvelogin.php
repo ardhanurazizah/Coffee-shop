@@ -9,8 +9,8 @@ if(isset($_POST['login'])){
 	$status = "success";
 	$sql = "SELECT * FROM customer WHERE username='$user' AND password = '$pass'";
 	$result = mysqli_query($con,$sql);
-	$sql2 = "SELECT * FROM employee WHERE username ='$user' AND password = '$pass'";
-	$result2= mysqli_query($con,$sql2);
+	//$sql2 = "SELECT * FROM employee WHERE username ='$user' AND password = '$pass'";
+	//$result2= mysqli_query($con,$sql2);
 	if(mysqli_num_rows($result)>0){
 		$_SESSION["username"] = $user;
 		while($row = mysqli_fetch_assoc($result)){
@@ -20,18 +20,7 @@ if(isset($_POST['login'])){
 		echo "yes";
 	}
 	else{
-		if(mysqli_num_rows($result2)>0){
-			$_SESSION["username"] = $user;
-			while($row = mysqli_fetch_assoc($result2)){
-				if($row['id_role'] == 1) $_SESSION['role']='admin';
-				else $_SESSION['role']='manager';
-				$_SESSION['myname']=$row['firstname'];
-			}
-			echo "yes";
-		}
-		else{
-			echo "no";
-		}
+		echo "no";
 	}
 }
 
@@ -78,10 +67,10 @@ if(isset($_POST['update'])){
 	if($table=="customer")
 	$sql = "UPDATE customer SET lastname='$lname', firstname='$fname',
 	email='$email', phone='$phone', address='$address', password='$pass' WHERE id_cus=$id; ";
-	else
-	$sql = "UPDATE employee SET lastname='$lname', firstname='$fname',
-	email='$email', phone='$phone', address='$address', password='$pass' WHERE id_em=$id; ";
-	echo "yes";
+	//else
+	//$sql = "UPDATE employee SET lastname='$lname', firstname='$fname',
+	//email='$email', phone='$phone', address='$address', password='$pass' WHERE id_em=$id; ";
+	//echo "yes";
 	mysqli_query($con,$sql);
 
 }

@@ -71,9 +71,9 @@ if( isset($_GET['pricemin']) || isset($_GET['pricemax'])  ){
 if( isset($_GET['type']) ){
 	$txtype=$_GET['type'];
 	$amountcon++; 
-	if($txtype!=0){
+	if($txtype!=""){
 		if($amountcon>1) $sql.=" and ";
-		$sql.=" (id_type = ".$txtype .") ";
+		$sql.=" (id_type LIKE  '%$txtype%') ";
 	}
 }
 // lay numrows tinh max page
@@ -108,7 +108,7 @@ include "include/header.php";
 		</div>
 		<div class="row">
 			<!-- tim kiem -->
-			<div class="col-sm-8 col-lg-8 col-md-8 col-xs-8" style="padding-left:400px">
+			<div class="col-lg-12 col-md-12 col-xs-12" >
 			<form class="form-horizontal" method="get" action="<?php echo $_SERVER['PHP_SELF'];?>">
 				<div class="form-group">
 					<label class="sr-only control-label col-sm-7">Tìm kiếm:</label>
@@ -117,23 +117,23 @@ include "include/header.php";
 				<div class="form-group" id="search_high" style="display:none;">
 					<label class="control-label col-sm-4" >Tìm theo giá:</label> 
 					<div class="col-sm-7">
-						<input class="form-control col-sm-12 col-xs-12" type="text" placeholder="Chọn giá thấp nhất" name="pricemin" name="pricemin" value="<?php echo $txpricemin; ?>" >
-						<input class="form-control col-sm-12 col-xs-12" style="margin-top:17px;" type="text" placeholder="Chọn giá cao nhất" name="pricemax" name="pricemax" value="<?php echo $txpricemax; ?>" >
+						<input class="form-control col-sm-12 col-xs-12" type="text" placeholder="Chọn giá thấp nhất" name="pricemin" name="pricemin" value="<?php echo $txpricemin; ?>" />
+						<input class="form-control col-sm-12 col-xs-12" style="margin-top:17px;" type="text" placeholder="Chọn giá cao nhất" name="pricemax" name="pricemax" value="<?php echo $txpricemax; ?>" />
 					</div>
 				</div>
 				<div class="form-group">	
 					<select class=" custom-select mr-sm-4" searchable="Tìm kiếm tại đây.." name="type">
-						<option value="0">Tất cả</option>
-						<option value="1">Cà phê</option>
-						<option value="2">Trà và machiato</option>
-						<option value="3">Đá xay</option>
-						<option value="4">Trái cây</option>
+						<option value="">Tất cả</option>
+						<option value="CF">Cà phê</option>
+						<option value="TM">Trà và machiato</option>
+						<option value="IC">Đá xay</option>
+						<option value="FF">Trái cây</option>
 					</select>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-offset-2 col-sm-8">
+					<div class="col-sm-8">
 						<button class="btn  btn-warning " type="submit">Tìm kiếm</button>
-						<a class="btn btn-warning ml-4" id="open" style="color:#FFFFFF;" onclick="Open()">Nâng cao</a>
+						<a class="btn btn-warning" id="open" style="color:#FFFFFF; margin-left:20px" onclick="Open()">Nâng cao</a>
 					</div>
 						
 				</div>
@@ -192,9 +192,9 @@ include "include/header.php";
                         <p id="info"></p>
                         <p class="popup_price" id="prices"></i></p>                            
                     <span id="hide"></span>
-					<div class="col-md-12" style="text-align:center;padding-top:20px">   
-							<span id="button"></span>                  
 					</div>
+					<div class="col-md-7 modal_body_right" style="text-align:center;">   
+							<span id="button"></span>                  
 					</div>                  
                     <div class="clearfix"> </div>                   
                 </div>
@@ -266,7 +266,7 @@ function showDetails(a)
 			$("#prices").text(number_format(product.price,0,".",",")+" Đ");
 			$("#images").html("<img src='img/product/"+product.image+"' witdh='50%' height='50%'/>");
 			$("#hide").html("<input type='hidden'  id='name"+product.id_pro+"' value='"+product.name+"'/><input type='hidden' id='price"+product.id_pro+"' value='"+product.price+"'/>");
-			$("#button").html("<button class='btn btn-warning them' style='width:80%' id='"+product.id_pro+"'>Mua ngay</button>");
+			$("#button").html("<button class='btn btn-warning them' style='width:60%; margin-top:40px' id='"+product.id_pro+"'>Mua ngay</button>");
 		}
 	});
 }
