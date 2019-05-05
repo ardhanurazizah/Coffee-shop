@@ -28,7 +28,6 @@
   <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
 	 <link rel="stylesheet" href="../assets/css/bootstrap.css"/>
   <!-- CSS Just for demo purpose, don't include it in your project -->
-  <link href="../assets/demo/demo.css" rel="stylesheet" />
 
 <style>
 input[type=text], input[type=password]
@@ -431,7 +430,6 @@ table tbody tr td{font-weight:400}
   <!-- Library for adding dinamically elements -->
   <script src="../assets/js/plugins/arrive.min.js"></script>
   <!--  Google Maps Plugin    -->
-  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <!-- Chartist JS -->
   <script src="../assets/js/plugins/chartist.min.js"></script>
   <!--  Notifications Plugin    -->
@@ -439,7 +437,6 @@ table tbody tr td{font-weight:400}
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
-  <script src="../assets/demo/demo.js"></script>
   <script src="../assets/js/admin.js"></script>
 </body>
 </html>
