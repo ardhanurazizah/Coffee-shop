@@ -130,7 +130,7 @@ $(document).ready(function(){
           <h4 class="modal-title" style=" align-content: center; color:lightgray; font-weight: bold">Người dùng đăng nhập</h4>
         </div>
 		<div class="model-body" style="margin: 15px">
-			<form>
+			<form method="post">
 				<div class="input-group" >
 					<span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
 					<input type="text" class="form-control" id="loguser" name="loguser" tabindex="1" placeholder="Tên tài khoản" required>
@@ -147,7 +147,7 @@ $(document).ready(function(){
       				<label class="custom-control-label" for="switch">Hiện mật khẩu</label>
     			</div>
 				<div class="form-group">
-					<button type="submit" id="loginuser" class="btn  btn-block" style="background-color: orange; " tabindex="3">Đăng nhập</button>
+					<button id="loginuser" class="btn  btn-block" style="background-color: orange; " tabindex="3">Đăng nhập</button>
 				</div>
 			</form>
 		</div>

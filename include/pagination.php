@@ -9,11 +9,13 @@
   -webkit-border-radius: 100%;
   border-radius: 100%;
 }
-.modal-3 a:hover {
-  background-color: #4DAD16;
+.modal-3 li a:hover {
+  background-color: #EA8025;
+  color:#FFFFFF;
 }
 .modal-3 a.active, .modal-3 a:active {
-  background-color: #BF9C76;
+  color:#FFFFFF;
+  background-color: #EA8025;
 }
 </style>
 <script type="text/javascript">

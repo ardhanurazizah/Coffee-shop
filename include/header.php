@@ -1,7 +1,10 @@
-<style>
+	<style>
 	#nav-menu-container ul li a:hover{
 	color: #FF9933;
 	text-decoration:none}
+	#nav-menu-container ul li a:focus{
+	text-decoration:none;
+	}
 	.dangnhap a{color:#FFFFFF;}
 	.dangnhap a:hover{
 	color: #FF9933;
@@ -57,7 +60,7 @@
 	border:none;
 	}
 	@media (max-width:768px){
-		.cart{margin-right:50px;}
+		.cart{margin-right:30px;}
 	}
 </style>
 <div id="header">			  	
@@ -73,7 +76,6 @@
 						$index=strpos($url,"index.php");
 						$payment=strpos($url,"payment.php");
 						$menu=strpos($url,"menu.php");
-						$account =strpos($url,"account.php");
 				    if($index>0){
 				    	// neu la trang index
 				    ?>
@@ -93,46 +95,24 @@
 				    ?>
 				</ul>
 			</nav><!-- #nav-menu-container -->
-			<?php if($index>0 || $menu>0 || $account>0){?>
-			<div class="cart" style="position:relative;">
+			<?php if($index>0 || $menu>0){?>
+			<div>
 				<a href="#cart_popup" data-toggle="modal">
-					<img src="img/cart.png" style="width:40%;" />
+					<img src="img/cart.png" style="width:40%" />
 				</a>
 			</div>  
 			<?php } ?>	
 			<?php 
 				if(isset($_SESSION['username']))
 				{
-					if(isset($_SESSION['role'])){
 			?>
-			<div class="dropdown">
-				<a href="#" id="dropdown">
-					<img src="img/profile.png" width="9%" height="9%"/><span style="padding-left:5px;"><?php echo $_SESSION['myname'] ?></span></a>
-					<ul class="dropdown-menu" id="dropdown-menu">
-			<?php
-						if(strcmp($_SESSION['role'],"customer")==0)
-						{
-			?>
-					
+					<div class="dropdown">
+						<a href="#" id="dropdown"><img src="img/profile.png" width="9%" height="9%"/><span style="padding-left:5px;"><?php echo $_SESSION['myname'] ?></span></a>
+							<ul class="dropdown-menu" id="dropdown-menu">
 								<li><button id="account">Thông tin cá nhân</button></li>
 								
 						<!-- trang admin hoac manager -->
-						<?php 
-						  }
-							if(strcmp($_SESSION['role'],"admin") ==0)
-							{
-						?>
-								<li><button id="admin">Vào trang admin</button></li>
-						<?php
-							}
-							if(strcmp($_SESSION['role'],"manager") ==0)
-							{
-						?>
-								<li><button id="manager">Vào trang manager</button></li>
-						<?php
-							}
-						}
-						?>
+
 						<!-- het trang admin manager -->
 							<li><button id="logout">Thoát</button></li>
 						</ul>
@@ -158,7 +138,7 @@
 				else
 				{
 			?>
-				<div class="dangnhap" style="margin-right:20px">
+				<div class="dangnhap" style="margin-right:35px">
 					<a href="#myloginForm" data-toggle="modal">Đăng nhập</a>
 				</div>
 				
@@ -214,10 +194,10 @@ function load_cart_data()
 	$.ajax({
 		url:"fetch_cart.php",
 		method:"POST",
+		dataType:"json",
 		success:function(data)
 		{
-		var cart = JSON.parse(data);
-		$("#cartDetails").html(cart.cart_detail);
+		$("#cartDetails").html(data.cart_detail);
 		},
 		error:function()
 			{alert("Tạo giỏ hàng không thành công");}
@@ -316,12 +296,6 @@ $(document).on('click','#check_out_cart', function(){
 			if($.trim(data) == "no")
 			{
 				alert("Bạn chưa đăng nhập!");
-				window.location.reload();
-			}
-			if($.trim(data) == "not")
-			{
-				alert("Bạn không có quyền mua hàng!");
-				window.location.reload();
 			}
 			else
 			{
@@ -333,4 +307,3 @@ $(document).on('click','#check_out_cart', function(){
 });
 
 </script>
-	
