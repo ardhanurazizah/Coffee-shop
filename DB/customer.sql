@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 16, 2019 lúc 06:23 PM
+-- Thời gian đã tạo: Th5 05, 2019 lúc 06:34 PM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -38,17 +38,18 @@ CREATE TABLE `customer` (
   `phone` varchar(12) CHARACTER SET utf8 DEFAULT NULL,
   `address` text CHARACTER SET utf8,
   `clocked` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `customer`
 --
 
 INSERT INTO `customer` (`id_cus`, `lastname`, `firstname`, `username`, `password`, `email`, `phone`, `address`, `clocked`) VALUES
-(1, 'Vu Tr', 'Gi', 'abcdef', '123456', 'vua@grm.com', '0903774503', '172 Le Thiet', 0),
-(2, 'Do Tr', 'Hi', 'hieu5', '123abc', 'abc@gmail.com', '', 'cnsjcns', 0),
-(3, 'Ch Qu', 'Vi', '5anhem', '123456', 'cndj@yahoo.com', '0123456789', '', 0),
-(4, 'Le Vi', 'Hi', 'qwerty', '123456', 'fedhlfk@fgmi.com', '', '', 0);
+(1, 'Vũ Trường', 'Giang', 'abcdef', '123456', 'vua@grm.com', '0903774503', '172 Lê Thiết', 0),
+(2, 'Đỗ Trung', 'Hiếu', 'hieu5', '123abc', 'abc@gmail.com', '0901312605', 'An Dương Vương', 0),
+(3, 'Châu Quốc', 'Việt', '5anhem', '123456', 'chauviet@gmail.com', '0123456789', '123 An Dương Vương', 0),
+(4, 'Le Vi', 'Hi', 'qwerty', '123456', 'fedhlfk@fgmi.com', '', '', 0),
+(5, 'Võ Minh', 'Thuận', 'vothuan123', '123456', 'vothuan@gmail.com', '0905646784', '123 Đường Đề Thám', 0);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -68,7 +69,7 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT cho bảng `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `id_cus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_cus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

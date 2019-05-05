@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 08, 2019 lúc 04:14 PM
+-- Thời gian đã tạo: Th5 05, 2019 lúc 06:33 PM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `type` (
-  `id_type` int(11) NOT NULL,
+  `id_type` varchar(15) NOT NULL,
   `name` varchar(30) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -38,10 +38,10 @@ CREATE TABLE `type` (
 --
 
 INSERT INTO `type` (`id_type`, `name`) VALUES
-(1, 'Cà phê'),
-(2, 'Trà vs macchiato'),
-(3, 'Đá xay'),
-(4, 'Trái cây');
+('CF', 'Cà phê'),
+('FF', 'Trái cây'),
+('IC', 'Đá xay'),
+('TM', 'Trà vs macchiato');
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -52,16 +52,6 @@ INSERT INTO `type` (`id_type`, `name`) VALUES
 --
 ALTER TABLE `type`
   ADD PRIMARY KEY (`id_type`);
-
---
--- AUTO_INCREMENT cho các bảng đã đổ
---
-
---
--- AUTO_INCREMENT cho bảng `type`
---
-ALTER TABLE `type`
-  MODIFY `id_type` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th4 08, 2019 lúc 03:03 PM
+-- Thời gian đã tạo: Th5 05, 2019 lúc 06:33 PM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -36,18 +36,19 @@ CREATE TABLE `employee` (
   `password` varchar(40) CHARACTER SET utf8 NOT NULL,
   `email` varchar(30) CHARACTER SET utf8 NOT NULL,
   `phone` varchar(12) CHARACTER SET utf8 DEFAULT NULL,
-  `id_role` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_role` int(11) NOT NULL,
+  `img` text COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Đang đổ dữ liệu cho bảng `employee`
 --
 
-INSERT INTO `employee` (`id_em`, `lastname`, `firstname`, `username`, `password`, `email`, `phone`, `id_role`) VALUES
-(1, 'Đỗ Trung', 'Hiếu', 'admin1', '123456', 'abcdeg@gmail.com', '0123456789', 1),
-(2, 'Vũ Trường ', 'Giang', 'admin2', '123456', 'vuapha008@gmail.com', '0903774503', 1),
-(3, 'Triệu Nguyễn Quốc', 'Việt', 'manager1', '123456', 'defghi@gmail.com', '0987654321', 2),
-(4, 'Châu Quốc', 'Việt', 'manager2', '123456', 'zxcv@gmail.com', '011111111', 2);
+INSERT INTO `employee` (`id_em`, `lastname`, `firstname`, `username`, `password`, `email`, `phone`, `id_role`, `img`) VALUES
+(1, 'Đỗ Trung', 'Hiếu', 'admin1', '123456', 'abcdeg@gmail.com', '0123456789', 1, 'hieu.jpg'),
+(2, 'Vũ Trường ', 'Giang', 'admin2', '123456', 'vuapha008@gmail.com', '0903774503', 1, 'giang.jpg'),
+(3, 'Triệu Nguyễn Quốc', 'Việt', 'manager1', '123456', 'defghi@gmail.com', '0987654321', 2, 'tviet.jpg'),
+(4, 'Châu Quốc', 'Việt', 'manager2', '123456', 'zxcv@gmail.com', '011111111', 2, 'cviet.jpg');
 
 --
 -- Chỉ mục cho các bảng đã đổ
