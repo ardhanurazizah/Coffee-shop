@@ -190,24 +190,10 @@ $(document).ready(function(){
 		}
 	}); 
 	$(document).on('keyup','.search',function(){
-		var action = "search";
 		var value = $(".search").val();
+		var page;
 		$.ajax({
-			url:"include/search_bill.php",
-			method:"POST",
-			data:{action:action,value:value},
-			success:function(data)
-			{
-				$("#pagination_data").html(data);
-			}
-		});
-	});	
-	$(document).on('click', '.pagination_link_search', function()
-	{
-		var page = $(this).attr("id");
-		var value = $(".search").val();
-		$.ajax({
-			url:"include/search_bill.php",
+			url:"include/pagination_bill.php",
 			method:"POST",
 			data:{page:page,value:value},
 			success:function(data)
@@ -215,6 +201,6 @@ $(document).ready(function(){
 				$("#pagination_data").html(data);
 			}
 		});
-	});
+	});	
 });
 </script>
