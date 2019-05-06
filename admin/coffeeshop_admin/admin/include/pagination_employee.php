@@ -12,8 +12,40 @@
 	{
 		$page = 1;
 	}
+	$searchValue="";
+	$searchQuery="";
+	if(isset($_POST["value"]))
+	{
+		$searchValue = $_POST["value"];
+		if($searchValue !="")
+		{
+			$key ="";
+			$admin = strpos($key,"admin");
+			$manager = strpos($key,"quản");
+			if($admin>0)
+			{
+				$key = 1;
+			}
+			else{	if($manager>0)
+					{
+						$key = 2;
+					}
+				}
+			if($admin>0 || $manager > 0)
+			{
+				$searchQuery = "AND id_role = $key";
+			}
+				else{$searchQuery = " AND (id_em like '%$searchValue%' or 
+					lastname like '%$searchValue%' or 
+					firstname like '%$searchValue%' or
+					email like '%$searchValue%' or
+					phone like '%$searchValue%' or
+					username  like '%$searchValue%' ) ";
+					}
+		}
+	}
 	$start_from = ($page -1) * $record_per_page;
-	$sql = "SELECT * FROM employee LIMIT $start_from,$record_per_page";
+	$sql = "SELECT * FROM employee WHERE 1 ".$searchQuery." LIMIT $start_from,$record_per_page";
 	$result = mysqli_query($con,$sql);
 	$output .= '
 	<table class="table">
@@ -52,7 +84,7 @@
 	}
 	$output.='</tbody>
                       </table>';
-	$page_query = "SELECT * FROM employee";
+	$page_query = "SELECT * FROM employee WHERE 1 ".$searchQuery."";
 	$page_result = mysqli_query($con,$page_query);
 	$total_record = mysqli_num_rows($page_result);
 	$total_pages = ceil($total_record/$record_per_page);

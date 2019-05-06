@@ -12,8 +12,50 @@
 	{
 		$page = 1;
 	}
+	$searchValue="";
+	$searchQuery="";
+	if(isset($_POST["value"]))
+	{
+		$searchValue = $_POST["value"];
+		if($searchValue !="")
+		{
+			$key = "";
+			$cf = strpos($searchValue,"cà phê");
+			$tm = strpos($searchValue,"trà và machi");
+			$ic = strpos($searchValue,"đá xay");
+			$ff = strpos($searchValue,"trái cây");
+			if($cf  > 0)
+			{
+				$key = "CF";
+			}
+			else {	if($tm > 0)
+					{
+						$key = "TM";
+					}
+					else{	if($ic > 0)
+							{
+								$key = "IC";
+							}
+							else{	if($ff > 0)
+									{
+										$key = "FF";
+									}
+								}
+						}
+					}
+			if($cf > 0 || $tm > 0 || $ic > 0 || $ff > 0 )
+			{
+				$searchQuery = "AND id_type like '%$key%'";
+			}  
+			else{$searchQuery = " AND (id_pro = $searchValue or 
+        	name like '%$searchValue%' or 
+        	info like '%$searchValue%' or
+			price  like '%$searchValue%' ) ";
+			}
+		}
+	}
 	$start_from = ($page -1) * $record_per_page;
-	$sql = "SELECT * FROM product LIMIT $start_from,$record_per_page";
+	$sql = "SELECT * FROM product WHERE 1 ".$searchQuery." LIMIT $start_from,$record_per_page";
 	$result = mysqli_query($con,$sql);
 	$output .= '
 	<table class="table">
@@ -31,6 +73,7 @@
 	{
 		$sql2 = "SELECT name FROM type AS t WHERE t.id_type like '%".$row['id_type']."%'";
 		$result2 = mysqli_query($con,$sql2);
+		
 		$row2 = mysqli_fetch_assoc($result2);
 		$output.='<tr>
 							  	<td width="20%" style="padding-left:40px" ><img width="100%" height="30%" style="position:relative" src="../../../img/product/'.$row['image'].'"/></td>
@@ -52,7 +95,7 @@
 	}
 	$output.='</tbody>
                       </table>';
-	$page_query = "SELECT * FROM product";
+	$page_query = "SELECT * FROM product WHERE 1 ".$searchQuery."";
 	$page_result = mysqli_query($con,$page_query);
 	$total_record = mysqli_num_rows($page_result);
 	$total_pages = ceil($total_record/$record_per_page);

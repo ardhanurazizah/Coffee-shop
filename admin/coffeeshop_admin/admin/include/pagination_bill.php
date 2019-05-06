@@ -12,9 +12,21 @@
 	{
 		$page = 1;
 	}
+	$searchValue="";
+	$searchQuery="";
+	if(isset($_POST["value"]))
+	{
+		$searchValue = $_POST["value"];
+		if($searchValue !="")
+		{
+			$searchQuery = " AND (id_bill like '%$searchValue%' or 
+        	cus_id like '%$searchValue%' or 
+        	now like '%$searchValue%' or
+			total_price  like '%$searchValue%' ) ";
+		}
+	}
 	$start_from = ($page -1) * $record_per_page;
-	$sql = "SELECT * FROM order_bill ";
-	$sql.="LIMIT $start_from,$record_per_page";
+	$sql ="SELECT * FROM order_bill WHERE 1 ".$searchQuery." LIMIT $start_from,$record_per_page";
 	$result = mysqli_query($con,$sql);
 	$output .= '
 	 <table class="table">
@@ -52,7 +64,7 @@
 			
 
 			<div style="padding:10px 0 0 35%">';
-	$page_query = "SELECT * FROM order_bill";
+	$page_query = "SELECT * FROM order_bill WHERE 1 ".$searchQuery."";
 	$page_result = mysqli_query($con,$page_query);
 	$total_record = mysqli_num_rows($page_result);
 	$total_pages = ceil($total_record/$record_per_page);
