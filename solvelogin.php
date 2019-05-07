@@ -24,10 +24,12 @@ if(isset($_POST['login'])){
 	}
 }
 
-if(isset($_POST['action']) == 'logout'){
+if(isset($_POST['action'])){
+	if($_POST['action'] == 'logout'){
 	unset($_SESSION["myname"]);
 	unset($_SESSION['role']);
 	unset($_SESSION['username']);
+}
 }
 
 if(isset($_POST['signup'])){
@@ -44,13 +46,25 @@ if(isset($_POST['signup'])){
 		echo 'no';
 	}
 	else {
-		$sql="INSERT INTO customer(lastname,firstname,username,password,email,phone,address)
-		VALUES('$lname','$fname','$user','$pass','$email','$phone','$address');";
-		mysqli_query($con, $sql);
-		$_SESSION["username"] = $user;
-		$_SESSION["myname"] = $fname;
-		$_SESSION['role']='customer';
-		echo "yes";
+		$id_cus="";
+		$kt=1;
+		$sql = "SELECT * FROM customer";
+		$result = mysqli_query($con,$sql);
+		$number=mysqli_num_rows($result)+1;
+		if($number<10) $id_cus="KH000".$number;
+		else if($number<100) $id_cus="KH00".$number;
+		else if($number<1000) $id_cus="KH0".$number;
+		else if($number<10000) $id_cus="KH".$number;
+		else {$kt=0; echo 'no';}
+		if($kt==1){
+			$sql="INSERT INTO customer(id_cus,lastname,firstname,username,password,email,phone,address)
+			VALUES('$id_cus','$lname','$fname','$user','$pass','$email','$phone','$address');";
+			mysqli_query($con, $sql);
+			$_SESSION["username"] = $user;
+			$_SESSION["myname"] = $fname;
+			$_SESSION['role']='customer';
+			echo "yes";
+		}
 	}
 }
 
