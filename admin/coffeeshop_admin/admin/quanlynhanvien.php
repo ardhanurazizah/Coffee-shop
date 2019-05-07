@@ -24,6 +24,21 @@ else{
   <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <style>
+  		 input[type="file"] {
+    display: none;
+    }
+    .custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-top: 20px;
+    margin-left: 90px;
+    cursor: pointer;
+	}
+	.add-emp .modal-title{color:purple;font-weight:400}
+	.add-emp .modal-body label {color:purple;font-weight:400}
+	.edit-emp .modal-title{color:purple;font-weight:400}
+	.edit-emp .modal-body label {color:purple;font-weight:400}
 		table thead th{font-weight:500!important;}
 		table tbody tr td{font-weight:500}
 	</style>
@@ -59,7 +74,7 @@ else{
 				<!--them xoa sua-->
         <?php   
         if($_SESSION['ad_role']=='admin')
-			     echo '<button mat-raised-button class="btn btn-primary" onClick="openForm()">Thêm</button>';
+			     echo '<button mat-raised-button class="btn btn-primary" data-toggle="modal" data-target=".add-emp"">Thêm</button>';
         ?>
               </div>
             </div>
@@ -70,6 +85,146 @@ else{
         </div>
       </div>
       <?php include("include/footer.php"); ?>
+	    <!--------Form thêm nhân viên -------->
+      <div class="modal fade add-emp" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" >
+                    <h4 class="modal-title" style="padding-left: 320px">Thêm nhân viên</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button> 
+                </div>
+                <div class="modal-body">
+                  <div class="col-md-5" style="float: left">
+                    <div style="border:1px solid black;height: 300px;width: 100%" id="image_emp">
+                      
+                    </div>
+                    <label class="custom-file-upload">
+                    <input type="file" id="upload-file"/>
+                      Tải ảnh lên
+                    </label>
+				 </div>
+                  <div class="col-md-7" style="float: right">
+                    	<div class="form-row">
+    						<div class="form-group col-md-6">
+      							<label>Họ nhân viên:</label>
+								<input style="margin-top:10px" id="lastname_emp" type="text"  class="form-control" placeholder="Họ nhân viên">
+    						</div>
+   						 	<div class="form-group col-md-6 ">
+								<label>Tên nhân viên:</label>
+      							<input  style="margin-top:10px" id="firstname_emp"  type="text" class="form-control" placeholder="Tên nhân viên">
+    			 		 	</div>
+  						</div>
+						<div class="form-row">
+    						<div class="form-group col-md-6">
+      							<label>Tài khoản:</label>
+								<input style="margin-top:10px" id="user_emp" type="text"  class="form-control" placeholder="Tài khoản">
+    						</div>
+   						 	<div class="form-group col-md-6 ">
+								<label>Mật khẩu:</label>
+      							<input  style="margin-top:10px" id="pass_emp"  type="password" class="form-control" placeholder="Mật khẩu">
+    			 		 	</div>
+  						</div>
+						<div class="form-row">
+							<div class="form-group col-md-12">
+								<label>Địa chỉ:</label>
+								<input style="margin-top:10px" id="address_emp" type="text" class="form-control" placeholder="Địa chỉ" />
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+      							<label>Số điện thoại:</label>
+								<input style="margin-top:10px" id="phone_emp" type="text"  class="form-control" placeholder="Số điện thoại">
+   							 </div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-5">
+      							<label>Chức vụ</label>
+      								<select class="form-control select_role" name="role">
+        								<option value="1" selected>admin</option>
+        								<option value="2">Manager</option>								
+      								</select>
+   							 </div>
+						</div>
+						<div class="row">
+							<button  class="btn btn-primary" id="add_emp">Thêm</button>
+						</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+      </div>
+	  <!--------Kết thúc form thêm nhân viên -------->
+	  <!--------Form sửa nhân viên -------->
+	  <div class="modal fade edit-emp" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" >
+                    <h4 class="modal-title" style="padding-left: 320px">Sửa nhân viên</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button> 
+                </div>
+                <div class="modal-body">
+                  <div class="col-md-5" style="float: left">
+                    <div style="border:1px solid black;height: 300px;width: 100%" id="edit_image_emp">
+                      
+                    </div>
+                    <label class="custom-file-upload">
+					<input type="hidden" id="edit_id_emp" />
+					<input type="hidden" id="edit-img" />
+                    <input type="file" id="edit-upload-file"/>
+                      Tải ảnh lên
+                    </label>
+                  </div>
+                  <div class="col-md-7" style="float: right">
+                    	<div class="form-row">
+    						<div class="form-group col-md-6">
+      							<label>Họ nhân viên:</label>
+								<input style="margin-top:10px" id="edit_lastname_emp" type="text"  class="form-control" placeholder="Họ nhân viên">
+    						</div>
+   						 	<div class="form-group col-md-6 ">
+								<label>Tên nhân viên:</label>
+      							<input  style="margin-top:10px" id="edit_firstname_emp"  type="text" class="form-control" placeholder="Tên nhân viên">
+    			 		 	</div>
+  						</div>
+						<div class="form-row">
+    						<div class="form-group col-md-6">
+      							<label>Tài khoản:</label>
+								<input style="margin-top:10px" id="edit_user_emp" type="text"  class="form-control" placeholder="Tài khoản">
+    						</div>
+   						 	<div class="form-group col-md-6 ">
+								<label>Mật khẩu:</label>
+      							<input  style="margin-top:10px" id="edit_pass_emp"  type="password" class="form-control" placeholder="Mật khẩu">
+    			 		 	</div>
+  						</div>
+						<div class="form-row">
+							<div class="form-group col-md-12">
+								<label>Địa chỉ:</label>
+								<input style="margin-top:10px" id="edit_address_emp" type="text" class="form-control" placeholder="Địa chỉ" />
+							</div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+      							<label>Số điện thoại:</label>
+								<input style="margin-top:10px" id="edit_phone_emp" type="text"  class="form-control" placeholder="Số điện thoại">
+   							 </div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-5">
+      							<label>Chức vụ</label>
+      								<select class="form-control edit_select_role" name="role">
+        								<option value="1" selected>admin</option>
+        								<option value="2">Manager</option>								
+      								</select>
+   							 </div>
+						</div>
+						<div class="row">
+							<button  class="btn btn-primary" id="edit_emp">Sửa</button>
+						</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+      </div>
+	  <!--------Kết thúc form sửa nhân viên -------->
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
