@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 05, 2019 lúc 06:34 PM
+-- Thời gian đã tạo: Th5 06, 2019 lúc 07:19 PM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -29,7 +29,7 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `customer` (
-  `id_cus` int(11) NOT NULL,
+  `id_cus` varchar(10) CHARACTER SET utf8 NOT NULL,
   `lastname` varchar(20) CHARACTER SET utf8 NOT NULL,
   `firstname` varchar(20) CHARACTER SET utf8 NOT NULL,
   `username` varchar(30) CHARACTER SET utf8 NOT NULL,
@@ -45,11 +45,11 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id_cus`, `lastname`, `firstname`, `username`, `password`, `email`, `phone`, `address`, `clocked`) VALUES
-(1, 'Vũ Trường', 'Giang', 'abcdef', '123456', 'vua@grm.com', '0903774503', '172 Lê Thiết', 0),
-(2, 'Đỗ Trung', 'Hiếu', 'hieu5', '123abc', 'abc@gmail.com', '0901312605', 'An Dương Vương', 0),
-(3, 'Châu Quốc', 'Việt', '5anhem', '123456', 'chauviet@gmail.com', '0123456789', '123 An Dương Vương', 0),
-(4, 'Le Vi', 'Hi', 'qwerty', '123456', 'fedhlfk@fgmi.com', '', '', 0),
-(5, 'Võ Minh', 'Thuận', 'vothuan123', '123456', 'vothuan@gmail.com', '0905646784', '123 Đường Đề Thám', 0);
+('KH0001', 'Vũ Trường', 'Giang', 'abcdef', '123456', 'vua@grm.com', '0903774503', '172 Lê Thiết', 0),
+('KH0002', 'Đỗ Trung', 'Hiếu', 'hieu5', '123abc', 'abc@gmail.com', '0901312605', 'An Dương Vương', 0),
+('KH0003', 'Châu Quốc', 'Việt', '5anhem', '123456', 'chauviet@gmail.com', '0123456789', '123 An Dương Vương', 0),
+('KH0004', 'Le Vi', 'Hi', 'qwerty', '123456', 'fedhlfk@fgmi.com', '', '', 0),
+('KH0005', 'Võ Minh', 'Thuận', 'vothuan123', '123456', 'vothuan@gmail.com', '0905646784', '123 Đường Đề Thám', 0);
 
 --
 -- Chỉ mục cho các bảng đã đổ
@@ -60,16 +60,6 @@ INSERT INTO `customer` (`id_cus`, `lastname`, `firstname`, `username`, `password
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`id_cus`);
-
---
--- AUTO_INCREMENT cho các bảng đã đổ
---
-
---
--- AUTO_INCREMENT cho bảng `customer`
---
-ALTER TABLE `customer`
-  MODIFY `id_cus` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

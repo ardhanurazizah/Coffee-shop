@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th5 05, 2019 lúc 06:32 PM
+-- Thời gian đã tạo: Th5 06, 2019 lúc 04:29 PM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -47,7 +47,12 @@ INSERT INTO `detail_order` (`id_bill`, `pro_id`, `qty`, `price`) VALUES
 (2, 6, 1, '55000'),
 (3, 19, 2, '59000'),
 (3, 20, 2, '59000'),
-(3, 21, 2, '59000');
+(3, 21, 2, '59000'),
+(4, 3, 1, '29000'),
+(4, 11, 1, '45000'),
+(4, 12, 1, '42000'),
+(5, 11, 7, '45000'),
+(5, 12, 7, '42000');
 
 --
 -- Chỉ mục cho các bảng đã đổ
