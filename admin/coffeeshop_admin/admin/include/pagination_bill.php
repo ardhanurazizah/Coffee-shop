@@ -28,7 +28,7 @@
 			}
 			else{
 			$searchQuery = " AND (id_bill like '%$searchValue%' or 
-        	id_cus like '%$searchValue%' or 
+        	cus_id like '%$searchValue%' or 
         	now like '%$searchValue%' or
 			total_price  like '%$searchValue%' ) ";
 			}
@@ -37,6 +37,7 @@
 	$start_from = ($page -1) * $record_per_page;
 	$sql ="SELECT * FROM order_bill WHERE 1 ".$searchQuery." LIMIT $start_from,$record_per_page";
 	$result = mysqli_query($con,$sql);
+	printf("Error: %s\n", mysqli_error($con));
 	$output .= '
 	 <table class="table">
                           <thead class="text-primary">
