@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	require("../connect.php");
 	
 	$record_per_page = 3;
@@ -17,12 +18,20 @@
 	if(isset($_POST["value"]))
 	{
 		$searchValue = $_POST["value"];
+
 		if($searchValue !="")
 		{
+			if($searchValue == "chua")
+			{
+				$searchValue = 0;
+				$searchQuery = "AND (status = 0)";
+			}
+			else{
 			$searchQuery = " AND (id_bill like '%$searchValue%' or 
-        	cus_id like '%$searchValue%' or 
+        	id_cus like '%$searchValue%' or 
         	now like '%$searchValue%' or
 			total_price  like '%$searchValue%' ) ";
+			}
 		}
 	}
 	$start_from = ($page -1) * $record_per_page;
@@ -48,7 +57,9 @@
 									<td width="15%" align="right" style="font-weight:500">'.number_format((int)$row['total_price'],0,".",",") .' đ</td>
 									<td width="20%" align="center">';
 		if($row['status']==0){
+			if($_SESSION['ad_role']=='manager')
 			$output.='<span style="color:red;cursor:pointer" class="check" id="'.$row['id_bill'].'">Chưa xác nhận</span>';
+			else $output.='<span style="color:red;" id="'.$row['id_bill'].'">Chưa xác nhận</span>';
 		}
 		else{
 			$output.='<span style="color:green">Đã xác nhận</span>';

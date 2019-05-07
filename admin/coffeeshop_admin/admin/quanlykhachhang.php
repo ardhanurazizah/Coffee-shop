@@ -1,4 +1,11 @@
-﻿ <?php
+﻿<?php 
+session_start();
+if(empty($_SESSION['ad_user'])){
+  header('Location: ../../adminlogin/adminlogin.php');
+}
+else{ 
+?>
+ <?php
      require("connect.php");
 	 $sotin1trang=4;
 	 if (isset($_GET['trang']))
@@ -26,7 +33,6 @@
   <!-- CSS -->
  
   <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
-	 <link rel="stylesheet" href="../assets/css/bootstrap.css"/>
   <!-- CSS Just for demo purpose, don't include it in your project -->
 
 <style>
@@ -57,7 +63,9 @@ overflow:auto!important;
     border: 1px solid #888;
     width: 5	0%;
 }
-
+.dsach td {
+  font-weight: 500;
+}
 #myModal input{
 	border:none;
 }
@@ -71,26 +79,7 @@ table tbody tr td{font-weight:400}
         $(document).ready(function()
         {
           // XÓA
-            $('.xoa').click(function()
-            {
-                var cus_id = $(this).attr("id");
-                var check= confirm("Bạn có chắc muốn xóa?");
-                if(check==true)
-                {
-                    $.ajax
-                    ({
-                        url: "xoa_kh.php",
-                        method:"GET",
-                        data: {cus_id:cus_id},
-                        success: function(){
-                            window.location.reload();
-                                           },
-                        error: function () {
-                            alert("xoa k thanh cong");
-                        }
-                    });
-                }
-            });
+            
             //   SỬA
            //$(document).on('click','a[data-role=update]',function()
            //$('.sua').click(function()
@@ -116,25 +105,21 @@ table tbody tr td{font-weight:400}
     <?php
        if($_SERVER["REQUEST_METHOD"] == "POST")
        {
-          if ($_POST['id'] == NULL or $_POST['ho'] == NULL or $_POST['ten'] == NULL or $_POST['taikhoan'] == NULL or $_POST['email'] == NULL or $_POST['dienthoai'] == NULL or $_POST['diachi'] == NULL)
+          if ($_POST['ho'] == NULL or $_POST['ten'] == NULL or $_POST['taikhoan'] == NULL or $_POST['email'] == NULL or $_POST['dienthoai'] == NULL or $_POST['diachi'] == NULL)
           {
               echo '<script language="javascript">';
               echo 'alert("Vui lòng điền đầy đủ thông tin")';
               echo '</script>';
           }
           else
-          {
-              $trung = mysqli_query($con, 'SELECT * FROM customer where id_cus="' . $_POST['id'] . '"');// trùng id
-              $dem_trung = mysqli_num_rows($trung);//đếm trùng
-              if ($dem_trung > 0)
-              {
-                  echo '<script language="javascript">';
-                  echo 'alert("ID đã tồn tại")';
-                  echo '</script>';
-              }
-              else
-              {
-                 $id = $_POST['id'];
+          {		$id = "";
+		  		$sql = "SELECT * FROM customer";
+		  		$result = mysqli_query($con,$sql);
+              	$number=mysqli_num_rows($result)+1;
+				if($number<10) $id="KH000".$number;
+				else if($number<100) $id="KH00".$number;
+				else if($number<1000) $id="KH0".$number;
+				else if($number<10000) $id="KH".$number;
                  $ho = $_POST['ho'];
                  $ten = $_POST['ten'];
                  $user = $_POST['taikhoan'];
@@ -153,12 +138,46 @@ table tbody tr td{font-weight:400}
                      echo '</script>';
                  }
                  else echo "Error: " . $sql . "<br>" . mysqli_error($con);
-
-              }
           }
        }
     ?>
-    <!--FORM THÊM KHÁCH HÀNG-->
+  
+<div class="wrapper ">
+   	<?php include("include/slidebar.php");?>
+   	<?php include("include/mainpanel.php"); ?>
+	<form class="navbar-form">
+		<div class="input-group no-border">
+			<input type="text" value="" size="50px" class="form-control search" placeholder="Tìm kiếm...">
+				<button type="submit" class="btn btn-white btn-round btn-just-icon">
+                	<i class="material-icons">search</i>
+                  		<div class="ripple-container"></div>
+                </button>
+        </div>
+    </form>
+	<?php include("include/account.php") ?>
+    <div class="content">
+        <div class="container-fluid">
+        	<div class="row">
+            	<div class="col-md-12">
+              		<div class="card">
+                		<div class="card-header card-header-primary">
+                  			<h4 class="card-title ">Danh sách khách hàng</h4>
+                		</div>
+                		<div class="card-body">
+                  			<div class="table-responsive" id="pagination_customer">    <!--tiêu đề bảng-->
+				  			</div>     
+                		</div>
+            		</div>	
+					 <?php   
+        if($_SESSION['ad_role']=='admin')
+			     echo '<button mat-raised-button class="btn btn-primary" data-toggle="modal" data-target="#form_popup">Thêm</button>';
+        ?>	
+        		</div>
+			</div>
+		</div>
+	</div>
+     <?php include("include/footer.php"); ?>
+	   <!--FORM THÊM KHÁCH HÀNG-->
 	<div id="form_popup" class="modal" role="dialog" >
 		<div class="modal-dialog" role="document">
 			<form class="modal-content animate" method="POST">
@@ -185,7 +204,7 @@ table tbody tr td{font-weight:400}
             		</div>
             		<div class="form-group">
                 		<label>Mật khẩu</label>
-               			<input type="matkhau" class="form-control" name="matkhau" >
+               			<input type="password" style="margin:0;" class="form-control" name="matkhau" >
             		</div>
             		<div class="form-group">
                 		<label for="email">Email</label>
@@ -223,97 +242,7 @@ table tbody tr td{font-weight:400}
      		</form>
 		</div>
 	</div>
-  <div class="wrapper ">
-   <?php include("include/slidebar.php");?>
-   <?php include("include/mainpanel.php"); ?>
-   <form class="navbar-form">
-              <div class="input-group no-border">
-                <input type="text" value="" size="50px" class="form-control timkiem" placeholder="Tìm kiếm...">
-                <button type="submit" class="btn btn-white btn-round btn-just-icon">
-                  <i class="material-icons">search</i>
-                  <div class="ripple-container"></div>
-                </button>
-              </div>
-       </form>
-	<?php include("include/account.php") ?>
-      <div class="content">
-        <div class="container-fluid">
-          <div class="row">
-            <div class="col-md-12">
-              <div class="card">
-                <div class="card-header card-header-primary">
-                  <h4 class="card-title ">Danh sách khách hàng</h4>
-                </div>
-                <div class="card-body">
-                  <div class="table-responsive">    <!--tiêu đề bảng-->
-                    <table class="table table-hover">
-                      <thead class=" text-primary">
-					              <th>STT</th>
-                        <th>ID</th>
-                        <th>Họ</th>
-                        <th>Tên</th>
-                        <th>Tài khoản</th>
-                        <th>Email</th>
-						            <th>Điện thoại</th>
-						            <th>Địa chỉ</th>
-						            <th>Tình trạng</th>
-						            <th>Thao tác</th>
-                      </thead>
-                      <tbody class="dsach">
-					     <!--nội dung-->
-					     <?php
-						    $from=($trang-1)*$sotin1trang;
-							$sql="SELECT id_cus,lastname,firstname,username,email,phone,address,clocked FROM customer LIMIT $from,$sotin1trang";
-							$danhsach=mysqli_query($con,$sql);
-							$tongsotin=mysqli_num_rows($danhsach);
-							$stt=$from+1;
-							if($tongsotin>0)
-							{
-								while($row=mysqli_fetch_array($danhsach))
-								{
-								   ?>
-                                    <tr>
-							        <td><?php echo $stt ?></td>
-                      <td data-target="id_cus"><?php echo $row['id_cus']?></td>
-                      <td data-target="lastname"><?php echo $row['lastname']?></td>
-                      <td data-target="firstname"><?php echo $row['firstname']?></td>
-                      <td data-target="username"><?php echo $row['username']?></td>
-                      <td data-target="email"><?php echo $row['email']?></td>
-									    <td data-target="phone"><?php echo $row['phone']?></td>
-									    <td data-target="address"><?php echo $row['address']?></td>
-									    <td data-target="clocked"><?php echo $row['clocked']?"Khóa":"Cho phép"?></td>
-									   <td>
-                      <!--BUTTON SỬA-->
-                      <a href="#myModal" id="<?php echo $row['id_cus'] ?>" data-toggle="modal" onClick="fetch_customer(this)" >
-                        <i class="material-icons">create</i>
-                      </a>
-                      <!--BUTTON XÓA-->
-                       <a href="#" class="xoa" id="<?php echo $row['id_cus'] ?>" />
-                         <i class="material-icons">clear</i>
-                      </a>
-									  </td>
-                  </tr>
-
-							  <?php $stt++;
-							    }
-							}
-						 ?>
-                      </tbody>
-
-                    </table>
-                      <!-------------BUTTON THÊM---------->
-					              <button class="btn btn-primary" onClick="document.getElementById('form_popup').style.display='block'" >
-                        Thêm
-                    </button>
-
-
-				  <div>     
-                </div>
-                  </div>
-                 </div>
-                </div>
-	          </div>
-            <!--FORM SỬA-->
+	 <!--FORM SỬA-->
             <!-- Trigger the modal with a button -->
             <!-- Modal -->
 <div id="myModal" class="modal fade" tabindex="-1" role="dialog">
@@ -358,43 +287,6 @@ table tbody tr td{font-weight:400}
   	</div>
 </div>
 </div>
-				<!--------phân trang---------------------------------->
-				<div style="padding:10px 0 0 35%">
-			      <?php
-				  $x=mysqli_query($con,"SELECT id_cus FROM customer");// số lượng tin còn lại để chia cho các trang tiếp theo để hiển thị ra có bao nhiêu trang
-				  $tongsotin=mysqli_num_rows($x);
-				  $sotrang=ceil($tongsotin/$sotin1trang);
-          $dau=1;
-          ?>
-          <a class="btn btn-social btn-link btn-dribbble" style="padding-right:20px;margin-top:20px" href='<?php echo'quanlykhachhang.php?trang=$dau'?>'> 
-             <i class="material-icons">keyboard_arrow_left</i>
-          </a>
-          <?php
-			    for($i=1;$i<=$sotrang;$i++)
-			      {
-              ?>
-				    <a class="btn btn-social btn-link btn-dribbble">
-                 <?php echo "<a href='quanlykhachhang.php?trang=$i'> $i</a>"?> 
-					 </a>
-				  <?php
-				  }
-          ?>
-          <a class="btn btn-social btn-link btn-dribbble" style="margin-left:40px; margin-top:20px" href='<?php echo'quanlykhachhang.php?trang=$sotrang'?>'> 
-             <i class="material-icons">keyboard_arrow_right</i>
-          </a>
-          
-          
-			    </div>
-        <!--------------------------------------------->
-              </div>
-            </div>
-            <div class="col-md-12">
-              
-            </div>
-          </div>
-        </div>
-      </div>
-     <?php include("include/footer.php"); ?>
   <!--   Core JS Files   -->
   <script src="../assets/js/core/form_popup.js"></script>
   <script src="../assets/js/core/jquery.min.js"></script>
@@ -458,6 +350,7 @@ function removeTone(str) {
     str = str.replace(/Đ/g, "D");
     return str;
 }
+
 function fetch_customer(a)
 	{
 		var cus_id = a.id;
@@ -488,6 +381,58 @@ function fetch_customer(a)
 		});
 	}
 $(document).ready(function(){
+pagination_customer();
+function pagination_customer(page,value)
+{
+	var value;
+	$.ajax({
+		url:"include/pagination_customer.php",
+		method:"POST",
+		data:{page:page,value:value},
+		success:function(data){
+			$("#pagination_customer").html(data);
+		}
+	});
+}
+$(document).on('click', '.pagination_link', function()
+	{
+    var value = $(".search").val();
+		var page = $(this).attr("id");
+		pagination_customer(page,value);
+	});
+	$(document).on('keyup','.search',function(){
+		var value = $(".search").val();
+		var page;
+		$.ajax({
+			url:"include/pagination_customer.php",
+			method:"POST",
+			data:{page:page,value:value},
+			success:function(data)
+			{
+				$("#pagination_customer").html(data);
+			}
+		});
+	});	
+		$('.xoa').click(function()
+            {
+                var cus_id = $(this).attr("id");
+                var check= confirm("Bạn có chắc muốn xóa?");
+                if(check==true)
+                {
+                    $.ajax
+                    ({
+                        url: "xoa_kh.php",
+                        method:"GET",
+                        data: {cus_id:cus_id},
+                        success: function(){
+                            window.location.reload();
+                                           },
+                        error: function () {
+                            alert("xoa k thanh cong");
+                        }
+                    });
+                }
+            });
 	
 	$(document).on('click','.edit',function(){
 		var cus_id = $('#cus_id').val();
@@ -544,5 +489,19 @@ $(document).ready(function(){
 				}
 			}
 	});
+	
+	$(document).on('click','#ad_logout',function(){
+		var action = "logout";
+		$.ajax({
+			url:"include/xuly.php",
+			method:"POST",
+			data:{action:action},
+			success:function()
+			{
+				window.location.reload();
+			}
+		});
+	});
 });
 </script>
+<?php } ?>

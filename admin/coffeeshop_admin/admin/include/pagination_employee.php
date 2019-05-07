@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	require("../connect.php");
 	
 	$record_per_page = 3;
@@ -19,22 +20,15 @@
 		$searchValue = $_POST["value"];
 		if($searchValue !="")
 		{
-			$key ="";
-			$admin = strpos($key,"admin");
-			$manager = strpos($key,"quản");
-			if($admin>0)
+			if($searchValue == "ad")
 			{
-				$key = 1;
+				$searchQuery = "AND (id_role = 1)";
 			}
-			else{	if($manager>0)
-					{
-						$key = 2;
-					}
-				}
-			if($admin>0 || $manager > 0)
+			else if($searchValue == "quan" || $searchValue == "manager")
 			{
-				$searchQuery = "AND id_role = $key";
+				$searchQuery = "AND (id_role = 2)";
 			}
+	
 				else{$searchQuery = " AND (id_em like '%$searchValue%' or 
 					lastname like '%$searchValue%' or 
 					firstname like '%$searchValue%' or
@@ -55,9 +49,9 @@
 						  <th style="text-align:center"> Tài khoản </th>
                           <th style="text-align:center"> Email</th>
                           <th style="text-align:center"> Số điện thoại</th>
-                          <th style="text-align:center"> Chức vụ</th>
-						  <th style="text-align:center">Thao tác</th>
-                          </thead>
+                          <th style="text-align:center"> Chức vụ</th>';
+	 if($_SESSION['ad_role']=='admin') $output .='<th style="text-align:center">Thao tác</th>';
+                   $output .=       '</thead>
                           <tbody>';
 	while($row =mysqli_fetch_array($result))
 	{
@@ -66,12 +60,12 @@
 		$row2=mysqli_fetch_array($result2);
 		$output.='<tr>
 									<td width="10%" align="center" style="font-weight:500">'.$row["id_em"].'</td>
-									<td width="15%" align="center" style="font-weight:500">'.$row['lastname'] . $row['firstname'].'</td>
+									<td width="15%" align="center" style="font-weight:500">'.$row['lastname']." ". $row['firstname'].'</td>
 									<td width="10%" align="center" style="font-weight:500">'.$row['username'].'</td>
 									<td width="20%" align="center" style="font-weight:500">'.$row['email'].'</td>
 									<td width="10%" align="center" style="font-weight:500">'.$row['phone'].'</td>
-									<td width="10%" align="center" style="font-weight:500">'.$row2["name"].'</td>
-									<td width="10%" align="center" >
+									<td width="10%" align="center" style="font-weight:500">'.$row2["name"].'</td>';
+		 if($_SESSION['ad_role']=='admin')	$output .='<td width="10%" align="center" >
 									<a href="#">
                         				<i class="material-icons">create</i>
                       				</a>
@@ -79,8 +73,8 @@
                        				<a href="#">
                          				<i class="material-icons">clear</i>
                       				</a>
-									</td>
-								</tr>	';
+									</td>';
+			$output .=					'</tr>	';
 	}
 	$output.='</tbody>
                       </table>';

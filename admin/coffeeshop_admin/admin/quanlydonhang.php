@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿<?php 
+session_start();
+if(empty($_SESSION['ad_user'])){
+  header('Location: ../../adminlogin/adminlogin.php');
+}
+else{ 
+?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -202,5 +209,18 @@ $(document).ready(function(){
 			}
 		});
 	});	
+	$(document).on('click','#ad_logout',function(){
+		var action = "logout";
+		$.ajax({
+			url:"include/xuly.php",
+			method:"POST",
+			data:{action:action},
+			success:function()
+			{
+				window.location.reload();
+			}
+		});
+	});
 });
 </script>
+<?php }  ?>

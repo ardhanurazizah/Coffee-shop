@@ -45,7 +45,7 @@
 	$total_pages = ceil($total_record/$record_per_page);
 	if($page>1)
 	{
-		$output.='<span class="pagination_link_list_list btn btn-social btn-link btn-dribbble" id="1"><i class="material-icons">fast_rewind</i></span>
+		$output.='<span class="pagination_link_list btn btn-social btn-link btn-dribbble" id="1"><i class="material-icons">fast_rewind</i></span>
 		<span class="pagination_link_list btn btn-social btn-link btn-dribbble" id="'.($page-1).'"><i class="material-icons">keyboard_arrow_left</i></span>';
 	}
 	for($i=1;$i<=$total_pages;$i++)

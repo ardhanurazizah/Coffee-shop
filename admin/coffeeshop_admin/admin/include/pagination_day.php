@@ -13,7 +13,7 @@
 		$page = 1;
 	}
 	$start_from = ($page -1) * $record_per_page;
-	$sql = "SELECT CAST(now AS date) AS now,SUM(total_price) as total_price,id_bill FROM `order_bill` WHERE 1 GROUP BY now ORDER BY total_price DESC LIMIT $start_from,$record_per_page";
+	$sql = "SELECT CAST(now AS date) AS now,SUM(total_price) as total_price,id_bill FROM `order_bill` WHERE 1 GROUP BY now ORDER BY now DESC LIMIT $start_from,$record_per_page";
 	$result = mysqli_query($con,$sql);
 	$output .= '
 	<table class="table table-hover">

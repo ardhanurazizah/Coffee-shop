@@ -1,4 +1,5 @@
 <?php
+	session_start();
 	require("../connect.php");
 	
 	$record_per_page = 3;
@@ -19,39 +20,33 @@
 		$searchValue = $_POST["value"];
 		if($searchValue !="")
 		{
-			$key = "";
-			$cf = strpos($searchValue,"cà phê");
-			$tm = strpos($searchValue,"trà và machi");
-			$ic = strpos($searchValue,"đá xay");
-			$ff = strpos($searchValue,"trái cây");
-			if($cf  > 0)
+			if($searchValue == "ca phe")
 			{
-				$key = "CF";
+				$searchValue ="CF";
+				$searchQuery = "AND (id_type = '$searchValue')";
 			}
-			else {	if($tm > 0)
-					{
-						$key = "TM";
-					}
-					else{	if($ic > 0)
-							{
-								$key = "IC";
-							}
-							else{	if($ff > 0)
-									{
-										$key = "FF";
-									}
-								}
-						}
-					}
-			if($cf > 0 || $tm > 0 || $ic > 0 || $ff > 0 )
+			else if($searchValue == "tra")
 			{
-				$searchQuery = "AND id_type like '%$key%'";
-			}  
-			else{$searchQuery = " AND (id_pro = $searchValue or 
+				$searchValue ="TM";
+				$searchQuery = "AND (id_type = '$searchValue')";
+			}
+			else if($searchValue == "da xay")
+			{
+				$searchValue ="IC";
+				$searchQuery = "AND (id_type = '$searchValue')";
+			}
+			else if($searchValue == "trai")
+			{
+				$searchValue ="FF";
+				$searchQuery = "AND (id_type = '$searchValue')";
+			}
+			else{
+			$searchQuery = " AND (id_pro like '%$searchValue%'or 
         	name like '%$searchValue%' or 
         	info like '%$searchValue%' or
-			price  like '%$searchValue%' ) ";
-			}
+			price  like '%$searchValue%' or
+			id_type = '$searchValue' ) ";}
+			
 		}
 	}
 	$start_from = ($page -1) * $record_per_page;
@@ -65,10 +60,10 @@
                           <th style="text-align:center"> Tên sản phẩm</th>
                           <th style="text-align:center"> Chi tiết</th> 
                           <th style="text-align:right"> Giá</th>
-						  <th style="text-align:center"> Loại </th>
-						  <th style="text-align:center">Thao tác</th>
-                          </thead>
-                          <tbody>';
+						  <th style="text-align:center"> Loại </th>';
+	if($_SESSION['ad_role']=='manager')	
+		$output.='<th style="text-align:center">Thao tác</th>';
+    $output.='</thead><tbody>';
 	while($row =mysqli_fetch_array($result))
 	{
 		$sql2 = "SELECT name FROM type AS t WHERE t.id_type like '%".$row['id_type']."%'";
@@ -81,17 +76,17 @@
 								<td width="15%" align="center"><span style="font-weight:500">'.$row['name'].'</span></td>
 								<td width="30%" style="font-weight:500">'.  $row['info'].'</td>
 								<td width="15%" align="right"><span style="font-weight:500">'.  number_format((int)$row['price'],0,".",",") .' đ</span></td>
-								<td width="10%" align="center" style="font-weight:500">'.$row2['name'].'</td>
-								<td width="20%" align="center">
-									<a href="#">
+								<td width="10%" align="center" style="font-weight:500">'.$row2['name'].'</td>';
+		if($_SESSION['ad_role']=='manager')	$output.='<td width="20%" align="center">
+									<a href=".edit-product" data-toggle="modal" class="edit_pro" id="'.$row['id_pro'].'" onclick="fetch_product(this)">
                         				<i class="material-icons">create</i>
                       				</a>
                       				<!--BUTTON XÓA-->
-                       				<a href="#">
+                       				<a style="cursor:pointer" class="del_pro" id="'.$row['id_pro'].'">
                          				<i class="material-icons">clear</i>
                       				</a>
-								</td>
-							  </tr>';
+								</td>';
+							 $output.='</tr>';
 	}
 	$output.='</tbody>
                       </table>';

@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿<?php 
+session_start();
+if(empty($_SESSION['ad_user'])){
+  header('Location: ../../adminlogin/adminlogin.php');
+}
+else{ 
+?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -50,7 +57,10 @@
                 </div>
 				</div>
 				<!--them xoa sua-->
-			  <button mat-raised-button class="btn btn-primary" onClick="openForm()">Thêm</button>
+        <?php   
+        if($_SESSION['ad_role']=='admin')
+			     echo '<button mat-raised-button class="btn btn-primary" onClick="openForm()">Thêm</button>';
+        ?>
               </div>
             </div>
             <div class="col-md-12">
@@ -123,8 +133,9 @@ $(document).ready(function(){
 	}
 	$(document).on('click', '.pagination_link', function()
 	{
+   		 var value = $(".search").val();
 		var page = $(this).attr("id");
-		pagination_employee(page);
+		pagination_employee(page,value);
 	});
 	$(document).on('keyup','.search',function(){
 		var action = "search";
@@ -141,5 +152,18 @@ $(document).ready(function(){
 			}
 		});
 	});	
+	$(document).on('click','#ad_logout',function(){
+		var action = "logout";
+		$.ajax({
+			url:"include/xuly.php",
+			method:"POST",
+			data:{action:action},
+			success:function()
+			{
+				window.location.reload();
+			}
+		});
+	});
 });
 </script>
+<?php } ?>

@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿<?php 
+session_start();
+if(empty($_SESSION['ad_user'])){
+  header('Location: ../../adminlogin/adminlogin.php');
+}
+else{ 
+?>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -18,6 +25,21 @@
   <!-- CSS Just for demo purpose, don't include it in your project -->
 
 	<style>
+    input[type="file"] {
+    display: none;
+    }
+    .custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-top: 20px;
+    margin-left: 55px;
+    cursor: pointer;
+	}
+	.add-product .modal-title{color:purple;font-weight:400}
+	.add-product .modal-body label {color:purple;font-weight:400}
+	.edit-product .modal-title{color:purple;font-weight:400}
+	.edit-product .modal-body label {color:purple;font-weight:400}
 		table thead th{font-weight:500!important;}
 		table tbody tr td{font-weight:500}
 	</style>
@@ -47,7 +69,10 @@
                 </div>
 				</div>
 				<!--them xoa sua-->
-			  <button mat-raised-button class="btn btn-primary" onClick="openForm()">Thêm</button>
+        <?php   
+        if($_SESSION['ad_role']=='manager')
+			     echo '<button mat-raised-button class="btn btn-primary" data-toggle="modal" data-target=".add-product"">Thêm</button>';
+        ?>
               </div>
             </div>
             <div class="col-md-12">
@@ -57,6 +82,130 @@
         </div>
       </div>
       <?php include("include/footer.php"); ?>
+      <div class="modal fade add-product" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" >
+                    <h4 class="modal-title" style="padding-left: 320px">Thêm sản phẩm</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button> 
+                </div>
+                <div class="modal-body">
+                  <div class="col-md-5" style="float: left">
+                    <div style="border:1px solid black;height: 300px;width: 100%" id="image_product">
+                      
+                    </div>
+                    <label class="custom-file-upload">
+                    <input type="file" id="upload-file"/>
+                      Tải ảnh lên
+                    </label>
+                  </div>
+                  <div class="col-md-7" style="float: right">
+                    	<div class="form-row">
+    						<div class="form-group col-md-6 ">
+      							<label>Tên sản phẩm:</label>
+								<input style="margin-top:10px" id="name_pro" type="text" class="form-control" placeholder="Tên sản phẩm">
+    						</div>
+   						 	<div class="form-group col-md-6 ">
+								<label>Giá tiền:</label>
+      							<input  style="margin-top:10px" id="price_pro"  type="text" class="form-control" placeholder="giá tiền">
+    			 		 	</div>
+  						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+      							<label >Trạng thái</label>
+      								<select class="form-control select_status" name="status">
+        								<option value="2" selected>Sản phẩm mới</option>
+        								<option value="0">Bình thường</option>
+										<option value="1">Bán chạy</option>
+      								</select>
+   							 </div>
+							 <div class="form-group col-md-6" >
+      							<label>Loại</label>
+      								<select class="form-control select_type" name="type">
+        								<option value="CF" selected>Cà phê</option>
+        								<option value="TM">Trà và macchiato</option>
+										<option value="IC">Đá xay</option>
+										<option value="FF">Trái cây</option>
+      								</select>
+   							 </div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-12">
+    							<label>Thông tin chi tiết</label>
+    								<textarea class="form-control" id="info_pro" rows="6"></textarea>
+  							</div>
+						</div>
+						<div class="row">
+							<button  class="btn btn-primary" id="add_pro">Thêm</button>
+						</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+      </div>
+	  <div class="modal fade edit-product" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header" >
+                    <h4 class="modal-title" style="padding-left: 320px">Sửa sản phẩm</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button> 
+                </div>
+                <div class="modal-body">
+                  <div class="col-md-5" style="float: left">
+                    <div style="border:1px solid black;height: 300px;width: 100%" id="edit_image_product">
+                      
+                    </div>
+                    <label class="custom-file-upload">
+					<input type="hidden" id="edit_id_pro" />
+					<input type="hidden" id="edit-img" />
+                    <input type="file" id="edit-upload-file"/>
+                      Tải ảnh lên
+                    </label>
+                  </div>
+                  <div class="col-md-7" style="float: right">
+                    	<div class="form-row">
+    						<div class="form-group col-md-6">
+      							<label>Tên sản phẩm:</label>
+								<input style="margin-top:10px" id="edit_name_pro" type="text"  class="form-control" placeholder="Tên sản phẩm">
+    						</div>
+   						 	<div class="form-group col-md-6 ">
+								<label>Giá tiền:</label>
+      							<input  style="margin-top:10px" id="edit_price_pro"  type="text" class="form-control" placeholder="giá tiền">
+    			 		 	</div>
+  						</div>
+						<div class="form-row">
+							<div class="form-group col-md-6">
+      							<label >Trạng thái</label>
+      								<select class="form-control edit_select_status" name="status">
+        								<option value="2" selected>Sản phẩm mới</option>
+        								<option value="0">Bình thường</option>
+										<option value="1">Bán chạy</option>
+      								</select>
+   							 </div>
+							 <div class="form-group col-md-6" >
+      							<label>Loại</label>
+      								<select class="form-control edit_select_type" name="type">
+        								<option value="CF" selected>Cà phê</option>
+        								<option value="TM">Trà và macchiato</option>
+										<option value="IC">Đá xay</option>
+										<option value="FF">Trái cây</option>
+      								</select>
+   							 </div>
+						</div>
+						<div class="form-row">
+							<div class="form-group col-md-12">
+    							<label>Thông tin chi tiết</label>
+    								<textarea class="form-control" id="edit_info_pro" rows="6"></textarea>
+  							</div>
+						</div>
+						<div class="row">
+							<button  class="btn btn-primary" id="edit_pro">Sửa</button>
+						</div>
+                  </div>
+                </div>
+            </div>
+        </div>
+      </div>
   <!--   Core JS Files   -->
   <script src="../assets/js/core/jquery.min.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
@@ -103,14 +252,34 @@
 
 </html>
 <script>
+function fetch_product(a)
+{
+	var id_pro = a.id;
+	$.ajax({
+		url:"action/fetch_product.php",
+		method:"GET",
+		data:{"id_pro":id_pro},
+		success:function(data){
+			var product = JSON.parse(data);
+			$("#edit_image_product").html('<img width="100%" src="../../../img/product/'+product.image+'" height="100%" >');
+			$("#edit_id_pro").val(product.id_pro);
+			$("#edit_name_pro").val(product.name);
+			$("#edit-img").val(product.image);
+			$("#edit_price_pro").val(product.price);
+			$("#edit_info_pro").val(product.info);
+			$(".edit_select_type").val(product.id_type);
+			$(".edit_select_status").val(product.id_status);
+		}
+	});
+}
 $(document).ready(function(){
 	pagination_product();
-	function pagination_product(page)
+	function pagination_product(page,value)
 	{
 		$.ajax({
 			url:"include/pagination_product.php",
 			method:"POST",
-			data:{page:page},
+			data:{page:page,value:value},
 			success:function(data)
 			{
 				$('#pagination_data').html(data);
@@ -120,8 +289,9 @@ $(document).ready(function(){
 	}
 	$(document).on('click', '.pagination_link', function()
 	{
+    var value = $(".search").val();
 		var page = $(this).attr("id");
-		pagination_product(page);
+		pagination_product(page,value);
 	});
 	$(document).on('keyup','.search',function(){
 		var value = $(".search").val();
@@ -136,5 +306,157 @@ $(document).ready(function(){
 			}
 		});
 	});	
+	$('#edit-upload-file').change(function(){
+		var picture = $('#edit-upload-file').val().split('.').pop().toLowerCase();
+		var value = $('#edit-upload-file').val().substr(12,);
+		if($.inArray(picture, ['gif','png','jpg','jpeg']) == -1) 
+		{
+				alert('Chỉ upload file ảnh!');
+				$('#edit-upload-file').val("");
+		}
+		else{
+				sizee = $("#edit-upload-file")[0].files[0].size; 
+				sizee = sizee / 1024; 
+				sizee = sizee / 1024; 
+ 				if (sizee > 10) 
+				{
+					alert("Dung lượng ảnh vượt giới hạn cho phép!");
+					return false;
+				}  
+				else 
+				{
+				$("#edit_image_product").html('<img width="100%" src="../../../img/product/'+value+'" height="100%" >');
+				$("#edit-img").val(value);
+				}
+		}
+    });
+  	$('#upload-file').change(function(){
+		var picture = $('#upload-file').val().split('.').pop().toLowerCase();
+		var value = $('#upload-file').val().substr(12,);
+		if($.inArray(picture, ['gif','png','jpg','jpeg']) == -1) 
+		{
+				alert('Chỉ upload file ảnh!');
+				$('#upload-file').val("");
+				$("#image_product").html("");
+		}
+		else{
+				sizee = $("#upload-file")[0].files[0].size; 
+				sizee = sizee / 1024; 
+				sizee = sizee / 1024; 
+ 				if (sizee > 10) 
+				{
+					alert("Dung lượng ảnh vượt giới hạn cho phép!");
+					return false;
+				}  
+				else 
+				{
+				$("#image_product").html('<img width="100%" src="../../../img/product/'+value+'" height="100%" >');
+				
+				}
+		}
+    });
+	$(document).on('click','#edit_pro',function(){
+		var action = "edit_product";
+		var id_pro = $("#edit_id_pro").val();
+		var name_pro = $("#edit_name_pro").val();
+		var price_pro = $("#edit_price_pro").val();
+		var img_pro = $('#edit-img').val();
+		var info_pro = $("#edit_info_pro").val();
+		var type_pro = $('.edit_select_type').children('option:selected').val();
+		var status_pro = $('.edit_select_status').children('option:selected').val();
+		if(name_pro == "" || price_pro == "" || img_pro == "" || info_pro == "")
+		{
+			alert("Các dữ liệu không được trống!");
+		}
+		else{
+			var pattern=/\d{4,6}/;
+			if(pattern.test(price_pro) == false)
+			{
+				alert("Giá tiền chưa hợp lệ!Phải là số và giá trị thấp nhất là 1000");
+			}
+			else{
+				$.ajax({
+					url:"action/xuly_product.php",
+					method:"POST",
+					data:{action:action,name_pro:name_pro,price_pro:price_pro,img_pro:img_pro,info_pro:info_pro,type_pro:type_pro,
+					status_pro:status_pro,id_pro:id_pro},
+					success:function(data)
+					{
+						alert("Sửa sản phẩm thành công!");
+						$(".edit-product").modal('toggle');
+						var page =$(".pagination_link").attr("id");
+						var value_search = $(".search").val();
+						pagination_product(page,value_search); 
+					}
+				});
+			}
+		}
+	});
+	$(document).on('click','#add_pro',function(){
+		var action = "add_product";
+		var name_pro = $("#name_pro").val();
+		var price_pro = $("#price_pro").val();
+		var img_pro = $('#upload-file').val().substr(12,);
+		var info_pro = $("#info_pro").val();
+		var type_pro = $('.select_type').children('option:selected').val();
+		var status_pro = $('.select_status').children('option:selected').val();
+		if(name_pro == "" || price_pro == "" || img_pro == "" || info_pro == "")
+		{
+			alert("Các dữ liệu không được trống!");
+		}
+		else{
+			var pattern=/\d{4,6}/;
+			if(pattern.test(price_pro) == false)
+			{
+				alert("Giá tiền chưa hợp lệ!Phải là số và giá trị thấp nhất là 1000");
+			}
+			else{
+				$.ajax({
+					url:"action/xuly_product.php",
+					method:"POST",
+					data:{action:action,name_pro:name_pro,price_pro:price_pro,img_pro:img_pro,info_pro:info_pro,type_pro:type_pro,status_pro:status_pro},
+					success:function(data)
+					{
+						alert("Thêm sản phẩm thành công!");
+						$(".add-product").modal('toggle');
+						pagination_product();
+					}
+				});
+			}
+		}
+	});
+	$(document).on('click','.del_pro',function(){
+		var id_pro = $(this).attr("id");
+		var check = confirm("Bạn có chắc muốn xóa?");
+		if(check==true)
+		{
+			var action = "del_pro";
+			$.ajax({
+				url:"action/xuly_product.php",
+				method:"POST",
+				data:{action:action,id_pro:id_pro},
+				success:function()
+				{
+					alert("Xóa thành công");
+					var page =$(".pagination_link").attr("id");
+					var value_search = $(".search").val();
+					pagination_product(page,value_search); 
+				}
+			})
+		}
+	});
+	$(document).on('click','#ad_logout',function(){
+		var action = "logout";
+		$.ajax({
+			url:"action/xuly_product.php",
+			method:"POST",
+			data:{action:action},
+			success:function()
+			{
+				window.location.reload();
+			}
+		});
+	});
 });
 </script>
+<?php } ?>

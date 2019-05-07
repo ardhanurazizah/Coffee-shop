@@ -9,10 +9,12 @@
                   </p>
                 </a>
                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownProfile">
-                  <a class="dropdown-item" href="#">Đăng xuất</a>
+                   <a class="dropdown-item" href="#"><?php echo $_SESSION['ad_name'] ?></a>
+                   <a class="dropdown-item" href="#" id="ad_logout">Đăng xuất</a>
                 </div>
               </li>
             </ul>
           </div>
         </div>
       </nav>	
+ 
