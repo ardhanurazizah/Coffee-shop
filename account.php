@@ -19,7 +19,7 @@ while($row = mysqli_fetch_assoc($result)){
 	$phone=$row['phone'];
 	$address=$row['address'];
 }
-$sql= "SELECT id_bill FROM order_bill where cus_id=$id ORDER BY  id_bill DESC";
+$sql= "SELECT id_bill FROM order_bill where cus_id='$id' ORDER BY  id_bill DESC";
 $result = mysqli_query($con,$sql);
 $i=0;
 while($row = mysqli_fetch_assoc($result)){
