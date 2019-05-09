@@ -22,6 +22,8 @@ else{
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css">
   <!-- CSS Files -->
   <link href="../assets/css/material-dashboard.css?v=2.1.1" rel="stylesheet" />
+    
+	
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <style>
 table thead th{font-weight:500!important;}
@@ -34,6 +36,29 @@ table thead th{font-weight:500!important;}
 	<?php include("include/account.php") ?>
    <div class="content">
         <div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div style="text-align:center">
+						<h1 style="color:purple;font-weight:600">Tổng doanh thu hiện tại</h1>
+						<?php require("connect.php");
+					  	$sql = "SELECT total_price FROM order_bill WHERE status = 1";
+						$result = mysqli_query($con,$sql);
+						$total_price=0;
+						while($row = mysqli_fetch_assoc($result))
+						{
+							$total_price += $row['total_price'];
+						}
+					  mysqli_close($con);?>
+					  <div style="margin-top:40px;margin-bottom:20px" class="single-counter">
+					  		<span class="counter" style="font-size:50px;color:green"><?php echo number_format((int)$total_price,0,".",",") ?> </span>
+							<span style="font-size:50px;margin-left:15px;color:green">VND</span>
+					  </div>
+					  <div style="margin-bottom:50px">
+					  	<span style="cursor:pointer;font-weight:400;color:red" id="upload">Cập nhật</span>				
+					  </div>
+					</div>
+				</div>
+			</div>
           <div class="row">
             <div class="col-lg-6 col-md-12">
               <div class="card">
@@ -56,7 +81,7 @@ table thead th{font-weight:500!important;}
                         </li>
                         <li class="nav-item">
                           <a class="nav-link" href="#settings" data-toggle="tab">
-                            <i class="material-icons">attach_money</i> Doanh thu
+                            <i class="material-icons">attach_money</i> Xếp hạng
                             <div class="ripple-container"></div>
                           </a>
                         </li>
@@ -69,23 +94,58 @@ table thead th{font-weight:500!important;}
                     <div class="tab-pane active" id="profile">
                     </div>
                     <div class="tab-pane" id="messages">
-                    </div>
-                    <div class="tab-pane" id="settings">
-                      <div style="width:100%; text-align:center;">
-					  	<h3><span style="color:purple">Tổng doanh thu hiện tại</span></h3>
-					 
-					  <?php require("connect.php");
-					  	$sql = "SELECT total_price FROM order_bill";
-						$result = mysqli_query($con,$sql);
-						$total_price=0;
-						while($row = mysqli_fetch_assoc($result))
-						{
-							$total_price += $row['total_price'];
-						}
-					  mysqli_close($con);?>
-					 
-					  		<span style="font-size:36px"><?php echo number_format((int)$total_price,0,".",",") ?> đ</span>
+						<div class="form-row">
+    						<div class="form-group col-md-4 ">
+      							<label class="label-control">Chọn ngày bắt đầu:</label>
+								<input style="margin-top:10px" id="day_begin" type="date" value="2019-04-29" class="form-control datetimepicker">
+    						</div>
+   						 	<div class="form-group col-md-4 ">
+								<label class="label-control">Chọn ngày cuối: </label>
+      							<input style="margin-top:10px" id="day_end"  type="date" value="2019-04-29" class="form-control datetimepicker">
+    			 		 	</div>
+  						</div>
+						<div class="row">
+							<div style="width:100%;text-align:center">
+								<button class="btn btn-primary" id="day">Thống kê</button>
+							</div>
 						</div>
+						<div class="row">
+							<div class="col-md-4">
+								<div style="text-align:center;"> 
+									<h4 style="font-weight:500;color:purple">Tổng sản phẩm:</h4>
+								</div>
+								<div style="text-align:center">
+									<span style="font-weight:500;font-size:20px;color:orange" id="tong_sanpham"></span>
+									<div style="margin-top:10px">
+										<span style="font-weight:200;font-size:20px;color:purple">Món</span>
+									</div>								
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div style="text-align:center;">
+									<h4 style="font-weight:500;color:purple">Tổng doanh thu:</h4>
+								</div>
+								<div style="text-align:center">
+									<span style="font-weight:500;font-size:20px;color:green" id="tong_tien"></span>
+									<div style="margin-top:10px">
+										<span style="font-weight:200;font-size:20px;color:purple">VND</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-md-4">
+								<div style="text-align:center;">
+									<h4 style="font-weight:500;color:purple">Lượt mua:</h4>
+								</div>
+								<div style="text-align:center">
+									<span style="font-weight:500;font-size:20px;color:red" id="tong_luot"></span>
+									<div style="margin-top:10px">
+										<span style="font-weight:200;font-size:20px;color:purple">Lượt</span>
+									</div>
+								</div>
+							</div>
+						</div>  
+                    </div>
+                    <div class="tab-pane" id="settings">  
                     </div>
                   </div>
                 </div>
@@ -108,7 +168,7 @@ table thead th{font-weight:500!important;}
 <?php include("include/footer.php"); ?>
   <!--   Core JS Files   -->
     
-  <script src="../assets/js/core/jquery.min.js"></script>
+	<script src="../assets/js/vendor/jquery-2.2.4.min.js"></script>
   <script src="../assets/js/admin.js"></script>
   <script src="../assets/js/core/popper.min.js"></script>
   <script src="../assets/js/core/bootstrap-material-design.min.js"></script>
@@ -116,6 +176,8 @@ table thead th{font-weight:500!important;}
   <!-- Plugin for the momentJs  -->
   <script src="../assets/js/plugins/moment.min.js"></script>
   <!--  Plugin for Sweet Alert -->
+  <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
+
   <script src="../assets/js/plugins/sweetalert2.js"></script>
   <!-- Forms Validations Plugin -->
   <script src="../assets/js/plugins/jquery.validate.min.js"></script>
@@ -141,23 +203,45 @@ table thead th{font-weight:500!important;}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/core-js/2.4.1/core.js"></script>
   <!-- Library for adding dinamically elements -->
   <script src="../assets/js/plugins/arrive.min.js"></script>
+	  
+  <script src="../assets/js/vendor/jquery.counterup.min.js"></script>
+  <script src="../assets/js/vendor/waypoints.min.js"></script>
   <!--  Google Maps Plugin    -->
   <!-- Chartist JS -->
   <script src="../assets/js/plugins/chartist.min.js"></script>
   <!--  Notifications Plugin    -->
   <script src="../assets/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
+  
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
- 
+ <script>
+	$(document).ready(function(){
+	
+	if ($('.single-counter').length) {
+      	$('.counter').counterUp({
+          	delay: 10,
+          	time: 1000
+      	});    
+    }
+	$(document).on('click','#upload',function(){
+		if ($('.single-counter').length) {
+		$('.counter').text("<?php echo number_format((int)$total_price,0,".",",")?>");
+      	$('.counter').counterUp({
+          	delay: 10,
+          	time: 1000
+      	});    
+    }
+	});
+	});
+</script>
 </body>
 
 </html>
 <script>
 $(document).ready(function(){
-	pagination_index();
-	pagination_day();
-	pagination_list();
+	pagination_index(1);
+	pagination_list(1);
+	fetch_rank();
 	function pagination_index(page)
 	{
 		$.ajax({
@@ -166,6 +250,17 @@ $(document).ready(function(){
 			data:{page:page},
 			success:function(data){
 				$("#profile").html(data);
+				if(page!=1){
+					$(".page_first").removeClass("btn-primary");
+					$(".page_first").addClass("btn-link");
+					$("#"+page+"").removeClass("btn-link");
+					$("#"+page+"").addClass("btn-primary");
+				}
+				else
+				{
+					$(".page_first").removeClass("btn-link");
+					$(".page_first").addClass("btn-primary");
+				}
 			}
 		});
 	}
@@ -174,22 +269,16 @@ $(document).ready(function(){
 		var page = $(this).attr("id");
 		pagination_index(page);
 	});
-	function pagination_day(page)
+	function fetch_rank()
 	{
-	$.ajax({
-			url:"include/pagination_day.php",
-			method:"POST",
-			data:{page:page},
-			success:function(data){
-				$("#messages").html(data);
+		$.ajax({
+			url:"include/fetch_rank.php",
+			success:function(data)
+			{
+				$("#settings").html(data);
 			}
 		});
 	}
-	$(document).on('click', '.pagination_link_day', function()
-	{
-		var page = $(this).attr("id");
-		pagination_day(page);
-	});
 	function pagination_list(page)
 	{
 	$.ajax({
@@ -198,6 +287,17 @@ $(document).ready(function(){
 			data:{page:page},
 			success:function(data){
 				$("#emp_list").html(data);
+				if(page!=1){
+					$(".page_first").removeClass("btn-primary");
+					$(".page_first").addClass("btn-link");
+					$("#"+page+"").removeClass("btn-link");
+					$("#"+page+"").addClass("btn-primary");
+				}
+				else
+				{
+					$(".page_first").removeClass("btn-link");
+					$(".page_first").addClass("btn-primary");
+				}
 			}
 		});
 	}
@@ -217,6 +317,53 @@ $(document).ready(function(){
 				window.location.reload();
 			}
 		});
+	});
+	$(document).on('click','#day',function(){
+		var day_begin = $("#day_begin").val();
+		var day_end = $("#day_end").val();
+		if(day_begin == "")
+		{
+			day_begin = "2019-04-29";
+		}
+		var d = new Date();
+		var month = d.getMonth()+1;
+		var day = d.getDate();
+		var output = d.getFullYear() + '-' +
+    		(month<10 ? '0' : '') + month + '-' +
+    		(day<10 ? '0' : '') + day;
+		if(day_end == "")
+		{
+			day_end = output;
+		}
+		alert(output);
+		$.ajax({
+			url:"action/xuly_day.php",
+			method:"POST",
+			data:{day_begin:day_begin,day_end:day_end},
+			success:function(data)
+			{
+				var change = JSON.parse(data);
+				$("#tong_tien").text(change.total_price);
+				$("#tong_sanpham").text(change.total_item);
+				$("#tong_luot").text(change.purchase);
+				
+			}
+		})
+	});
+	$(document).on('click','#month',function(){
+		var month_choose = $('.select_month').children('option:selected').val();
+		$.ajax({
+			url:"action/xuly_month.php",
+			method:"POST",
+			data:{month_choose},
+			success:function(data)
+			{
+				var change = JSON.parse(data);
+				$("#tong_tien_thang").text(change.total_price);
+				$("#tong_sanpham_thang").text(change.total_item);
+				$("#tong_luot_thang").text(change.purchase);
+			}
+		})
 	});
 });
 </script>

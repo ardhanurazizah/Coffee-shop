@@ -42,6 +42,7 @@ else{
 	.edit-product .modal-body label {color:purple;font-weight:400}
 		table thead th{font-weight:500!important;}
 		table tbody tr td{font-weight:500}
+	
 	</style>
 </head>
 
@@ -82,6 +83,7 @@ else{
         </div>
       </div>
       <?php include("include/footer.php"); ?>
+	  <!--------Form thêm sản phẩm -------->
       <div class="modal fade add-product" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -103,11 +105,12 @@ else{
                     	<div class="form-row">
     						<div class="form-group col-md-6 ">
       							<label>Tên sản phẩm:</label>
-								<input style="margin-top:10px" id="name_pro" type="text" class="form-control" placeholder="Tên sản phẩm">
+								<input style="margin-top:10px" id="name_pro" type="text" class="form-control" placeholder="Tên sản phẩm" required>
     						</div>
    						 	<div class="form-group col-md-6 ">
 								<label>Giá tiền:</label>
-      							<input  style="margin-top:10px" id="price_pro"  type="text" class="form-control" placeholder="giá tiền">
+      							<input  style="margin-top:10px" id="price_pro"  type="text" class="form-control" placeholder="giá tiền" title="Chỉ được là số và ít nhất là 10000" required>
+								<span id="z-txprice" style="color:red"></span>
     			 		 	</div>
   						</div>
 						<div class="form-row">
@@ -143,6 +146,8 @@ else{
             </div>
         </div>
       </div>
+	  <!--------Kết thúc form thêm sản phẩm -------->
+	  <!--------Form sửa sản phẩm -------->
 	  <div class="modal fade edit-product" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -166,11 +171,12 @@ else{
                     	<div class="form-row">
     						<div class="form-group col-md-6">
       							<label>Tên sản phẩm:</label>
-								<input style="margin-top:10px" id="edit_name_pro" type="text"  class="form-control" placeholder="Tên sản phẩm">
+								<input style="margin-top:10px" id="edit_name_pro" type="text"  class="form-control" required placeholder="Tên sản phẩm">
     						</div>
    						 	<div class="form-group col-md-6 ">
 								<label>Giá tiền:</label>
-      							<input  style="margin-top:10px" id="edit_price_pro"  type="text" class="form-control" placeholder="giá tiền">
+      							<input  style="margin-top:10px" id="edit_price_pro"  type="text" class="form-control" placeholder="giá tiền" title="Phải là số và ít nhất là 10000" required>
+								<span id="z-txprice" style="color:red"></span>
     			 		 	</div>
   						</div>
 						<div class="form-row">
@@ -273,7 +279,7 @@ function fetch_product(a)
 	});
 }
 $(document).ready(function(){
-	pagination_product();
+	pagination_product(1);
 	function pagination_product(page,value)
 	{
 		$.ajax({
@@ -283,7 +289,17 @@ $(document).ready(function(){
 			success:function(data)
 			{
 				$('#pagination_data').html(data);
-				
+				if(page!=1){
+					$(".page_first").removeClass("btn-primary");
+					$(".page_first").addClass("btn-link");
+					$("#"+page+"").removeClass("btn-link");
+					$("#"+page+"").addClass("btn-primary");
+				}
+				else
+				{
+					$(".page_first").removeClass("btn-link");
+					$(".page_first").addClass("btn-primary");
+				}
 			}
 		});
 	}
@@ -303,6 +319,8 @@ $(document).ready(function(){
 			success:function(data)
 			{
 				$("#pagination_data").html(data);
+				$("#"+page+"").removeClass("btn-link");
+				$("#"+page+"").addClass("btn-primary");
 			}
 		});
 	});	
@@ -372,9 +390,11 @@ $(document).ready(function(){
 			var pattern=/\d{4,6}/;
 			if(pattern.test(price_pro) == false)
 			{
-				alert("Giá tiền chưa hợp lệ!Phải là số và giá trị thấp nhất là 1000");
+				$("#z-txprice").text($("#edit_price_pro").attr("title")); $("#edit_price_pro").css("border","2px solid red")
 			}
-			else{
+			else
+			{
+				$("#z-txprice").text("" ); $("#edit_price_pro").css("border","2px solid green");
 				$.ajax({
 					url:"action/xuly_product.php",
 					method:"POST",
@@ -408,9 +428,11 @@ $(document).ready(function(){
 			var pattern=/\d{4,6}/;
 			if(pattern.test(price_pro) == false)
 			{
-				alert("Giá tiền chưa hợp lệ!Phải là số và giá trị thấp nhất là 1000");
+				$("#z-txprice").text($("#price_pro").attr("title")); $("#price_pro").css("border","2px solid red")
 			}
-			else{
+			else
+			{
+				$("#z-txprice").text("" ); $("#price_pro").css("border","2px solid green");
 				$.ajax({
 					url:"action/xuly_product.php",
 					method:"POST",
@@ -448,7 +470,7 @@ $(document).ready(function(){
 	$(document).on('click','#ad_logout',function(){
 		var action = "logout";
 		$.ajax({
-			url:"action/xuly_product.php",
+			url:"include/xuly.php",
 			method:"POST",
 			data:{action:action},
 			success:function()

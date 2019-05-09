@@ -108,7 +108,8 @@ table tbody tr td{font-weight:400}
           if ($_POST['ho'] == NULL or $_POST['ten'] == NULL or $_POST['taikhoan'] == NULL or $_POST['email'] == NULL or $_POST['dienthoai'] == NULL or $_POST['diachi'] == NULL)
           {
               echo '<script language="javascript">';
-              echo 'alert("Vui lòng điền đầy đủ thông tin")';
+              echo 'alert("Vui lòng điền đầy đủ thông tin"); ';
+			  echo '$("#form_popup").modal("show")';
               echo '</script>';
           }
           else
@@ -127,17 +128,32 @@ table tbody tr td{font-weight:400}
                  $email = $_POST['email'];
                  $dt = $_POST['dienthoai'];
                  $dchi =$_POST['diachi'];
+				 $kt=1;
                  if(isset($_POST['chophep']))$clock ='0';
                  else $clock ='1';
+				 while($row = mysqli_fetch_array($result))
+				 {
+				 	if($user == $row['username']){
+					$kt=0;}
+				 }
+				 if($kt==1){
                  $insert = "INSERT INTO customer (id_cus, lastname, firstname, username, password, email, phone, address, clocked) 
                     VALUES ('$id', '$ho', '$ten', '$user', '$pass', '$email', '$dt', '$dchi', '$clock')";
-                 if (mysqli_query($con, $insert))
-                 {
+					if (mysqli_query($con, $insert))
+                 	{
                      echo '<script language="javascript">';
                      echo 'alert("Thêm dữ liệu thành công")';
                      echo '</script>';
-                 }
+                 	}
                  else echo "Error: " . $sql . "<br>" . mysqli_error($con);
+				 }
+				 else
+				 {
+				 	 echo '<script language="javascript">';
+                     echo 'alert("Tên tài khoản đã tồn tại!")';
+                     echo '</script>';
+				 }
+                 
           }
        }
     ?>
@@ -330,26 +346,10 @@ table tbody tr td{font-weight:400}
   <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/js/admin.js"></script>
+  <script src="../assets/js/removeTone.js"></script>
 </body>
 </html>
 <script>
-function removeTone(str) {
-    str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
-    str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
-    str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
-    str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
-    str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
-    str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
-    str = str.replace(/đ/g, "d");
-    str = str.replace(/À|Á|Ạ|Ả|Ã|Â|Ầ|Ấ|Ậ|Ẩ|Ẫ|Ă|Ằ|Ắ|Ặ|Ẳ|Ẵ/g, "A");
-    str = str.replace(/È|É|Ẹ|Ẻ|Ẽ|Ê|Ề|Ế|Ệ|Ể|Ễ/g, "E");
-    str = str.replace(/Ì|Í|Ị|Ỉ|Ĩ/g, "I");
-    str = str.replace(/Ò|Ó|Ọ|Ỏ|Õ|Ô|Ồ|Ố|Ộ|Ổ|Ỗ|Ơ|Ờ|Ớ|Ợ|Ở|Ỡ/g, "O");
-    str = str.replace(/Ù|Ú|Ụ|Ủ|Ũ|Ư|Ừ|Ứ|Ự|Ử|Ữ/g, "U");
-    str = str.replace(/Ỳ|Ý|Ỵ|Ỷ|Ỹ/g, "Y");
-    str = str.replace(/Đ/g, "D");
-    return str;
-}
 
 function fetch_customer(a)
 	{
@@ -372,16 +372,16 @@ function fetch_customer(a)
 				$("#lname_customer").html('<label >Họ</label><input type="ho" class="form-control"  id="cus_lname"  value="'+customer.lastname+'" title="Sai định dạng tên!" required> <span class="z-txlname" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>');
 				$("#fname_customer").html('<label >Tên</label><input type="ten" class="form-control" id="cus_fname" value="'+customer.firstname+'" title="Sai định dạng tên!" required><span class="z-txfiname" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>');
 				$("#user_customer").html('<label>Tài khoản</label><input type="taikhoan" class="form-control" id="cus_username" value="'+customer.username+'" disabled />');
-				$("#pass_customer").html(' <label>Mật khẩu</label><input type="matkhau" class="form-control" id="cus_pass" value="'+customer.password+'" title="Ít nhất 5 ký tự và không có ký tự đặc biệt!" required><span class="z-txpass" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>');
+				$("#pass_customer").html(' <label>Mật khẩu</label><input type="matkhau" class="form-control" id="cus_pass" value="'+customer.password+'" title="Ít nhất 5 ký tự" required><span class="z-txpass" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>');
 				$("#email_customer").html(' <label for="email">Email</label><input type="email" class="form-control" id="cus_email" value="'+customer.email+'" title="Chưa đúng định dạng Email(phải có @ và .)" required ><span class="z-txemail" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>');
-				$("#phone_customer").html(' <label >Điện thoại</label><input type="dienthoai" class="form-control" id="cus_phone" value="'+customer.phone+'" required title="10 hoặc 11 chữ số!">');
+				$("#phone_customer").html(' <label >Điện thoại</label><input type="dienthoai" class="form-control" id="cus_phone" value="'+customer.phone+'" required title="10 hoặc 11 chữ số!"><span class="z-txphname" style="color:white;background-color:red;border:1px;border-radius:6px;"></span>');
 				$("#address_customer").html(' <label>Địa chỉ</label><input type="diachi" class="form-control" id="cus_address" value="'+customer.address+'">');
 			},
 			error:function(){alert("failed");}
 		});
 	}
 $(document).ready(function(){
-pagination_customer();
+pagination_customer(1);
 function pagination_customer(page,value)
 {
 	var value;
@@ -391,12 +391,24 @@ function pagination_customer(page,value)
 		data:{page:page,value:value},
 		success:function(data){
 			$("#pagination_customer").html(data);
+			
+			if(page!=1){
+			$(".page_first").removeClass("btn-primary");
+			$(".page_first").addClass("btn-link");
+			$("#"+page+"").removeClass("btn-link");
+			$("#"+page+"").addClass("btn-primary");
+			}
+			else
+			{
+				$(".page_first").removeClass("btn-link");
+				$(".page_first").addClass("btn-primary");
+			}
 		}
 	});
 }
 $(document).on('click', '.pagination_link', function()
 	{
-    var value = $(".search").val();
+    	var value = $(".search").val();
 		var page = $(this).attr("id");
 		pagination_customer(page,value);
 	});
@@ -410,6 +422,8 @@ $(document).on('click', '.pagination_link', function()
 			success:function(data)
 			{
 				$("#pagination_customer").html(data);
+				$("#"+page+"").removeClass("btn-link");
+				$("#"+page+"").addClass("btn-primary");
 			}
 		});
 	});	
@@ -446,12 +460,6 @@ $(document).on('click', '.pagination_link', function()
 		var status = $('input[name="status"]:checked').val();
 		var kt=1;
 		var action= "edit"; 
-		if(cus_id == 0 || cus_lname == 0 || cus_fname == 0 || cus_user == 0 || cus_pass == 0 || cus_email == 0 || cus_phone == 0 || cus_add == 0)
-		{
-			alert("Không được trống dòng nào!");
-		} 
-		else
-		{
 			var em=removeTone(cus_lname);var pattern= /^([A-Z][a-z]*\s*)+$/;var out=pattern.test(em);
 			if(out==true){ $(".z-txlname").text("" ); $("#cus_lname").css("border","2px solid green");}
 			else {$(".z-txlname").text($("#cus_lname").attr("title")); $("#cus_lname").css("border","2px solid red");kt=0;}
@@ -468,13 +476,9 @@ $(document).on('click', '.pagination_link', function()
 			if(out==true){ $(".z-txpass").text( ""); $("#cus_pass").css("border","2px solid green");}
 			else {$(".z-txpass").text($("#cus_pass").attr("title")); $("#cus_pass").css("border","2px solid red");kt=0;}
 
-			var em=cus_phone;
-			if(em=="")  $(this).css("border","2px solid green");
-			else{
-				var pattern=/^0\d{9,10}$/;var out=pattern.test(em);
-				if(out==true){ $(".z-txlname").text("" ); $(this).css("border","2px solid green");}
-				else {$(".z-txlname").text($(this).attr("title")); $(this).css("border","2px solid red");kt=0;}
-				}	
+			var em=cus_phone;var pattern=/^0\d{9,10}$/;var out=pattern.test(em);
+			if(out==true){ $(".z-txphname").text("" ); $(this).css("border","2px solid green");}
+			else {$(".z-txphname").text($(this).attr("title")); $(this).css("border","2px solid red");kt=0;}	
 			if(kt==1){
 				$.ajax({
 					url:"action/xuly_customer.php",
@@ -487,7 +491,7 @@ $(document).on('click', '.pagination_link', function()
 					}
 					});
 				}
-			}
+			
 	});
 	
 	$(document).on('click','#ad_logout',function(){

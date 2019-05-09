@@ -107,35 +107,40 @@ else{
                     	<div class="form-row">
     						<div class="form-group col-md-6">
       							<label>Họ nhân viên:</label>
-								<input style="margin-top:10px" id="lastname_emp" type="text"  class="form-control" placeholder="Họ nhân viên">
-    						</div>
+								<input style="margin-top:10px" id="lastname_emp" type="text"  class="form-control" title="Sai định dạng tên!" required placeholder="Họ nhân viên">
+    							<span class="z-txlname" style="color: red"> </span>
+							</div>
    						 	<div class="form-group col-md-6 ">
 								<label>Tên nhân viên:</label>
-      							<input  style="margin-top:10px" id="firstname_emp"  type="text" class="form-control" placeholder="Tên nhân viên">
-    			 		 	</div>
+      							<input  style="margin-top:10px" id="firstname_emp"  type="text" class="form-control" title="Sai định dạng tên!" required placeholder="Tên nhân viên">
+    			 		 		<span class="z-txlname" style="color: red"> </span>
+							</div>
   						</div>
 						<div class="form-row">
     						<div class="form-group col-md-6">
       							<label>Tài khoản:</label>
-								<input style="margin-top:10px" id="user_emp" type="text"  class="form-control" placeholder="Tài khoản">
+								<input style="margin-top:10px" id="user_emp" type="text"  class="form-control" placeholder="Tài khoản" title="Tên tài khoản cần ít nhất 5 ký tự" required>
+								<span class="z-txuser" style="color:red"></span>
     						</div>
    						 	<div class="form-group col-md-6 ">
 								<label>Mật khẩu:</label>
-      							<input  style="margin-top:10px" id="pass_emp"  type="password" class="form-control" placeholder="Mật khẩu">
-    			 		 	</div>
+      							<input  style="margin-top:10px" id="pass_emp"  type="password" class="form-control" placeholder="Mật khẩu" title="Ít nhất 5 ký tự(có thể chứa ký tự đặc biệt)" required>
+    			 		 		<span class="z-txpass" style="color: red"> </span>
+							</div>
   						</div>
 						<div class="form-row">
-							<div class="form-group col-md-12">
-								<label>Địa chỉ:</label>
-								<input style="margin-top:10px" id="address_emp" type="text" class="form-control" placeholder="Địa chỉ" />
+							<div class="form-group col-md-6">
+								<label>Email:</label>
+								<input style="margin-top:10px" id="email_emp" type="text" class="form-control" placeholder="Email" title="Chưa đúng định dạng Email(phải có @ và .)" required />
+								<span class="z-txemail" style="color: red"> </span>
 							</div>
-						</div>
-						<div class="form-row">
 							<div class="form-group col-md-6">
       							<label>Số điện thoại:</label>
-								<input style="margin-top:10px" id="phone_emp" type="text"  class="form-control" placeholder="Số điện thoại">
-   							 </div>
+								<input style="margin-top:10px" id="phone_emp" type="text"  class="form-control" placeholder="Số điện thoại" required title="10 hoặc 11 chữ số!"/>
+   							 	<span class="z-txphname" style="color: red"></span>
+							 </div>
 						</div>
+						
 						<div class="form-row">
 							<div class="form-group col-md-5">
       							<label>Chức vụ</label>
@@ -178,33 +183,36 @@ else{
                     	<div class="form-row">
     						<div class="form-group col-md-6">
       							<label>Họ nhân viên:</label>
-								<input style="margin-top:10px" id="edit_lastname_emp" type="text"  class="form-control" placeholder="Họ nhân viên">
+								<input style="margin-top:10px" id="edit_lastname_emp" type="text"  class="form-control" title="Sai định dạng tên!" required placeholder="Họ nhân viên">
+								<span class="z-txlname" style="color: red"> </span>
     						</div>
    						 	<div class="form-group col-md-6 ">
 								<label>Tên nhân viên:</label>
-      							<input  style="margin-top:10px" id="edit_firstname_emp"  type="text" class="form-control" placeholder="Tên nhân viên">
+      							<input  style="margin-top:10px" id="edit_firstname_emp"  type="text" class="form-control" title="Sai định dạng tên!" required placeholder="Tên nhân viên">
+								<span class="z-txlname" style="color: red"> </span>
     			 		 	</div>
   						</div>
 						<div class="form-row">
     						<div class="form-group col-md-6">
       							<label>Tài khoản:</label>
-								<input style="margin-top:10px" id="edit_user_emp" type="text"  class="form-control" placeholder="Tài khoản">
+								<input style="margin-top:10px" id="edit_user_emp" type="text"  class="form-control" disabled="disabled" placeholder="Tài khoản">
     						</div>
    						 	<div class="form-group col-md-6 ">
 								<label>Mật khẩu:</label>
-      							<input  style="margin-top:10px" id="edit_pass_emp"  type="password" class="form-control" placeholder="Mật khẩu">
+      							<input  style="margin-top:10px" id="edit_pass_emp"  type="password" class="form-control" placeholder="Mật khẩu" title="Ít nhất 5 ký tự(có thể chứa ký tự đặc biệt)" required>
+								<span class="z-txpass" style="color: red"> </span>
     			 		 	</div>
   						</div>
 						<div class="form-row">
-							<div class="form-group col-md-12">
-								<label>Địa chỉ:</label>
-								<input style="margin-top:10px" id="edit_address_emp" type="text" class="form-control" placeholder="Địa chỉ" />
+							<div class="form-group col-md-6">
+								<label>Email:</label>
+								<input style="margin-top:10px" id="edit_email_emp" type="text" class="form-control" placeholder="Email"  title="Chưa đúng định dạng Email(phải có @ và .)" required />
+								<span class="z-txemail" style="color: red"> </span>
 							</div>
-						</div>
-						<div class="form-row">
 							<div class="form-group col-md-6">
       							<label>Số điện thoại:</label>
-								<input style="margin-top:10px" id="edit_phone_emp" type="text"  class="form-control" placeholder="Số điện thoại">
+								<input style="margin-top:10px" id="edit_phone_emp" type="text"  class="form-control" placeholder="Số điện thoại"required title="10 hoặc 11 chữ số!"/>
+								<span class="z-txphname" style="color: red"></span>
    							 </div>
 						</div>
 						<div class="form-row">
@@ -267,12 +275,36 @@ else{
   <script src="../assets/js/material-dashboard.js?v=2.1.1" type="text/javascript"></script>
   <!-- Material Dashboard DEMO methods, don't include it in your project! -->
  <script src="../assets/js/admin.js"></script>
+   <script src="../assets/js/removeTone.js"></script>
 </body>
 
 </html>
 <script>
+function fetch_emp(a)
+{
+	var id_emp = a.id;
+	$.ajax({
+		url:"action/fetch_emp.php",
+		method:"GET",
+		data:{"id_emp":id_emp},
+		success:function(data){
+			var emp = JSON.parse(data);
+			$("#edit_image_emp").html('<img width="100%" src="../../../img/employee/'+emp.img+'" height="100%" >');
+			$("#edit_phone_emp").val(emp.phone);
+			$("#edit_id_emp").val(emp.id_em);
+			$("#edit_lastname_emp").val(emp.lastname);
+			$("#edit-img").val(emp.img);
+			$("#edit_firstname_emp").val(emp.firstname);
+			$("#edit_user_emp").val(emp.username);
+			$(".edit_select_role").val(emp.id_role);
+			$("#edit_pass_emp").val(emp.password);
+			$("#edit_email_emp").val(emp.email);
+			
+		}
+	});
+}
 $(document).ready(function(){
-	pagination_employee();
+	pagination_employee(1);
 	function pagination_employee(page)
 	{
 		$.ajax({
@@ -282,7 +314,17 @@ $(document).ready(function(){
 			success:function(data)
 			{
 				$('#pagination_data').html(data);
-				
+				if(page!=1){
+					$(".page_first").removeClass("btn-primary");
+					$(".page_first").addClass("btn-link");
+					$("#"+page+"").removeClass("btn-link");
+					$("#"+page+"").addClass("btn-primary");
+				}
+				else
+				{
+					$(".page_first").removeClass("btn-link");
+					$(".page_first").addClass("btn-primary");
+				}
 			}
 		});
 	}
@@ -293,7 +335,6 @@ $(document).ready(function(){
 		pagination_employee(page,value);
 	});
 	$(document).on('keyup','.search',function(){
-		var action = "search";
 		var value = $(".search").val();
 
 		var page;
@@ -304,9 +345,176 @@ $(document).ready(function(){
 			success:function(data)
 			{
 				$("#pagination_data").html(data);
+				$("#"+page+"").removeClass("btn-link");
+				$("#"+page+"").addClass("btn-primary");
 			}
 		});
 	});	
+	$('#edit-upload-file').change(function(){
+		var picture = $('#edit-upload-file').val().split('.').pop().toLowerCase();
+		var value = $('#edit-upload-file').val().substr(12,);
+		if($.inArray(picture, ['gif','png','jpg','jpeg']) == -1) 
+		{
+				alert('Chỉ upload file ảnh!');
+				$('#edit-upload-file').val("");
+		}
+		else{
+				sizee = $("#edit-upload-file")[0].files[0].size; 
+				sizee = sizee / 1024; 
+				sizee = sizee / 1024; 
+ 				if (sizee > 10) 
+				{
+					alert("Dung lượng ảnh vượt giới hạn cho phép!");
+					return false;
+				}  
+				else 
+				{
+				$("#edit_image_emp").html('<img width="100%" src="../../../img/employee/'+value+'" height="100%" >');
+				$("#edit-img").val(value);
+				}
+		}
+    });
+  	$('#upload-file').change(function(){
+		var picture = $('#upload-file').val().split('.').pop().toLowerCase();
+		var value = $('#upload-file').val().substr(12,);
+		if($.inArray(picture, ['gif','png','jpg','jpeg']) == -1) 
+		{
+				alert('Chỉ upload file ảnh!');
+				$('#upload-file').val("");
+				$("#image_emp").html("");
+		}
+		else{
+				sizee = $("#upload-file")[0].files[0].size; 
+				sizee = sizee / 1024; 
+				sizee = sizee / 1024; 
+ 				if (sizee > 10) 
+				{
+					alert("Dung lượng ảnh vượt giới hạn cho phép!");
+					return false;
+				}  
+				else 
+				{
+				$("#image_emp").html('<img width="100%" src="../../../img/employee/'+value+'" height="100%" >');
+				
+				}
+		}
+    });
+	$(document).on('click','#edit_emp',function(){
+		var action = "edit_emp";
+		var id_emp = $("#edit_id_emp").val();
+		var lastname_emp = $("#edit_lastname_emp").val();
+		var firstname_emp = $("#edit_firstname_emp").val();
+		var user_emp = $("#edit_user_emp").val();
+		var img_emp = $('#edit-img').val();
+		var pass_emp = $("#edit_pass_emp").val();
+		var role_emp = $('.edit_select_role').children('option:selected').val();
+		var email_emp =$('#edit_email_emp').val();
+		var phone_emp = $('#edit_phone_emp').val();
+		var kt = 1;
+		var em=removeTone(lastname_emp);var pattern= /^([A-Z][a-z]*\s*)+$/;var out=pattern.test(em);
+			if(out==true){ $(".z-txlname").text("" ); $("#edit_lastname_emp").css("border","2px solid green");}
+			else {$(".z-txlname").text($("#edit_lastname_emp").attr("title")); $("#edit_lastname_emp").css("border","2px solid red");kt=0;}
+
+			var em=removeTone(firstname_emp);var pattern= /^([A-Z][a-z]*\s*)+$/;var out=pattern.test(em);
+			if(out==true){ $(".z-txfiname").text("" ); $("#edit_firstname_emp").css("border","2px solid green");}
+			else {$(".z-txfiname").text($("#edit_firstname_emp").attr("title")); $("#edit_firstname_emp").css("border","2px solid red");kt=0;}
+	
+			
+			var em=email_emp;var pattern= /^[a-zA-Z0-9\.\-\_](\w+(\.|\-|\_)?){2,}@\w{3,}(.\w{2,3})+$/;var out=pattern.test(em);
+			if(out==true){ $(".z-txemail").text(""); $("#edit_email_emp").css("border","2px solid green");}
+			else {$(".z-txemail").text($("#edit_email_emp").attr("title")); $("#edit_email_emp").css("border","2px solid red");kt=0;}
+
+			var em=pass_emp;var pattern= /^[a-zA-Z0-9]{5,}$/;var out=pattern.test(em);
+			if(out==true){ $(".z-txpass").text( ""); $("#edit_pass_emp").css("border","2px solid green");}
+			else {$(".z-txpass").text($("#edit_pass_emp").attr("title")); $("#edit_pass_emp").css("border","2px solid red");kt=0;}
+
+			var em=phone_emp;var pattern=/^0\d{9,10}$/;var out=pattern.test(em);
+			if(out==true){ $(".z-txphname").text("" ); $("#edit_phone_emp").css("border","2px solid green");}
+			else {$(".z-txphname").text($("#edit_phone_emp").attr("title")); $("#edit_phone_emp").css("border","2px solid red");kt=0;}
+			if(kt == 1){
+				$.ajax({
+					url:"action/xuly_emp.php",
+					method:"POST",
+					data:{action:action,id_emp:id_emp,lastname_emp:lastname_emp,firstname_emp:firstname_emp,user_emp:user_emp,img_emp:img_emp,pass_emp:pass_emp,role_emp:role_emp,email_emp:email_emp,phone_emp:phone_emp},
+					success:function(data)
+					{
+						alert("Sửa nhân viên thành công!");
+						$(".edit-emp").modal('toggle');
+						pagination_employee(); 
+					}
+				});
+			}
+	});
+	$(document).on('click','#add_emp',function(){
+		var action = "add_emp";
+		var lastname_emp = $("#lastname_emp").val();
+		var firstname_emp = $("#firstname_emp").val();
+		var user_emp = $("#user_emp").val();
+		var img_emp = $('#upload-file').val().substr(12,);
+		var pass_emp = $("#pass_emp").val();
+		var role_emp = $('.select_role').children('option:selected').val();
+		var email_emp =$('#email_emp').val();
+		var phone_emp = $('#phone_emp').val();
+		var kt = 1;
+		
+		var em=removeTone(lastname_emp);var pattern= /^([A-Z][a-z]*\s*)+$/;var out=pattern.test(em);
+			if(out==true){ $(".z-txlname").text("" ); $("#lastname_emp").css("border","2px solid green");}
+			else {$(".z-txlname").text($("#lastname_emp").attr("title")); $("#lastname_emp").css("border","2px solid red");kt=0;}
+
+			var em=removeTone(firstname_emp);var pattern= /^([A-Z][a-z]*\s*)+$/;var out=pattern.test(em);
+			if(out==true){ $(".z-txfiname").text("" ); $("#firstname_emp").css("border","2px solid green");}
+			else {$(".z-txfiname").text($("#firstname_emp").attr("title")); $("#firstname_emp").css("border","2px solid red");kt=0;}
+	
+			var em=email_emp;var pattern= /^[a-zA-Z0-9\.\-\_](\w+(\.|\-|\_)?){2,}@\w{3,}(.\w{2,3})+$/;var out=pattern.test(em);
+			if(out==true){ $(".z-txemail").text(""); $("#email_emp").css("border","2px solid green");}
+			else {$(".z-txemail").text($("#email_emp").attr("title")); $("#email_emp").css("border","2px solid red");kt=0;}
+			
+			var em=user_emp;var pattern= /[A-Za-z0-9\_\-\@\.]{5,}/;var out=pattern.test(em);
+			if(out==true){ $(".z-txuser").text(""); $("#user_emp").css("border","2px solid green");}
+			else {$(".z-txuser").text($("#user_emp").attr("title")); $("#user_emp").css("border","2px solid red");kt=0;}
+
+
+			var em=pass_emp;var pattern= /^[a-zA-Z0-9]{5,}$/;var out=pattern.test(em);
+			if(out==true){ $(".z-txpass").text( ""); $("#pass_emp").css("border","2px solid green");}
+			else {$(".z-txpass").text($("#pass_emp").attr("title")); $("#pass_emp").css("border","2px solid red");kt=0;}
+
+			var em=phone_emp;var pattern=/^0\d{9,10}$/;var out=pattern.test(em);
+			if(out==true){ $(".z-txphname").text("" ); $("#phone_emp").css("border","2px solid green");}
+			else {$(".z-txphname").text($("#phone_emp").attr("title")); $("#phone_emp").css("border","2px solid red");kt=0;}
+			if(kt==1){
+				$.ajax({
+					url:"action/xuly_emp.php",
+					method:"POST",
+					data:{action:action,lastname_emp:lastname_emp,firstname_emp:firstname_emp,user_emp:user_emp,img_emp:img_emp,pass_emp:pass_emp,role_emp:role_emp,email_emp:email_emp,phone_emp:phone_emp},
+					success:function(data)
+					{
+						
+						alert("Thêm nhân viên thành công!");
+						$(".add-emp").modal('toggle');
+						pagination_employee();
+					}
+				});
+			}
+		
+	});
+	$(document).on('click','.del_emp',function(){
+		var id_emp = $(this).attr("id");
+		var check = confirm("Bạn có chắc muốn xóa?");
+		if(check==true)
+		{
+			var action = "del_emp";
+			$.ajax({
+				url:"action/xuly_emp.php",
+				method:"POST",
+				data:{action:action,id_emp:id_emp},
+				success:function()
+				{
+					alert("Xóa thành công");
+					pagination_employee(); 
+				}
+			})
+		}
+	});
 	$(document).on('click','#ad_logout',function(){
 		var action = "logout";
 		$.ajax({

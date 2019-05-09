@@ -160,24 +160,36 @@ function fetch_bill(a)
 	});
 }
 $(document).ready(function(){
-	pagination_bill();
-	function pagination_bill(page)
+	pagination_bill(1);
+	function pagination_bill(page,value)
 	{
 		$.ajax({
 			url:"include/pagination_bill.php",
 			method:"POST",
-			data:{page:page},
+			data:{page:page,value:value},
 			success:function(data)
 			{
 				$('#pagination_data').html(data);
+				if(page!=1){
+					$(".page_first").removeClass("btn-primary");
+					$(".page_first").addClass("btn-link");
+					$("#"+page+"").removeClass("btn-link");
+					$("#"+page+"").addClass("btn-primary");
+				}
+				else
+				{
+					$(".page_first").removeClass("btn-link");
+					$(".page_first").addClass("btn-primary");
+				}
 				
 			}
 		});
 	}
 	$(document).on('click', '.pagination_link', function()
 	{
+		var value = $(".search").val();
 		var page = $(this).attr("id");
-		pagination_bill(page);
+		pagination_bill(page,value);
 	});
 	$(document).on('click', '.check', function()
 	{
@@ -191,7 +203,7 @@ $(document).ready(function(){
 			success:function()
 			{
 				alert("Đã xác nhận đơn hàng!");
-				window.location.reload();
+				pagination_bill();
 			}
 		});
 		}
@@ -206,6 +218,8 @@ $(document).ready(function(){
 			success:function(data)
 			{
 				$("#pagination_data").html(data);
+				$("#"+page+"").removeClass("btn-link");
+				$("#"+page+"").addClass("btn-primary");
 			}
 		});
 	});	
