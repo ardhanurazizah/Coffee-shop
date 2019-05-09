@@ -37,7 +37,6 @@
 	$start_from = ($page -1) * $record_per_page;
 	$sql ="SELECT * FROM order_bill WHERE 1 ".$searchQuery." LIMIT $start_from,$record_per_page";
 	$result = mysqli_query($con,$sql);
-	printf("Error: %s\n", mysqli_error($con));
 	$output .= '
 	 <table class="table">
                           <thead class="text-primary">
@@ -82,18 +81,23 @@
 	$total_pages = ceil($total_record/$record_per_page);
 	if($page>1)
 	{
-		$output.='<span class="pagination_link btn btn-social btn-link btn-dribbble" id="1"><i class="material-icons">fast_rewind</i></span>
-		<span class="pagination_link btn btn-social btn-link btn-dribbble" id="'.($page-1).'"><i class="material-icons">keyboard_arrow_left</i></span>';
+		$output.='<span class="pagination_link btn btn-link " id="1"><i class="material-icons">fast_rewind</i></span>
+		<span class="pagination_link btn  btn-link " id="'.($page-1).'"><i class="material-icons">keyboard_arrow_left</i></span>';
 	}
 	for($i=1;$i<=$total_pages;$i++)
 	{
-		$output.='<span class="pagination_link btn btn-social btn-link btn-dribbble" style="color:purple;" id="'.$i.'">'.$i.'</span>';
+		if($i==1){
+		$output.='<span class="pagination_link btn  btn-link page_first" id="1">'.$i.'</span>';
+		}
+		else{
+		$output.='<span class="pagination_link btn  btn-link  " id="'.$i.'">'.$i.'</span>';
+		}
 	}
 	if($page<$total_pages)
 	{
 		$output.='
-		<span class="pagination_link btn btn-social btn-link btn-dribbble" id="'.($page+1).'"><i class="material-icons">keyboard_arrow_right</i></span>
-		<span class="pagination_link btn btn-social btn-link btn-dribbble" id="'.$total_pages.'"><i class="material-icons">fast_forward</i></span>';
+		<span class="pagination_link btn  btn-link " id="'.($page+1).'"><i class="material-icons">keyboard_arrow_right</i></span>
+		<span class="pagination_link btn  btn-link " id="'.$total_pages.'"><i class="material-icons">fast_forward</i></span>';
 	}
 	$output.='</div>';
 	mysqli_close($con);

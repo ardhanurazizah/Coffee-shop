@@ -1,3 +1,9 @@
+<style>
+.active{
+	background-color:purple;
+	color:purple;
+	}
+</style>
 <?php
 	session_start();
 	require("../connect.php");
@@ -96,23 +102,23 @@
 	$total_pages = ceil($total_record/$record_per_page);
 	if($page>1)
 	{
-		$output.='<span class="pagination_link btn btn-social btn-link btn-dribbble" id="1"><i class="material-icons">fast_rewind</i></span>
-		<span class="pagination_link btn btn-social btn-link btn-dribbble" id="'.($page-1).'"><i class="material-icons">keyboard_arrow_left</i></span>';
+		$output.='<span class="pagination_link btn  btn-link e" id="1"><i class="material-icons">fast_rewind</i></span>
+		<span class="pagination_link btn  btn-link " id="'.($page-1).'"><i class="material-icons">keyboard_arrow_left</i></span>';
 	}
 	for($i=1;$i<=$total_pages;$i++)
 	{
 		if($i==1){
-		$output.='<span class="pagination_link btn btn-social btn-link btn-dribbble active" "id="'.$i.'">'.$i.'</span>';
+		$output.='<span class="pagination_link btn  btn-link  page_first" "id="'.$i.'">'.$i.'</span>';
 		}
 		else{
-		$output.='<span class="pagination_link btn btn-social btn-link btn-dribbble " id="'.$i.'">'.$i.'</span>';
+		$output.='<span class="pagination_link btn  btn-link  " id="'.$i.'">'.$i.'</span>';
 		}
 	}
 	if($page<$total_pages)
 	{
 		$output.='
-		<span class="pagination_link btn btn-social btn-link btn-dribbble" id="'.($page+1).'"><i class="material-icons">keyboard_arrow_right</i></span>
-		<span class="pagination_link btn btn-social btn-link btn-dribbble" id="'.$total_pages.'"><i class="material-icons">fast_forward</i></span>';
+		<span class="pagination_link btn  btn-link " id="'.($page+1).'"><i class="material-icons">keyboard_arrow_right</i></span>
+		<span class="pagination_link btn  btn-link " id="'.$total_pages.'"><i class="material-icons">fast_forward</i></span>';
 	}
 	$output.='</div>';
 	mysqli_close($con);

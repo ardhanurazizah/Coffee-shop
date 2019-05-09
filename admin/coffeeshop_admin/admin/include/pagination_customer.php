@@ -37,7 +37,6 @@
 	$start_from = ($page -1) * $record_per_page;
 	$sql = "SELECT * FROM customer	WHERE 1 ".$searchQuery." LIMIT $start_from,$record_per_page";
 	$result = mysqli_query($con,$sql);
-	printf("Error: %s\n", mysqli_error($con));
 	$output .= '
 	<table class="table table-hover">
                           <thead class="text-warning">
@@ -69,11 +68,11 @@
 									<td width="10%" data-target="clocked">';
 									if($row['clocked'] == 1)
 									{
-										$output.='<span style="color:red">Khóa</span>';
+										$output.='<span style="color:red;font-weight:400">Khóa</span>';
 									}
 									else
 									{
-										$output.='<span style="color:green">Cho phép</span>';
+										$output.='<span style="color:green;font-weight:400">Cho phép</span>';
 									}
 								$output.='</td>';
 								if($_SESSION['ad_role']=='admin'){
@@ -105,7 +104,12 @@
 	}
 	for($i=1;$i<=$total_pages;$i++)
 	{
-		$output.='<span class="pagination_link btn btn-social btn-link btn-dribbble" id="'.$i.'">'.$i.'</span>';
+		if($i==1){
+		$output.='<span class="pagination_link btn  btn-link  page_first" id="1">'.$i.'</span>';
+		}
+		else{
+		$output.='<span class="pagination_link btn  btn-link  " id="'.$i.'">'.$i.'</span>';
+		}
 	}
 	if($page<$total_pages)
 	{
