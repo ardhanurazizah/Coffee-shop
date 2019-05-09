@@ -76,6 +76,7 @@
 						$index=strpos($url,"index.php");
 						$payment=strpos($url,"payment.php");
 						$menu=strpos($url,"menu.php");
+						$account =strpos($url,"account.php");
 				    if($index>0){
 				    	// neu la trang index
 				    ?>
@@ -95,10 +96,11 @@
 				    ?>
 				</ul>
 			</nav><!-- #nav-menu-container -->
-			<?php if($index>0 || $menu>0){?>
+			<?php if($index>0 || $menu>0 || $account>0){?>
 			<div>
 				<a href="#cart_popup" data-toggle="modal">
-					<img src="img/cart.png" style="width:40%" />
+					<img src="img/cart.png" style="width:20%" />
+					<span style="color:#FFFFFF;" id="total-item"></span>
 				</a>
 			</div>  
 			<?php } ?>	
@@ -198,6 +200,7 @@ function load_cart_data()
 		success:function(data)
 		{
 		$("#cartDetails").html(data.cart_detail);
+		$("#total-item").text("( "+data.total_item+" món)");
 		},
 		error:function()
 			{alert("Tạo giỏ hàng không thành công");}

@@ -8,51 +8,9 @@
 				<div class="viewmore_menu_home"><a class="animate_btn" href="<?php echo "./menu.php";?>" >xem thêm tất cả sản phẩm</a></div>
 			</div>
 			<div class="clearfix"></div>
-			<div class="menu_list_home flex_wrap display_flex">
-	<?php include("dbconnect.php"); 
-	$sql = "SELECT * FROM product WHERE `id_status`=2";
-	$rs= mysqli_query($con,$sql);
-	while($row = mysqli_fetch_array($rs))
-	{ ?>
-	<div class="menu_item">
-		<div class="menu_item_image">
-			<a href="#PRODUCT_DETAILS" data-toggle="modal" id="<?php echo $row['id_pro']; ?>" onclick="showDetails(this)"><img src="img/product/<?php echo $row['image'];?>" /></a>
-				<div class="new">
-					<img class="svg-new" src="img/svg/orion_sheriff-star.svg" /><span>MỚI</span>
-				</div>
-		</div>
-		<div class="menu_item_info bg_white">
-			<h3><?php echo $row['name'];?></h3>
-			<div class="price_product_item"><?php echo number_format($row['price'],0,".",",").' Đ'?></div>
-			<input type="hidden"  id="name<?php echo $row['id_pro']?>" value="<?php echo $row['name']?>"/>
-			<input type="hidden" id="price<?php echo $row['id_pro']?>" value="<?php echo number_format($row['price'],0,".",",")?>"/>
-			<button class="menu_item_action animate_btn them" id="<?php echo $row['id_pro'] ?>">Mua ngay</button>
-			<!--<a class="menu_item_action_view" href="/products/tra-oolong-sen-an-nhien">Tìm hiểu thêm</a>-->
-		</div>				
-	</div>	
-	<?php } ?>
-	<?php  
-	$sql = "SELECT * FROM product WHERE `id_status`=1";
-	$rs= mysqli_query($con,$sql);
-	while($row = mysqli_fetch_array($rs))
-	{ ?>
-	<div class="menu_item">
-		<div class="menu_item_image">
-			<a href="#PRODUCT_DETAILS" data-toggle="modal" id="<?php echo $row['id_pro']; ?>" onclick="showDetails(this)"><img src="img/product/<?php echo $row['image'];?>" /></a>
-				<div class="best_seller">
-					<img class="svg-best-seller" src="img/svg/orion_diploma.svg" /><span>BÁN CHẠY NHẤT</span>
-				</div>
-		</div>
-		<div class="menu_item_info bg_white">
-			<h3><?php echo $row['name'];?></h3>
-			<div class="price_product_item"><?php echo number_format($row['price'],0,".",",").' Đ'?></div>
-			<input type="hidden"  id="name<?php echo $row['id_pro']?>" value="<?php echo $row['name']?>"/>
-			<input type="hidden" id="price<?php echo $row['id_pro']?>" value="<?php echo number_format($row['price'],0,".",",")?>"/>
-			<button class="menu_item_action animate_btn them" id="<?php echo $row['id_pro'] ?>">Mua ngay</button>
-		</div>				
-	</div>	
-	<?php } ?>
-		</div>
+			<div class="menu_list_home flex_wrap display_flex" id="pagination_show">
+	
+			</div>
 	</div>
 </div>
 </section>
@@ -93,6 +51,29 @@ function number_format( number, decimals, dec_point, thousands_sep ) {
                               
     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 }
+pagination_show(1);
+function pagination_show(page)
+{
+	
+	$.ajax({
+		url:"include/pagination_show.php",
+		method:"POST",
+		data:{page:page},
+		success:function(data)
+		{
+
+			$("#pagination_show").html(data);
+			if(page!=1){
+					$(".page_first").removeClass("active");
+					$("#"+page+"").addClass("active");
+				}
+				else
+				{
+					$(".page_first").addClass("active");
+				}
+		}
+	});
+}
 function showDetails(a)
 {
 	var productID = a.id;
@@ -113,4 +94,11 @@ function showDetails(a)
 		}
 	});
 }
+$(document).ready(function(){
+	$(document).on('click','.pagination_link',function(){
+		var page = $(this).attr('id');
+		pagination_show(page);	
+	});
+	
+});
 </script>

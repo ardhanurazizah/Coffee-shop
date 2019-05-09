@@ -26,7 +26,7 @@ $(document).ready(function(){
 		else {$(".z-txuser").text($(this).attr("title")); $(this).css("border","2px solid red");}
 	});
 	$("#txpass").blur(function(){
-		var em=$(this).val();var pattern= /^[a-zA-Z0-9]{5,}$/;var out=pattern.test(em);
+		var em=$(this).val();var pattern= /^(?=.*[A-Z])(?=.*[!@#$%^&*+=])(?=.*[0-9])(?=.*[a-z]).{5,}$/;var out=pattern.test(em);
 		if(out==true){ $(".z-txpass").text( ""); $(this).css("border","2px solid green");}
 		else {$(".z-txpass").text($(this).attr("title")); $(this).css("border","2px solid red");}
 	});	
@@ -68,55 +68,94 @@ $(document).ready(function(){
 	$uerlogin=$passlogin="";
 ?>
   <div class="modal" id="myForm" tabindex="-1" role="dialog" >
-    <div class="modal-dialog modal-dialog-centered modal-sm" >
+    <div class="modal-dialog modal-dialog-centered modal-lg" >
       <div class="modal-content" >
 	  	<div class="col-md-12">
 					<button type="button" class="close" data-dismiss="modal" style="width:40px; height:40px;">&times;</button>
 		</div>
-        <div class="modal-header" style="background-color:cornsilk ">
-          <button type="button" class="close btn btn-primary" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title" style="  color:#19A7D3; font-weight: bold; margin: auto">Đăng ký thành viên</h4>
+        <div class="modal-header" style="background-color:cornsilk;text-align:center;  ">
+          <h4 class="modal-title" style="  color:orange; font-weight: bold;">Đăng ký thành viên</h4>
         </div>
         <div class="modal-body">
 		<!--     form    it needs to change action later -->
 			<form>
-				<div style="padding-bottom: 5px">					
-					<input type="text" placeholder="Họ và tên lót*" class="form-control" id="txlname" name="txlname" tabindex="1" required  title="Sai định dạng tên!" value="<?php echo $lastnamere;?>">
-					<span class="z-txlname" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>
+			<div class="col-md-8" style="float:left; border-right:1px solid #CCCCCC;border-bottom:1px solid #CCCCCC" >
+				<div class="row">
+					<div style="width:100%;text-align:center">
+						<h4 style="font-weight:600">Thông tin cá nhân</h4>
+					</div>
 				</div>
-				<div style="padding-bottom: 5px">
-					<input type="text" placeholder="Tên của bạn*" class="form-control" id="txfiname" name="txfiname" tabindex="2"   title="Sai định dạng tên!" required value="<?php echo $finamere;?>">
-					<span class="z-txfiname" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>
+				<div class="row">
+					<div class="form-group col-md-6">	
+						<label>Họ và tên lót:</label>				
+						<input type="text"  placeholder="Họ và tên lót" class="form-control" id="txlname" name="txlname"  required  title="Sai định dạng tên!" value="<?php echo $lastnamere;?>">
+					<span class="z-txlname" style="color: red"> </span>
+					</div>
+					<div class="form-group col-md-6">
+						<label>Tên</label>
+						<input type="text" placeholder="Tên của bạn*" class="form-control" id="txfiname" name="txfiname"    title="Sai định dạng tên!" required value="<?php echo $finamere;?>">
+						<span class="z-txfiname" style="color: red"> </span>
+					</div>
 				</div>
-				<div style="padding-bottom: 5px">
-					<input type="text" class="form-control" placeholder="Email của bạn*" id="txemail" name="txemail" tabindex="3"  title="Email phải có dấu '@'và dấu '.'" required value="<?php echo 
+				<div class="row">
+					<div class="form-group col-md-6">
+						<label>Email</label>
+						<input type="text" class="form-control" placeholder="Email của bạn*" id="txemail" name="txemail"   title="Email phải có dấu '@'và dấu '.'" required value="<?php echo 
 					$emailre;?>">
-					<span class="z-txemail" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>
+						<span class="z-txemail"style="color: red"> </span>
+					</div>
+					<div class="form-group col-md-6">
+						<label>Số điện thoại:</label>
+						<input type="text" class="form-control" placeholder="Số điện thoại" name="txphone" id="txphone"  pattern="^0\d{9,10}$" title="10 hoặc 11 chữ số!" value="<?php echo $phonere;?>">
+					</div>
 				</div>
-				<div style="padding-bottom: 5px">
-					<input type="text" placeholder="Tài khoản*" class="form-control" name="txuser" id="txuser" tabindex="4"  required title="Có ít nhất 5 ký tự và không có ký tự đặc biệt" value="<?php echo $userre;?>">
-					<span class="z-txuser" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>
+				<div class="row">
+					<div class="form-group col-md-12">
+						<label>Địa chỉ:</label>
+						<input type="text" class="form-control" placeholder="Địa chỉ" name="txaddress" id="txaddress" value="<?php echo $addressre;?>" >
+					</div>
 				</div>
-				<div style="padding-bottom: 5px">
-					<input type="password" placeholder="Mật khẩu*" class="form-control" name="txpass" id="txpass" tabindex="5"  title="Ít nhất 5 ký tự và không có ký tự đặc biệt!" required value="<?php echo $passre;?>" >
-					<span class="z-txpass" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>
+				
+			</div>
+			
+			<div class="col-md-4" style="float:right;border-bottom:1px solid #CCCCCC">
+				<div class="row">
+					<div style="width:100%;text-align:center">
+						<h4 style="font-weight:600">Thông tin tài khoản</h4>
+					</div>
 				</div>
-				<div style="padding-bottom: 5px">
-					<input type="password" placeholder="Nhập lại mật khẩu*" class="form-control" name="txpass2" id="txpass2" tabindex="6"  title="Phải giống mật khẩu!" required value="<?php echo $pass2re;?>">
-					<span class="z-txpass2" style="color: white; background-color: red; border:1px;border-radius: 6px;"> </span>
+				<div class="row">
+					<div class="form-group col-md-12">
+						<label>Tên tài khoản:</label>
+							<input type="text" placeholder="Tài khoản*" class="form-control" name="txuser" id="txuser"   required title="Có ít nhất 5 ký tự và không có ký tự đặc biệt" value="<?php echo $userre;?>">
+							<span class="z-txuser" style="color: red"> </span>
+					</div>
 				</div>
-				<div style="padding-bottom: 5px">
-					<input type="text" class="form-control" placeholder="Địa chỉ" name="txaddress" id="txaddress" tabindex="7" value="<?php echo $addressre;?>" >
+				<div class="row">
+					<div class="form-group col-md-12">
+						<label>Mật khẩu:</label>
+						<input type="password" placeholder="Mật khẩu*" class="form-control" name="txpass" id="txpass"   title="Phải có ít nhất 1 ký tự đặc biệt,1 ký tự in hoa,1 chữ số và hơn 5 ký tự" required value="<?php echo $passre;?>" >
+						<span class="z-txpass" style="color: red"> </span>
+					</div>
 				</div>
-				<div style="padding-bottom: 5px" >
-					<input type="text" class="form-control" placeholder="Số điện thoại" name="txphone" id="txphone" tabindex="8" pattern="^0\d{9,10}$" title="10 hoặc 11 chữ số!" value="<?php echo $phonere;?>">
+				<div class="row">
+					<div class="form-group col-md-12">
+						<label>Nhập lại mật khẩu:</label>
+						<input type="password" placeholder="Nhập lại mật khẩu*" class="form-control" name="txpass2" id="txpass2"  title="Phải giống mật khẩu!" required value="<?php echo $pass2re;?>">
+						<span class="z-txpass2" style="color: red"> </span>
+					</div>
 				</div>
-				<div class="form-group">
-					<button type="button" id="btsubmit" class="btn btn-primary btn-block" tabindex="9">Đăng ký</button>
+			</div>
+			<div class="col-md-8" style="margin-top:10px;margin-left:150px">
+				<div class="row">	
+					<div class="form-group col-md-6">
+						<button type="button" style="background-color:orange;border:none" id="btsubmit" class="btn btn-primary btn-block" >Đăng ký</button>
+					</div>
+					<div class="form-group col-md-6">
+						<button type="reset" style="background-color:orange;border:none" id="btreset" class="btn btn-primary btn-block">Xóa</button>
+					</div> 
 				</div>
-				<div class="form-group">
-					<button type="reset" id="btreset" class="btn btn-primary btn-block" tabindex="10">Xóa</button>
-				</div> 
+			</div>
 			</form> 
         </div>
       </div>    
@@ -247,11 +286,11 @@ $(document).ready(function(){
 		if(out==true){ $(".z-txemail").text(""); $("#txemail").css("border","2px solid green");}
 		else {$(".z-txemail").text($("#txemail").attr("title")); $("#txemail").css("border","2px solid red");kt=0;}
 
-		var em=userre;var pattern= /^[a-zA-Z0-9]{5,}$/;var out=pattern.test(em);
+		var em=userre;var pattern= /[A-Za-z0-9\_\-\@\.%^&*+=]{5,}/;var out=pattern.test(em);
 		if(out==true){ $(".z-txuser").text(""); $("#txuser").css("border","2px solid green");}
 		else {$(".z-txuser").text($("#txuser").attr("title")); $("#txuser").css("border","2px solid red");kt=0;}
 
-		var em=passre;var pattern= /^[a-zA-Z0-9]{5,}$/;var out=pattern.test(em);
+		var em=passre;var pattern= /^(?=.*[A-Z])(?=.*[!@#$%^&*+=])(?=.*[0-9])(?=.*[a-z]).{5,}$/;var out=pattern.test(em);
 		if(out==true){ $(".z-txpass").text( ""); $("#txpass").css("border","2px solid green");}
 		else {$(".z-txpass").text($("#txpass").attr("title")); $("#txpass").css("border","2px solid red");kt=0;}
 
