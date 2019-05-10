@@ -26,7 +26,7 @@
 	session_start();
 	require("dbconnect.php");
 	
-	$record_per_page = 6;
+	$record_per_page = 3;
 	$page = '';
 	$output= ''; 
 	if(isset($_POST["page"]))
@@ -46,11 +46,17 @@
 		$output.='
 	<div class="menu_item">
 		<div class="menu_item_image">
-			<a href="#PRODUCT_DETAILS" data-toggle="modal" id="'.$row['id_pro'].'" onclick="showDetails(this)"><img src="img/product/'. $row['image'].'" /></a>
-				<div class="new">
+			<a href="#PRODUCT_DETAILS" data-toggle="modal" id="'.$row['id_pro'].'" onclick="showDetails(this)"><img src="img/product/'. $row['image'].'" /></a>';
+			if($row['id_status']==2){
+				$output.='<div class="new">
 					<img class="svg-new" src="img/svg/orion_sheriff-star.svg" /><span>MỚI</span>
-				</div>
-		</div>
+				</div>';
+				}
+			else{
+				$output.='<div class="best_seller">
+					<img class="svg-best-seller" src="img/svg/orion_diploma.svg" /><span>BÁN CHẠY NHẤT</span>
+				</div>';}
+		$output.='</div>
 		<div class="menu_item_info bg_white">
 			<h3>'. $row['name'].'</h3>
 			<div class="price_product_item">'. number_format($row['price'],0,".",",").' Đ</div>
