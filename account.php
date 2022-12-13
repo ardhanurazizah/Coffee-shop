@@ -16,7 +16,7 @@ while($row = mysqli_fetch_assoc($result)){
 	$user=$row['username'];
 	$pass=$row['password'];
 	$email=$row['email'];
-	$phone=$row['phone'];
+	$phone=$row['handphone'];
 	$address=$row['address'];
 }
 $sql= "SELECT id_bill FROM order_bill where cus_id='$id' ORDER BY  id_bill DESC";
